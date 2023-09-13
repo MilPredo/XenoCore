@@ -21,6 +21,7 @@ import {
   FiTrendingUp,
   FiCompass,
   FiStar,
+  FiUsers,
   FiSettings,
   FiMenu,
   FiList,
@@ -30,7 +31,8 @@ import {
 import { IconType } from "react-icons";
 import { ReactText } from "react";
 import Inventory from "./pages/Inventory";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, Navigate, NavLink } from "react-router-dom";
+import SideBar from "./components/SideBar";
 interface LinkItemProps {
   name: string;
   to: string;
@@ -38,38 +40,46 @@ interface LinkItemProps {
 }
 const LinkItems: Array<LinkItemProps> = [
   { name: "Inventory", to: "inventory", icon: FiList },
+  { name: "User Management", to: "usermanagement", icon: FiUsers },
   { name: "Settings", to: "settings", icon: FiSettings },
   { name: "Log Out", to: "/login", icon: FiLogOut },
 ];
 
 export default function Dashboard() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
-      <SidebarContent
-        onClose={() => onClose}
-        display={{ base: "none", md: "block" }}
-      />
-      <Drawer
-        isOpen={isOpen}
-        placement="left"
-        onClose={onClose}
-        returnFocusOnClose={false}
-        onOverlayClick={onClose}
-        size="full"
-      >
-        <DrawerContent>
-          <SidebarContent onClose={onClose} />
-        </DrawerContent>
-      </Drawer>
-      {/* mobilenav */}
-      <MobileNav display={{ base: "flex", md: "none" }} onOpen={onOpen} />
+    <Box minH="100vh">
+      <Flex
+        bg={useColorModeValue("white", "gray.900")}
+        w={{ base: "full", md: 60 }}
+        pos="fixed"
+        h="full"
+      ></Flex>
       <Box ml={{ base: 0, md: 60 }} p="4">
-        {/* Content */}
         <Outlet />
-        {/* <Inventory /> */}
       </Box>
     </Box>
+    // <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
+    //   <SidebarContent
+    //     onClose={() => onClose}
+    //     display={{ base: "none", md: "block" }}
+    //   />
+    //   <Drawer
+    //     isOpen={isOpen}
+    //     placement="left"
+    //     onClose={onClose}
+    //     returnFocusOnClose={false}
+    //     onOverlayClick={onClose}
+    //     size="full"
+    //   >
+    //     <DrawerContent>
+    //       <SidebarContent onClose={onClose} />
+    //     </DrawerContent>
+    //   </Drawer>
+    //   <MobileNav display={{ base: "flex", md: "none" }} onOpen={onOpen} />
+    //   <Box ml={{ base: 0, md: 60 }} p="4">
+    //     <Outlet />
+    //   </Box>
+    // </Box>
   );
 }
 
@@ -79,7 +89,7 @@ interface SidebarProps extends BoxProps {
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   return (
-    <Box
+    <Flex
       bg={useColorModeValue("white", "gray.900")}
       borderRight="1px"
       borderRightColor={useColorModeValue("gray.200", "gray.700")}
@@ -94,12 +104,19 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         </Text>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
-      {LinkItems.map((link) => (
-        <NavItem key={link.name} to={link.to} icon={link.icon}>
-          {link.name}
-        </NavItem>
-      ))}
-    </Box>
+      <Flex flex={1} bg="red" flexDir={"column"}>
+        <Box flex={1}>
+          {LinkItems.map((link) => (
+            <NavItem key={link.name} to={link.to} icon={link.icon}>
+              {link.name}
+            </NavItem>
+          ))}
+        </Box>
+        <Box flex={1} bg="green">
+          asd
+        </Box>
+      </Flex>
+    </Flex>
   );
 };
 
@@ -110,38 +127,43 @@ interface NavItemProps extends FlexProps {
 }
 const NavItem = ({ icon, children, to, ...rest }: NavItemProps) => {
   return (
-    <Link to={to}>
-      <Box
-        style={{ textDecoration: "none" }}
-        _focus={{ boxShadow: "none", bg: "primary" }}
-      >
-        <Flex
-          align="center"
-          p="4"
-          mx="4"
-          borderRadius="lg"
-          role="group"
-          cursor="pointer"
-          _hover={{
-            bg: "rgba(255,255,255,0.2)",
-            color: "white",
-          }}
-          {...rest}
+    <NavLink to={to}>
+      {({ isActive }) => (
+        <Box
+          style={{ textDecoration: "none" }}
+          _focus={{ boxShadow: "none", bg: "primary" }}
         >
-          {icon && (
-            <Icon
-              mr="4"
-              fontSize="16"
-              _groupHover={{
-                color: "white",
-              }}
-              as={icon}
-            />
-          )}
-          {children}
-        </Flex>
-      </Box>
-    </Link>
+          <Flex
+            align="center"
+            p="4"
+            mx="4"
+            borderRadius="lg"
+            role="group"
+            cursor="pointer"
+            _hover={{
+              bg: "rgba(255,255,255,0.2)",
+              color: "white",
+            }}
+            boxShadow={
+              isActive ? "inset 0px 0px 0px 2px rgba(135, 206, 250, 0.5)" : ""
+            }
+            {...rest}
+          >
+            {icon && (
+              <Icon
+                mr="4"
+                fontSize="16"
+                _groupHover={{
+                  color: "white",
+                }}
+                as={icon}
+              />
+            )}
+            {children}
+          </Flex>
+        </Box>
+      )}
+    </NavLink>
   );
 };
 
