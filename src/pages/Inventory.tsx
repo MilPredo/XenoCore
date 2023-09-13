@@ -14,6 +14,7 @@ import {
   InputGroup,
   InputLeftElement,
   Input,
+  Button,
 } from "@chakra-ui/react";
 import {
   FiHome,
@@ -117,43 +118,104 @@ function Inventory() {
         </InputLeftElement>
         <Input type="text" placeholder="Search Item" />
       </InputGroup>
+      <Button
+        isLoading
+        loadingText="Loading"
+        colorScheme="teal"
+        variant="outline"
+        spinnerPlacement="start"
+      >
+        Submit
+      </Button>
       <TableContainer>
         <Table size="sm">
           <Thead>
             <Tr>
               <Th>Category</Th>
               <Th>Product</Th>
-              <Th>COG</Th>
+              <Th isNumeric>COG</Th>
               <Th>Papers</Th>
-              <Th>Price per Unit</Th>
+              <Th isNumeric>Price per Unit</Th>
               <Th>Initial Quantity</Th>
               <Th>Re-Order Level</Th>
               <Th>Current In Stock Quantity</Th>
               <Th>Status</Th>
-              <Th>Total Inventory Cost</Th>
-              <Th>Total Inventory Value</Th>
+              <Th isNumeric>Total Inventory Cost</Th>
+              <Th isNumeric>Total Inventory Value</Th>
             </Tr>
           </Thead>
           <Tbody>
             {dummyInventory.map((value, index) => (
-              <Tr key={index}>
+              <Tr
+                key={index}
+                _hover={{
+                  _dark: {
+                    bg: "gray.500"
+                  },
+                  _light: {
+                    bg: "gray.200"
+                  },
+                }}
+                _focus={{
+                  _dark: {
+                    bg: "rgba(255,255,255,0.75)",
+                  },
+                  _light: {
+                    bg: "rgba(0,0,0,0.75)",
+                  },
+                }}
+                transitionDuration="0.5s"  
+              >
                 <Td>
                   <Tag>{value.category}</Tag>
                 </Td>
                 <Td>{value.productName}</Td>
-                <Td>{new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(value.cog)}</Td>
-                <Td>{value.papers ? '✔️':'❌'}</Td>
-                <Td>{new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(value.pricePerUnit)}</Td>
+                <Td isNumeric>
+                  {new Intl.NumberFormat("en-PH", {
+                    style: "currency",
+                    currency: "PHP",
+                  }).format(value.cog)}
+                </Td>
+                <Td>{value.papers ? "✔️" : "❌"}</Td>
+                <Td isNumeric>
+                  {new Intl.NumberFormat("en-PH", {
+                    style: "currency",
+                    currency: "PHP",
+                  }).format(value.pricePerUnit)}
+                </Td>
                 <Td>{value.initialQuantity}</Td>
                 <Td>{value.reOrderLevel}</Td>
                 <Td>{value.initialQuantity}</Td>
                 <Td>
-                  <Badge variant="solid" colorScheme={value.initialQuantity>=value.reOrderLevel ? 'green' : value.initialQuantity<=0 ? 'red': 'orange'}>
-                    {value.initialQuantity>=value.reOrderLevel ? 'In Stock' : value.initialQuantity<=0 ? 'No Stock': 'Low Stock'}
+                  <Badge
+                    variant="solid"
+                    colorScheme={
+                      value.initialQuantity >= value.reOrderLevel
+                        ? "green"
+                        : value.initialQuantity <= 0
+                        ? "red"
+                        : "orange"
+                    }
+                  >
+                    {value.initialQuantity >= value.reOrderLevel
+                      ? "In Stock"
+                      : value.initialQuantity <= 0
+                      ? "No Stock"
+                      : "Low Stock"}
                   </Badge>
                 </Td>
-                <Td>{new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(value.cog*value.initialQuantity)}</Td>
-                <Td>{new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(value.pricePerUnit*value.initialQuantity)}</Td>
+                <Td isNumeric>
+                  {new Intl.NumberFormat("en-PH", {
+                    style: "currency",
+                    currency: "PHP",
+                  }).format(value.cog * value.initialQuantity)}
+                </Td>
+                <Td isNumeric>
+                  {new Intl.NumberFormat("en-PH", {
+                    style: "currency",
+                    currency: "PHP",
+                  }).format(value.pricePerUnit * value.initialQuantity)}
+                </Td>
               </Tr>
             ))}
           </Tbody>

@@ -30,12 +30,12 @@ function Login() {
   const [loginFailed, setLoginFailed] = useState<boolean | null>();
   useEffect(() => {
     if (isAuthenticated) {
-      console.log(user);
+      //console.log(user);
       navigate("/dashboard");
     }
 
     if (error) {
-      console.log(error);
+      //console.log(error);
       setLoginFailed(true);
     }
   }, [isAuthenticated, error]);
@@ -58,12 +58,12 @@ function Login() {
       if (!values.password) {
         errors.password = "Password is required";
       }
-      console.log(errors);
+      //console.log(errors);
       return errors;
     },
     onSubmit: (values) => {
       // Handle form submission
-      console.log("hello");
+      //console.log("hello");
       login(values.email, values.password);
     },
   });
