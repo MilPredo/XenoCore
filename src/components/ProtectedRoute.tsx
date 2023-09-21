@@ -9,7 +9,7 @@ function ProtectedRoute({ element }: { element: React.ReactNode }) {
     if (!isAuthenticated){
       navigate('/login')
     }
-  }, [])
+  }, [isAuthenticated])
   
   return isAuthenticated ? <>{element}</> : null;
 }

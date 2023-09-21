@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import supabase from "../api/supabase";
+import { useNavigate } from "react-router";
 
 interface AuthState {
   isAuthenticated: boolean;
@@ -30,11 +31,15 @@ export const useAuthStore = create<AuthState>((set) => {
             "Error signing in:",
             (error as { message: string }).message
           );
-
+          alert(JSON.stringify(error));
           set({ user: null, error, isAuthenticated: false });
         } else if (data.user) {
           // Store the user session in local storage
           localStorage.setItem("user", JSON.stringify(data));
+          const {
+            data: { session },
+          } = await supabase.auth.getSession();
+          console.log(session);
           set({ user: data, error: null, isAuthenticated: true });
         } else {
           set({ user: null, error, isAuthenticated: false });
@@ -44,10 +49,16 @@ export const useAuthStore = create<AuthState>((set) => {
         set({ user: null, error, isAuthenticated: false });
       }
     },
-    logout: () => {
+    logout: async () => {
       // Clear the user session from local storage
-      localStorage.removeItem("user");
-      set({ isAuthenticated: false, user: null, error: null });
+      try {
+        const res = await supabase.auth.signOut();
+        console.log(res)
+        set({ isAuthenticated: false, user: null, error: null });
+      } catch (error) {
+        console.log("Error:", error);
+      }
+      //localStorage.removeItem("user");
     },
   };
 });

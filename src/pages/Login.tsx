@@ -67,7 +67,7 @@ function Login() {
       login(values.email, values.password);
     },
   });
-  return (
+  return isAuthenticated?(<></>):(
     <Center w="100vw" h="100vh">
       <form onSubmit={formik.handleSubmit}>
         <Card minW="sm" overflow="hidden">
@@ -80,8 +80,7 @@ function Login() {
             <Stack spacing={4}>
               <FormControl
                 isInvalid={
-                  (!!formik.errors.email && formik.touched.email) ||
-                  !!loginFailed
+                  (!!formik.errors.email && formik.touched.email) || !!loginFailed
                 }
               >
                 <FormLabel>Email</FormLabel>
@@ -111,7 +110,9 @@ function Login() {
                   value={formik.values.password}
                 />
                 <FormErrorMessage>
-                  {formik.errors.password}{" "}
+                  {formik.errors.password}
+                </FormErrorMessage>
+                <FormErrorMessage>
                   {loginFailed ? "Invalid Email and/or Password" : null}
                 </FormErrorMessage>
               </FormControl>
