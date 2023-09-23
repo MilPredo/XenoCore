@@ -6,7 +6,7 @@ function ThemeSwitchButton() {
   const { colorMode, toggleColorMode } = useColorMode();
   return (
     <NavLinkComponent
-      name={`Toggle ${colorMode === "light" ? "Dark" : "Light"} Mode`}
+      name={`${colorMode === "light" ? "Dark" : "Light"} Mode`}
       icon={colorMode === "light" ? FiMoon : FiSun}
       onClick={toggleColorMode}
     />

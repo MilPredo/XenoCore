@@ -15,6 +15,7 @@ import {
   InputLeftElement,
   Input,
   Button,
+  Flex,
 } from "@chakra-ui/react";
 import {
   FiHome,
@@ -108,26 +109,152 @@ function Inventory() {
       initialQuantity: 30,
       reOrderLevel: 10,
     },
+    {
+      category: "Medicine",
+      productName: "Erythropoietin (EPO)",
+      cog: 200.0, // Cost in Philippine Peso
+      papers: true,
+      pricePerUnit: 450.0, // Price in Philippine Peso
+      initialQuantity: 30,
+      reOrderLevel: 10,
+    },
+    {
+      category: "Medicine",
+      productName: "Erythropoietin (EPO)",
+      cog: 200.0, // Cost in Philippine Peso
+      papers: true,
+      pricePerUnit: 450.0, // Price in Philippine Peso
+      initialQuantity: 30,
+      reOrderLevel: 10,
+    },
+    {
+      category: "Medicine",
+      productName: "Erythropoietin (EPO)",
+      cog: 200.0, // Cost in Philippine Peso
+      papers: true,
+      pricePerUnit: 450.0, // Price in Philippine Peso
+      initialQuantity: 30,
+      reOrderLevel: 10,
+    },
+    {
+      category: "Medicine",
+      productName: "Erythropoietin (EPO)",
+      cog: 200.0, // Cost in Philippine Peso
+      papers: true,
+      pricePerUnit: 450.0, // Price in Philippine Peso
+      initialQuantity: 30,
+      reOrderLevel: 10,
+    },
+    {
+      category: "Medicine",
+      productName: "Erythropoietin (EPO)",
+      cog: 200.0, // Cost in Philippine Peso
+      papers: true,
+      pricePerUnit: 450.0, // Price in Philippine Peso
+      initialQuantity: 30,
+      reOrderLevel: 10,
+    },
+    {
+      category: "Medicine",
+      productName: "Erythropoietin (EPO)",
+      cog: 200.0, // Cost in Philippine Peso
+      papers: true,
+      pricePerUnit: 450.0, // Price in Philippine Peso
+      initialQuantity: 30,
+      reOrderLevel: 10,
+    },
+    {
+      category: "Medicine",
+      productName: "Erythropoietin (EPO)",
+      cog: 200.0, // Cost in Philippine Peso
+      papers: true,
+      pricePerUnit: 450.0, // Price in Philippine Peso
+      initialQuantity: 30,
+      reOrderLevel: 10,
+    },
+    {
+      category: "Medicine",
+      productName: "Erythropoietin (EPO)",
+      cog: 200.0, // Cost in Philippine Peso
+      papers: true,
+      pricePerUnit: 450.0, // Price in Philippine Peso
+      initialQuantity: 30,
+      reOrderLevel: 10,
+    },
+    {
+      category: "Medicine",
+      productName: "Erythropoietin (EPO)",
+      cog: 200.0, // Cost in Philippine Peso
+      papers: true,
+      pricePerUnit: 450.0, // Price in Philippine Peso
+      initialQuantity: 30,
+      reOrderLevel: 10,
+    },
+    {
+      category: "Medicine",
+      productName: "Erythropoietin (EPO)",
+      cog: 200.0, // Cost in Philippine Peso
+      papers: true,
+      pricePerUnit: 450.0, // Price in Philippine Peso
+      initialQuantity: 30,
+      reOrderLevel: 10,
+    },
+    {
+      category: "Medicine",
+      productName: "Erythropoietin (EPO)",
+      cog: 200.0, // Cost in Philippine Peso
+      papers: true,
+      pricePerUnit: 450.0, // Price in Philippine Peso
+      initialQuantity: 30,
+      reOrderLevel: 10,
+    },
+    {
+      category: "Medicine",
+      productName: "Erythropoietin (EPO)",
+      cog: 200.0, // Cost in Philippine Peso
+      papers: true,
+      pricePerUnit: 450.0, // Price in Philippine Peso
+      initialQuantity: 30,
+      reOrderLevel: 10,
+    },
+    {
+      category: "Medicine",
+      productName: "Erythropoietin (EPO)",
+      cog: 200.0, // Cost in Philippine Peso
+      papers: true,
+      pricePerUnit: 450.0, // Price in Philippine Peso
+      initialQuantity: 30,
+      reOrderLevel: 10,
+    },
+    {
+      category: "Medicine",
+      productName: "Erythropoietin (EPO)",
+      cog: 200.0, // Cost in Philippine Peso
+      papers: true,
+      pricePerUnit: 450.0, // Price in Philippine Peso
+      initialQuantity: 30,
+      reOrderLevel: 10,
+    },
   ];
 
   return (
-    <Box>
+    <Flex flexDir="column" maxH='90vh'>
       <InputGroup my={{ base: 0, md: 10 }}>
         <InputLeftElement pointerEvents="none">
           <FiSearch />
         </InputLeftElement>
         <Input type="text" placeholder="Search Item" />
+        <Button
+          // isLoading
+          loadingText="Loading"
+          colorScheme="teal"
+          variant="outline"
+          spinnerPlacement="start"
+        >
+          Filter
+        </Button>
       </InputGroup>
-      <Button
-        isLoading
-        loadingText="Loading"
-        colorScheme="teal"
-        variant="outline"
-        spinnerPlacement="start"
-      >
-        Submit
-      </Button>
-      <TableContainer>
+      <Box _dark={{bg: "rgb(31,31,63)"}} p={2} borderRadius='xl' bg="white">
         <Table size="sm">
           <Thead>
             <Tr>
@@ -144,16 +271,16 @@ function Inventory() {
               <Th isNumeric>Total Inventory Value</Th>
             </Tr>
           </Thead>
-          <Tbody>
+          <Tbody overflowX='auto' maxH='100px'>
             {dummyInventory.map((value, index) => (
               <Tr
                 key={index}
                 _hover={{
                   _dark: {
-                    bg: "gray.500"
+                    bg: "gray.500",
                   },
                   _light: {
-                    bg: "gray.200"
+                    bg: "gray.200",
                   },
                 }}
                 _focus={{
@@ -164,7 +291,7 @@ function Inventory() {
                     bg: "rgba(0,0,0,0.75)",
                   },
                 }}
-                transitionDuration="0.5s"  
+                transitionDuration="0.5s"
               >
                 <Td>
                   <Tag>{value.category}</Tag>
@@ -220,8 +347,8 @@ function Inventory() {
             ))}
           </Tbody>
         </Table>
-      </TableContainer>
-    </Box>
+      </Box>
+    </Flex>
   );
 }
 

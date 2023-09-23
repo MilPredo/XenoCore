@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import Dashboard from "./Dashboard.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./pages/Login.tsx";
-import { ChakraProvider, CSSReset, extendTheme } from "@chakra-ui/react";
+import { Box, ChakraProvider, CSSReset, extendTheme } from "@chakra-ui/react";
 const theme = extendTheme({
   config: {
     initialColorMode: "dark",
@@ -13,6 +13,7 @@ const theme = extendTheme({
 import Inventory from "./pages/Inventory.tsx";
 import UserManagement from "./pages/UserManagement.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
+import NotFound from "./pages/NotFound.tsx";
 const router = createBrowserRouter([
   {
     path: "/dashboard",
@@ -26,11 +27,16 @@ const router = createBrowserRouter([
         path: "usermanagement",
         element: <UserManagement />,
       },
+      {
+        path: "*",
+        element: <NotFound />,
+      },
     ],
   },
   {
     path: "/",
     element: <Login />,
+    errorElement: <Box w='100vw' h='100vh'><NotFound /></Box>,
   },
   {
     path: "/login",

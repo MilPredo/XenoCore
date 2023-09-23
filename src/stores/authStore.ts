@@ -40,6 +40,7 @@ export const useAuthStore = create<AuthState>((set) => {
             data: { session },
           } = await supabase.auth.getSession();
           console.log(session);
+          console.log(data)
           set({ user: data, error: null, isAuthenticated: true });
         } else {
           set({ user: null, error, isAuthenticated: false });
