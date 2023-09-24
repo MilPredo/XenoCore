@@ -2,9 +2,11 @@ import { Box, Center, Flex, FlexProps, Heading, Stack } from "@chakra-ui/react";
 import { IconType } from "react-icons";
 import {
   FiBarChart,
+  FiDollarSign,
   FiList,
   FiLogOut,
   FiPackage,
+  FiShoppingCart,
   FiUsers,
 } from "react-icons/fi";
 import { NavLink } from "react-router-dom";
@@ -26,6 +28,8 @@ function SideNavBar() {
     { name: "Statistics", to: "statistics", icon: FiBarChart },
     { name: "Inventory", to: "inventory", icon: FiPackage },
     { name: "User Management", to: "usermanagement", icon: FiUsers },
+    { name: "Purchases", to: "purchases", icon: FiShoppingCart },
+    { name: "Sales", to: "sales", icon: FiDollarSign },
   ];
   const { logout } = useAuthStore();
   return (
