@@ -238,7 +238,7 @@ function Inventory() {
   ];
 
   return (
-    <Flex flexDir="column" maxH='90vh'>
+    <Flex flexDir="column" _dark={{ bg: '#0F0F1F' }} p='4'>
       <InputGroup my={{ base: 0, md: 10 }}>
         <InputLeftElement pointerEvents="none">
           <FiSearch />
@@ -254,7 +254,7 @@ function Inventory() {
           Filter
         </Button>
       </InputGroup>
-      <Box _dark={{bg: "rgb(31,31,63)"}} p={2} borderRadius='xl' bg="white">
+      <Box _light={{boxShadow:'base'}} _dark={{bg: "rgb(31,31,63)", borderRadius:'xl'}} p={2} bg="white">
         <Table size="sm">
           <Thead>
             <Tr>
