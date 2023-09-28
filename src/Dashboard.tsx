@@ -5,15 +5,14 @@ import SideNavBar from "./components/SideNavBar";
 
 export default function Dashboard() {
   return (
-    <Flex maxH="100vh">
+    <Flex maxH="100vh" >
       <SideNavBar />
       <Box
-        _light={{ bg: "blue.200" }}
+        // _light={{ bg: "blue.200" }}
         flex={1}
         maxW='calc(100% - (240px))'
         maxH='100vh'
-        _dark={{ bg: '#0F0F1F' }}
-        p="4"
+        // _dark={{ bg: '#0F0F1F' }}
       > 
         <Outlet />
       </Box>

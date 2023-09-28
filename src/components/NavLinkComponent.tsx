@@ -1,5 +1,16 @@
 import { Box, Flex, FlexProps, Icon, Text } from "@chakra-ui/react";
 import { IconType } from "react-icons";
+/*
+yellow (241,245,143)
+orange (255,169,48)
+*/
+
+
+
+
+
+
+
 
 interface NavLinkComponentProps extends FlexProps {
   icon: IconType;
@@ -23,7 +34,6 @@ function NavLinkComponent({
         align="center"
         p="4"
         mx="2"
-        borderRadius="lg"
         role="group"
         cursor="pointer"
         _dark={{
@@ -42,22 +52,26 @@ function NavLinkComponent({
           boxShadow: isActive
             ? "inset 0px 0px 8px 2px rgba(255, 255, 255, 0.5), 0px 0px 8px 2px rgba(255, 255, 255, 0.25)"
             : "inset 0px 0px 8px 2px rgba(255, 255, 255, 0.25)",
+            borderRadius:"lg"
         }}
         _light={{
           _hover: {
             boxShadow: "inset 0px 0px 0px 2px rgba(0, 0, 0, 1)",
           },
-          bg: isActive ? "cyan.200" : "white",
+          bg: isActive ? "#BDFFBD" : "#FFFFBF",
 
-          boxShadow: "base",
+          boxShadow: isActive? "md" : "base",
+          transition: '0.25s',
+          transform: isActive ?'scale(1.05,1.05)':''
         }}
+        zIndex={isActive?2:0}
         // boxShadow={
         //   isActive ? "inset 0px 0px 0px 2px rgb(129, 199, 132)" : ""
         // }
         {...rest}
       >
-        {icon && <Icon mr="4" fontSize="md" as={icon} />}
-        <Text  userSelect={"none"} fontSize={"md"} fontWeight={"medium"}>
+        {icon && <Icon mr="4" fontSize="xl" as={icon} />}
+        <Text fontFamily='Kasitau' fontSize="" fontWeight='bold' textTransform='uppercase'_dark={{fontFamily:'inherit', fontWeight:'medium'}}  userSelect={"none"}  >
           {name}
         </Text>
       </Flex>

@@ -1,0 +1,96 @@
+/* NeverMindBauhaus-Bold */
+@font-face {
+  font-family: 'NeverMindBauhaus-Bold';
+  src: url('./fonts/NeverMindBauhaus-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+/* NeverMindBauhaus-DemiBold */
+@font-face {
+  font-family: 'NeverMindBauhaus-DemiBold';
+  src: url('./fonts/NeverMindBauhaus-DemiBold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+/* NeverMindBauhaus-Extrabold */
+@font-face {
+  font-family: 'NeverMindBauhaus-Extrabold';
+  src: url('./fonts/NeverMindBauhaus-Extrabold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+/* NeverMindBauhaus-ExtraLight */
+@font-face {
+  font-family: 'NeverMindBauhaus-ExtraLight';
+  src: url('./fonts/NeverMindBauhaus-ExtraLight.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* NeverMindBauhaus-Heavy */
+@font-face {
+  font-family: 'NeverMindBauhaus-Heavy';
+  src: url('./fonts/NeverMindBauhaus-Heavy.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+/* NeverMindBauhaus-Light */
+@font-face {
+  font-family: 'NeverMindBauhaus-Light';
+  src: url('./fonts/NeverMindBauhaus-Light.ttf') format('truetype');
+  font-weight: lighter;
+  font-style: normal;
+}
+
+/* NeverMindBauhaus-Medium */
+@font-face {
+  font-family: 'NeverMindBauhaus-Medium';
+  src: url('./fonts/NeverMindBauhaus-Medium.ttf') format('truetype');
+  font-weight: medium;
+  font-style: normal;
+}
+
+/* NeverMindBauhaus-Regular */
+@font-face {
+  font-family: 'NeverMindBauhaus-Regular';
+  src: url('./fonts/NeverMindBauhaus-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* NeverMindBauhaus-Thin */
+@font-face {
+  font-family: 'NeverMindBauhaus-Thin';
+  src: url('./fonts/NeverMindBauhaus-Thin.ttf') format('truetype');
+  font-weight: lighter;
+  font-style: normal;
+}
+
+/* MostlyMono */
+@font-face {
+  font-family: 'MostlyMono';
+  src: url('./fonts/MostlyMono.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+/* MostlyMono */
+@font-face {
+  font-family: 'Mungil';
+  src: url('./fonts/Mungil-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* MostlyMono */
+@font-face {
+  font-family: 'Kasitau';
+  src: url('./fonts/Kasitau.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}

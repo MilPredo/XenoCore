@@ -16,7 +16,7 @@ function CurrentUserNav() {
   return (
     <Center>
       <Flex flexDir="column" align='center'>
-        <Avatar size="md" name={user.user.email} m={2} />
+        <Avatar size="md" name={user.user.email} boxShadow={'base'} m={2} />
         <Text>{user.user.email}</Text>
       </Flex>
     </Center>
