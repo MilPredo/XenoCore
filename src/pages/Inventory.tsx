@@ -30,6 +30,7 @@ import {
 } from "react-icons/fi";
 import { IconType } from "react-icons";
 import { useState } from "react";
+import { useNavHeight } from "../stores/navHeight";
 
 function calculateStockStatus(
   qtyInStock: number,
@@ -236,9 +237,9 @@ function Inventory() {
       reOrderLevel: 10,
     },
   ];
-
+  const {navBarHeight} = useNavHeight()
   return (
-    <Flex flexDir="column" _dark={{ bg: '#0F0F1F' }} p='4'>
+    <Flex flexDir="column" _dark={{ bg: '#0F0F1F' }} pt={`${navBarHeight}px`} pb='6' px='6'>
       <InputGroup my={{ base: 0, md: 10 }}>
         <InputLeftElement pointerEvents="none">
           <FiSearch />

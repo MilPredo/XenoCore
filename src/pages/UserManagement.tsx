@@ -1,9 +1,13 @@
-import { Box } from '@chakra-ui/react'
+import { Box, Flex } from '@chakra-ui/react'
 import React from 'react'
 
 function UserManagement() {
   return (
-    <Box>UserManagement</Box>
+    <Flex flexDir="column" _dark={{ bg: '#0F0F1F' }} p='4'>
+      <Box>
+        
+      </Box>
+    </Flex>
   )
 }
 

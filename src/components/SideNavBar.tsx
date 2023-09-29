@@ -55,7 +55,7 @@ function SideNavBar() {
           </Heading>
         </Center>
         <Stack
-          py="2"
+          p="2"
           mx="2"
           flex={1}
           overflowY={"scroll"}
@@ -97,7 +97,7 @@ function SideNavBar() {
         </Stack>
 
         <Stack
-          py="2"
+          p="2"
           mx="2"
           _light={{ bg: "#FFBDFF", boxShadow: "base" }}
           _dark={{ borderRadius: "xl" }}
