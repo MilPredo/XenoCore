@@ -94,3 +94,38 @@
   font-weight: normal;
   font-style: normal;
 }
+
+@font-face {
+  font-family: 'NeverMindBauhaus-Regular';
+  src: url('./fonts/NeverMindHand-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Hand';
+  src: url('./fonts/NeverMindHand-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Hand';
+  src: url('./fonts/NeverMindHand-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Rounded';
+  src: url('./fonts/NeverMindRounded-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Rounded';
+  src: url('./fonts/NeverMindRounded-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}

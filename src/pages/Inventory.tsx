@@ -254,7 +254,7 @@ function Inventory() {
           Filter
         </Button>
       </InputGroup>
-      <Box _light={{boxShadow:'base'}} _dark={{bg: "rgb(31,31,63)", borderRadius:'xl'}} p={2} bg="white">
+      <Box _light={{boxShadow:'base'}} _dark={{bg: "rgb(31,31,63)", borderRadius:'xl'}} p={2} bg="white" overflow='auto'>
         <Table size="sm">
           <Thead>
             <Tr>
