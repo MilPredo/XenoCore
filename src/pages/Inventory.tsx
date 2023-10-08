@@ -30,6 +30,7 @@ import {
 } from "react-icons/fi";
 import { IconType } from "react-icons";
 import { useState } from "react";
+import { useNavHeight } from "../stores/navHeight";
 
 function calculateStockStatus(
   qtyInStock: number,
@@ -236,9 +237,9 @@ function Inventory() {
       reOrderLevel: 10,
     },
   ];
-
+  const { navBarHeight } = useNavHeight();
   return (
-    <Flex flexDir="column" _dark={{ bg: '#0F0F1F' }} p='4'>
+    <>
       <InputGroup my={{ base: 0, md: 10 }}>
         <InputLeftElement pointerEvents="none">
           <FiSearch />
@@ -254,9 +255,23 @@ function Inventory() {
           Filter
         </Button>
       </InputGroup>
-      <Box _light={{boxShadow:'base'}} _dark={{bg: "rgb(31,31,63)", borderRadius:'xl'}} p={2} bg="white">
-        <Table size="sm">
-          <Thead>
+      <Box
+        _light={{ boxShadow: "base" }}
+        _dark={{ bg: "rgb(31,31,63)", borderRadius: "xl" }}
+        bg="white"
+        overflow="auto"
+        m='8'
+      >
+        <Table overflowX="unset" overflowY="unset" size="sm">
+          <Thead
+            _light={{ boxShadow: "base" }}
+            _dark={{ bg: "rgb(31,31,63)", borderRadius: "xl" }}
+            p={2}
+            bg="white"
+            position="sticky"
+            top={0}
+            zIndex="docked"
+          >
             <Tr>
               <Th>Category</Th>
               <Th>Product</Th>
@@ -271,7 +286,7 @@ function Inventory() {
               <Th isNumeric>Total Inventory Value</Th>
             </Tr>
           </Thead>
-          <Tbody overflowX='auto' maxH='100px'>
+          <Tbody overflowX="auto" maxH="100px">
             {dummyInventory.map((value, index) => (
               <Tr
                 key={index}
@@ -348,7 +363,7 @@ function Inventory() {
           </Tbody>
         </Table>
       </Box>
-    </Flex>
+    </>
   );
 }
 

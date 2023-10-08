@@ -33,18 +33,16 @@ function SideNavBar() {
   ];
   const { logout } = useAuthStore();
   return (
-    <Flex flexDir={"column"} h="100vh" minW="240px" w="60">
+    <Flex flexDir={"column"} h="100vh" pos="sticky" top="0" bottom="0" maxW='400px'>
       <Stack
         zIndex={1}
         _dark={{ bg: "#181830" }}
         //_light={{ bg: "rgb(241,245,143)" }}
         h="100vh"
-        maxH="100vh"
-        pos="fixed"
-        w="60"
+        maxH="100vh" 
         py="2"
       >
-        <Center mx="2" py="4" borderRadius={"xl"}>
+        {/* <Center mx="2" py="4" borderRadius={"xl"}>
           <Heading
             textAlign="center"
             fontFamily="MostlyMono"
@@ -53,9 +51,9 @@ function SideNavBar() {
           >
             Inventory System
           </Heading>
-        </Center>
+        </Center> */}
         <Stack
-          py="2"
+          p="2"
           mx="2"
           flex={1}
           overflowY={"scroll"}
@@ -97,7 +95,7 @@ function SideNavBar() {
         </Stack>
 
         <Stack
-          py="2"
+          p="2"
           mx="2"
           _light={{ bg: "#FFBDFF", boxShadow: "base" }}
           _dark={{ borderRadius: "xl" }}

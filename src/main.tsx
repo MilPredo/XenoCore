@@ -24,6 +24,10 @@ const router = createBrowserRouter([
         element: <Inventory />,
       },
       {
+        path: "sales",
+        element: <Inventory />,
+      },
+      {
         path: "usermanagement",
         element: <UserManagement />,
       },

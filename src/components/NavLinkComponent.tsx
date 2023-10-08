@@ -33,7 +33,6 @@ function NavLinkComponent({
       <Flex
         align="center"
         p="4"
-        mx="2"
         role="group"
         cursor="pointer"
         _dark={{
@@ -71,7 +70,7 @@ function NavLinkComponent({
         {...rest}
       >
         {icon && <Icon mr="4" fontSize="xl" as={icon} />}
-        <Text fontFamily='Kasitau' fontSize="" fontWeight='bold' textTransform='uppercase'_dark={{fontFamily:'inherit', fontWeight:'medium'}}  userSelect={"none"}  >
+        <Text mr='2' fontFamily='Hand' fontSize="" fontWeight='bold' _dark={{fontFamily:'Rounded', fontWeight:'bold'}}  userSelect={"none"}  >
           {name}
         </Text>
       </Flex>
