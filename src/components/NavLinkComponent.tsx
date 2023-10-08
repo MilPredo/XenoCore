@@ -70,7 +70,7 @@ function NavLinkComponent({
         {...rest}
       >
         {icon && <Icon mr="4" fontSize="xl" as={icon} />}
-        <Text fontFamily='Hand' fontSize="" fontWeight='bold' _dark={{fontFamily:'Rounded', fontWeight:'bold'}}  userSelect={"none"}  >
+        <Text mr='2' fontFamily='Hand' fontSize="" fontWeight='bold' _dark={{fontFamily:'Rounded', fontWeight:'bold'}}  userSelect={"none"}  >
           {name}
         </Text>
       </Flex>

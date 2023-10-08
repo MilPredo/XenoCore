@@ -1,5 +1,13 @@
 import React, { ReactNode, useEffect, useRef, useState } from "react";
-import { Box, Flex, Heading, Stack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Container,
+  Flex,
+  HStack,
+  Heading,
+  Stack,
+} from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
 import SideNavBar from "./components/SideNavBar";
 import NavLinkComponent from "./components/NavLinkComponent";
@@ -43,9 +51,9 @@ export default function Dashboard() {
     }
   }, [screenWidth]);
   return (
-    <Flex maxH="100vh">
-      <SideNavBar />
-      <Box
+    <HStack gap='0'>
+      {/*< Flex maxH="100vh"> <SideNavBar /> */}
+      {/* <Box
         // _light={{ bg: "blue.200" }}
         flex={1}
         maxW="calc(100% - (240px))"
@@ -53,30 +61,41 @@ export default function Dashboard() {
         // _dark={{ bg: '#0F0F1F' }}
         overflowX="hidden"
       >
-        <Box>
-          <Flex ref={navbarRef} pos="fixed" flex="1">
-            <Flex
-              px={2}
-              _light={{ bg: "#FFBDFF", boxShadow: "base" }}
-              _dark={{ borderRadius: "xl" }}
-            >
-              <Flex>
-                <Stack direction="row" py="2">
-                  <ThemeSwitchButton />
-                  <NavLinkComponent
-                    name={"Log Out"}
-                    icon={FiLogOut}
-                    onClick={() => {
-                      logout();
-                    }}
-                  />
-                </Stack>
-              </Flex>
-            </Flex>
-          </Flex>
-        </Box>
         <Outlet />
-      </Box>
-    </Flex>
+      </Box> */}
+      {/* <Flex
+        flex={1}
+        maxH="100%"
+        flexDir="column"
+        _dark={{ bg: "#0F0F1F" }}
+        // pt={`${navBarHeight}px`}
+        overflow="unset"
+      >
+        <Outlet />
+      </Flex></Flex>*/}
+      {/* <Flex h="100vh" pos="sticky" top="0" bottom="0" bg="red">
+        
+      </Flex> */}
+      <SideNavBar />
+      <Flex
+        flex={1}
+        maxH="100%"
+        flexDir="column"
+        _dark={{ bg: "#0F0F1F" }}
+        // pt={`${navBarHeight}px`}
+        h="100vh"
+        w="100%"
+        overflow="hidden"
+      >
+        <Flex justify="flex-end" pos="sticky" top="0">
+          <Button>Press me</Button>
+          <Button>Press me</Button>
+          <Button>Press me</Button>
+          <Button>Press a</Button>
+          <Button>Press me</Button>
+        </Flex>
+        <Outlet />
+      </Flex>
+    </HStack>
   );
 }
