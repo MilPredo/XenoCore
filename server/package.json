@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/node": "^20.8.6",
     "fastify": "^4.24.1",
     "nodemon": "^3.0.1",
@@ -19,7 +20,12 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
+    "@fastify/jwt": "^7.2.2",
+    "@fastify/postgres": "^5.2.0",
+    "@types/fastify-jwt": "^0.8.1",
     "@types/pg": "^8.10.5",
+    "fastify-jwt": "^4.2.0",
+    "jsonwebtoken": "^9.0.2",
     "pg": "^8.11.3"
   }
 }
