@@ -3,6 +3,8 @@ import jwt from "@fastify/jwt";
 import userRoutes from "./routes/auth";
 import { Pool } from "pg";
 import fastifyPostgres from "@fastify/postgres";
+import fastifySession from '@fastify/session';
+import fastifyCookie from '@fastify/cookie';
 
 const app = Fastify({ logger: true });
 const port = 1338;
@@ -15,8 +17,18 @@ app.register(fastifyPostgres, {
   port: 1337,
 });
 // Register the fastify-jwt plugin with your secret key
-app.register(jwt, {
-  secret: "asdjkl", // Replace with your secret key
+// app.register(jwt, {
+//   secret: "asdjkl", // Replace with your secret key
+// });
+
+app.register(fastifyCookie);
+app.register(fastifySession, {
+  cookieName: 'sessionId',
+  secret: 'never gonna give you up, never gonna let you down, hee hee! se no! demo sou nan ja dame, se no! sawattara taiho!',
+  saveUninitialized: false, // Don't save uninitialized sessions
+  cookie: {
+    secure: false, // Set to true in a production environment with HTTPS
+  },
 });
 
 app.register(userRoutes, { prefix: "/user" });

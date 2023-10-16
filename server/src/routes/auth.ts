@@ -1,32 +1,38 @@
 import bcrypt from "bcrypt";
-import { FastifyInstance } from "fastify";
+import { FastifyError, FastifyInstance } from "fastify";
 import { Pool } from "pg";
 
 interface UserRequestBody {
   username: string;
   password: string;
+  first_name: string;
+  middle_name: string;
+  last_name: string;
 }
 
-export default async function userRoutes(
-  fastify: FastifyInstance,
-  opts: { db: Pool; secretKey: string }
-) {
-  const db = opts.db;
-  const secretKey = opts.secretKey;
+// Define the session object type
+interface UserSession {
+  loggedIn: boolean;
+  // Add other session properties if needed
+}
+
+export default async function userRoutes(fastify: FastifyInstance) {
   // User registration route
   fastify.post<{ Body: UserRequestBody }>(
     "/register",
     async (request, reply) => {
-      const { username, password } = request.body;
-
+      const { username, password, first_name, middle_name, last_name } =
+        request.body;
       try {
         const hashedPassword = await bcrypt.hash(password, 10); // Hash the password
-        await db.query("INSERT INTO users(username, password) VALUES($1, $2)", [
-          username,
-          hashedPassword,
-        ]);
+        await fastify.pg.query(
+          "INSERT INTO users(username, password, first_name, middle_name, last_name) VALUES($1, $2, $3, $4, $5)",
+          [username, hashedPassword, first_name, middle_name, last_name]
+        );
         reply.send({ message: "User registered successfully" });
       } catch (error) {
+        const fastifyError = error as FastifyError;
+        console.log(fastifyError.message);
         reply.status(500).send({ error: "Registration failed" });
       }
     }
@@ -37,7 +43,7 @@ export default async function userRoutes(
     const { username, password } = request.body;
 
     try {
-      const { rows } = await db.query(
+      const { rows } = await fastify.pg.query(
         "SELECT * FROM users WHERE username = $1",
         [username]
       );
@@ -47,11 +53,19 @@ export default async function userRoutes(
       ) {
         reply.status(401).send({ error: "Authentication failed" });
       } else {
-        const token = fastify.jwt.sign({ username }, { expiresIn: "1h" });
-        reply.send({ token });
+        // const token = fastify.jwt.sign({ username }, { expiresIn: "1h" });
+        // reply.send({ token });
+        request.session.user = {name: 'max'};
+        reply.send({ message: 'Login successful' });
       }
     } catch (error) {
+      const fastifyError = error as FastifyError;
+      fastifyError.code;
       reply.status(500).send({ error: "Authentication failed" });
     }
+  });
+  fastify.post('/logout', (request, reply) => {
+    request.session.destroy();
+    reply.send('logged out');
   });
 }
