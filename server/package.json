@@ -20,10 +20,14 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
+    "@fastify/cookie": "^9.1.0",
     "@fastify/jwt": "^7.2.2",
+    "@fastify/passport": "^2.4.0",
     "@fastify/postgres": "^5.2.0",
+    "@fastify/session": "^10.5.0",
     "@types/fastify-jwt": "^0.8.1",
     "@types/pg": "^8.10.5",
+    "bcrypt": "^5.1.1",
     "fastify-jwt": "^4.2.0",
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.11.3"
