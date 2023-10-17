@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import { FastifyError, FastifyInstance } from "fastify";
 import { Pool } from "pg";
+import checkAccess from "../middleware/userAccess";
 
 interface UserRequestBody {
   username: string;
@@ -20,6 +21,9 @@ export default async function userRoutes(fastify: FastifyInstance) {
   // User registration route
   fastify.post<{ Body: UserRequestBody }>(
     "/register",
+    {
+      preHandler: [checkAccess(fastify, "create")],
+    },
     async (request, reply) => {
       const { username, password, first_name, middle_name, last_name } =
         request.body;
@@ -55,8 +59,8 @@ export default async function userRoutes(fastify: FastifyInstance) {
       } else {
         // const token = fastify.jwt.sign({ username }, { expiresIn: "1h" });
         // reply.send({ token });
-        request.session.user = {name: 'max'};
-        reply.send({ message: 'Login successful' });
+        (request.session as any).user = { name: "max" };
+        reply.send({ message: "Login successful" });
       }
     } catch (error) {
       const fastifyError = error as FastifyError;
@@ -64,8 +68,8 @@ export default async function userRoutes(fastify: FastifyInstance) {
       reply.status(500).send({ error: "Authentication failed" });
     }
   });
-  fastify.post('/logout', (request, reply) => {
+  fastify.post("/logout", (request, reply) => {
     request.session.destroy();
-    reply.send('logged out');
+    reply.send("logged out");
   });
 }
