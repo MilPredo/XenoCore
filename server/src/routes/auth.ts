@@ -20,10 +20,10 @@ interface UserSession {
 export default async function userRoutes(fastify: FastifyInstance) {
   // User registration route
   fastify.post<{ Body: UserRequestBody }>(
-    "/register",
-    {
-      preHandler: [checkAccess(fastify, "create")],
-    },
+    "/register",    
+    // {
+    //   preHandler: [checkAccess(fastify, "create")],
+    // },
     async (request, reply) => {
       const { username, password, first_name, middle_name, last_name } =
         request.body;
@@ -31,7 +31,7 @@ export default async function userRoutes(fastify: FastifyInstance) {
         const hashedPassword = await bcrypt.hash(password, 10); // Hash the password
         await fastify.pg.query(
           "INSERT INTO users(username, password, first_name, middle_name, last_name) VALUES($1, $2, $3, $4, $5)",
-          [username, hashedPassword, first_name, middle_name, last_name]
+          [username, hashedPassword, first_name || null, middle_name || null, last_name || null]
         );
         reply.send({ message: "User registered successfully" });
       } catch (error) {
