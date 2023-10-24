@@ -3,8 +3,10 @@ import jwt from "@fastify/jwt";
 import userRoutes from "./routes/auth";
 import { Pool } from "pg";
 import fastifyPostgres from "@fastify/postgres";
-import fastifySession from '@fastify/session';
-import fastifyCookie from '@fastify/cookie';
+import fastifySession from "@fastify/session";
+import fastifyCookie from "@fastify/cookie";
+import fastifyFormbody from "@fastify/formbody";
+import checkAccess from "./middleware/userAccess";
 
 const app = Fastify({ logger: true });
 const port = 1338;
@@ -20,12 +22,13 @@ app.register(fastifyPostgres, {
 // app.register(jwt, {
 //   secret: "asdjkl", // Replace with your secret key
 // });
-
+app.register(fastifyFormbody);
 app.register(fastifyCookie);
 app.register(fastifySession, {
-  cookieName: 'sessionId',
-  secret: 'never gonna give you up, never gonna let you down, hee hee! se no! demo sou nan ja dame, se no! sawattara taiho!',
-  saveUninitialized: false, // Don't save uninitialized sessions
+  cookieName: "sessionId",
+  secret:
+    "never gonna give you up, never gonna let you down, hee hee! se no! demo sou nan ja dame, se no! sawattara taiho!",
+  //saveUninitialized: false, // Don't save uninitialized sessions
   cookie: {
     secure: false, // Set to true in a production environment with HTTPS
   },
@@ -36,6 +39,31 @@ app.register(userRoutes, { prefix: "/user" });
 // Declare a route
 app.get("/", async function handler(request, reply) {
   return { hello: "world" };
+});
+app.get(
+  "/inventory",
+  {
+    preHandler: checkAccess(app, "read", "user_management_access"),
+  },
+  async (request, reply) => {
+    reply.send({ msg: "HALLO!!!!" });
+  }
+);
+app.post("/test", async function handler(request, reply) {
+  const { secret_word } = request.body as any;
+  if (secret_word === "banana") {
+    console.log(request.session.sessionId);
+    (request.session as any).authenticated = true;
+    reply.status(200);
+    return { ...request.session };
+  }
+  reply.status(200);
+  return { ...request.session };
+});
+
+app.get("/checkauth", async function handler(request, reply) {
+  console.log(request.session.sessionId);
+  return { ...request.session };
 });
 
 // Run the server!
@@ -66,6 +94,5 @@ const start = async () => {
 //   reply.code(404).send({ error: 'Not found' });
 //   return `logged in!`
 // })
-
 
 start();

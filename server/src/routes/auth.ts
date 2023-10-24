@@ -20,10 +20,7 @@ interface UserSession {
 export default async function userRoutes(fastify: FastifyInstance) {
   // User registration route
   fastify.post<{ Body: UserRequestBody }>(
-    "/register",    
-    // {
-    //   preHandler: [checkAccess(fastify, "create")],
-    // },
+    "/register",
     async (request, reply) => {
       const { username, password, first_name, middle_name, last_name } =
         request.body;
@@ -31,36 +28,49 @@ export default async function userRoutes(fastify: FastifyInstance) {
         const hashedPassword = await bcrypt.hash(password, 10); // Hash the password
         await fastify.pg.query(
           "INSERT INTO users(username, password, first_name, middle_name, last_name) VALUES($1, $2, $3, $4, $5)",
-          [username, hashedPassword, first_name || null, middle_name || null, last_name || null]
+          [
+            username,
+            hashedPassword,
+            first_name || null,
+            middle_name || null,
+            last_name || null,
+          ]
         );
         reply.send({ message: "User registered successfully" });
       } catch (error) {
-        const fastifyError = error as FastifyError;
-        console.log(fastifyError.message);
-        reply.status(500).send({ error: "Registration failed" });
+        console.log((error as any).detail);
+        console.log(error);
+        reply
+          .status((error as any).code === "23505" ? 409 : 500)
+          .send({ message: (error as { detail: string }).detail });
       }
     }
   );
+
+
 
   // User login route for authentication
   fastify.post<{ Body: UserRequestBody }>("/login", async (request, reply) => {
     const { username, password } = request.body;
 
     try {
+      if ((request.session as any).user) {
+        reply.send({ message: "User already logged in" });
+        return;
+      }
       const { rows } = await fastify.pg.query(
         "SELECT * FROM users WHERE username = $1",
         [username]
       );
-      if (
-        rows.length === 0 ||
-        !(await bcrypt.compare(password, rows[0].password))
-      ) {
-        reply.status(401).send({ error: "Authentication failed" });
+      if (await bcrypt.compare(password, rows[0].password)) {
+        const { password, ...rest } = rows[0] as { [key: string]: any };
+        (request.session as any).user = { ...rest };
+        console.log(request.session);
+        reply.send({ message: "Login successful" });
       } else {
+        reply.status(401).send({ error: "Authentication failed" });
         // const token = fastify.jwt.sign({ username }, { expiresIn: "1h" });
         // reply.send({ token });
-        (request.session as any).user = { name: "max" };
-        reply.send({ message: "Login successful" });
       }
     } catch (error) {
       const fastifyError = error as FastifyError;
