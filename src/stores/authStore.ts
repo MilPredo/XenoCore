@@ -1,12 +1,11 @@
 import { create } from "zustand";
-import supabase from "../api/supabase";
 import { useNavigate } from "react-router";
 
 interface AuthState {
   isAuthenticated: boolean;
   user: any;
   error: any;
-  login: (email: string, password: string) => void;
+  login: (username: string, password: string) => void;
   logout: () => void;
 }
 
@@ -19,32 +18,64 @@ export const useAuthStore = create<AuthState>((set) => {
     isAuthenticated: !!initialUser,
     user: initialUser,
     error: null,
-    login: async (email: string, password: string) => {
+    login: async (username: string, password: string) => {
       try {
-        const { data, error } = await supabase.auth.signInWithPassword({
-          email: email,
+        // const { data, error } = await supabase.auth.signInWithPassword({
+        //   email: email,
+        //   password: password,
+        // });
+        let headersList = {
+          Accept: "*/*",
+          "Content-Type": "application/json",
+        };
+
+        let bodyContent = JSON.stringify({
+          username: username,
           password: password,
         });
 
-        if (error) {
+        let response = await fetch("http://127.0.0.1:1338/user/login", {
+          method: "POST",
+          body: bodyContent,
+          headers: headersList,
+        });
+
+        let data = await response.json();
+        console.log(data);
+
+        if (data.user) {
+          // Store the user session in local storage
+          localStorage.setItem("user", JSON.stringify(data.user));
+          // const {
+          //   data: { session },
+          // } = await supabase.auth.getSession();
+          // console.log(session);
+          console.log(data);
+          set({ user: data.user, error: null, isAuthenticated: true });
+        } else {
           console.log(
             "Error signing in:",
-            (error as { message: string }).message
+            data.error
+            // (error as { message: string }).message
           );
-          alert(JSON.stringify(error));
-          set({ user: null, error, isAuthenticated: false });
-        } else if (data.user) {
-          // Store the user session in local storage
-          localStorage.setItem("user", JSON.stringify(data));
-          const {
-            data: { session },
-          } = await supabase.auth.getSession();
-          console.log(session);
-          console.log(data)
-          set({ user: data, error: null, isAuthenticated: true });
-        } else {
-          set({ user: null, error, isAuthenticated: false });
+          alert(data.error);
+          set({ user: null, error: data.error, isAuthenticated: false });
         }
+
+        // if (!data.user) {
+
+        // } else if (data.user) {
+        //   // Store the user session in local storage
+        //   localStorage.setItem("user", JSON.stringify(data));
+        //   // const {
+        //   //   data: { session },
+        //   // } = await supabase.auth.getSession();
+        //   // console.log(session);
+        //   console.log(data);
+        //   set({ user: data, error: null, isAuthenticated: true });
+        // } else {
+        //   set({ user: null, error: data.error, isAuthenticated: false });
+        // }
       } catch (error) {
         console.log("Error:", error);
         set({ user: null, error, isAuthenticated: false });
@@ -53,13 +84,23 @@ export const useAuthStore = create<AuthState>((set) => {
     logout: async () => {
       // Clear the user session from local storage
       try {
-        const res = await supabase.auth.signOut();
-        console.log(res)
-        set({ isAuthenticated: false, user: null, error: null });
+        // const res = await supabase.auth.signOut();
+        let headersList = {
+          Accept: "*/*",
+        };
+
+        let response = await fetch("http://127.0.0.1:1338/user/logout", {
+          method: "POST",
+          headers: headersList,
+        });
+
+        let data = await response.json();
+        console.log(data);
+        localStorage.removeItem("user");
+        set({ user: null, error: null, isAuthenticated: false });
       } catch (error) {
         console.log("Error:", error);
       }
-      //localStorage.removeItem("user");
     },
   };
 });

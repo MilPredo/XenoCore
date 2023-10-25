@@ -16,11 +16,10 @@ import {
 } from "@chakra-ui/react";
 import { Form, useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
-import supabase from "../api/supabase";
 import { useAuthStore } from "../stores/authStore";
 
 interface LoginFormValues {
-  email: string;
+  username: string;
   password: string;
 }
 
@@ -42,18 +41,19 @@ function Login() {
 
   const formik = useFormik<LoginFormValues>({
     initialValues: {
-      email: "",
+      username: "",
       password: "",
     },
     validate: (values) => {
       const errors: Partial<LoginFormValues> = {};
-      if (!values.email) {
-        errors.email = "Email is required";
-      } else if (
-        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-      ) {
-        errors.email = "Invalid email address";
-      }
+      if (!values.username) {
+        errors.username = "Username is required";
+      } 
+      // else if (
+      //   !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+      // ) {
+      //   errors.email = "Invalid email address";
+      // }
 
       if (!values.password) {
         errors.password = "Password is required";
@@ -64,7 +64,7 @@ function Login() {
     onSubmit: (values) => {
       // Handle form submission
       //console.log("hello");
-      login(values.email, values.password);
+      login(values.username, values.password);
     },
   });
   return isAuthenticated?(<></>):(
@@ -80,19 +80,19 @@ function Login() {
             <Stack spacing={4}>
               <FormControl
                 isInvalid={
-                  (!!formik.errors.email && formik.touched.email) || !!loginFailed
+                  (!!formik.errors.username && formik.touched.username) || !!loginFailed
                 }
               >
-                <FormLabel>Email</FormLabel>
+                <FormLabel>Username</FormLabel>
                 <Input
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder="Enter email"
+                  type="text"
+                  id="username"
+                  name="username"
+                  placeholder="Enter username"
                   onChange={formik.handleChange}
-                  value={formik.values.email}
+                  value={formik.values.username}
                 />
-                <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
+                <FormErrorMessage>{formik.errors.username}</FormErrorMessage>
               </FormControl>
               <FormControl
                 isInvalid={
@@ -113,7 +113,7 @@ function Login() {
                   {formik.errors.password}
                 </FormErrorMessage>
                 <FormErrorMessage>
-                  {loginFailed ? "Invalid Email and/or Password" : null}
+                  {loginFailed ? "Invalid Username and/or Password" : null}
                 </FormErrorMessage>
               </FormControl>
             </Stack>

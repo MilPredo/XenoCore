@@ -3,21 +3,19 @@ import { useEffect } from "react";
 import { useAuthStore } from "../stores/authStore";
 
 interface UserInfo {
-  user: {
-    email: string;
-  };
+  username: string;
 }
 function CurrentUserNav() {
   const { user }: { user: UserInfo } = useAuthStore();
   useEffect(() => {
-    console.log(user.user.email);
+    console.log(user.username);
   }, [user]);
 
   return (
     <Center>
-      <Flex flexDir="column" align='center'>
-        <Avatar size="md" name={user.user.email} boxShadow={'base'} m={2} />
-        <Text>{user.user.email}</Text>
+      <Flex flexDir="column" align="center">
+        <Avatar size="md" name={user.username} boxShadow={"base"} m={2} />
+        <Text>{user.username}</Text>
       </Flex>
     </Center>
   );

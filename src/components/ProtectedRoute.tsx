@@ -6,6 +6,7 @@ function ProtectedRoute({ element }: { element: React.ReactNode }) {
   const { isAuthenticated } = useAuthStore();
   const navigate = useNavigate()
   useEffect(() => {
+    console.log("is authenticated ",isAuthenticated)
     if (!isAuthenticated){
       navigate('/login')
     }
