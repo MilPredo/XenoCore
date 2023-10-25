@@ -47,15 +47,16 @@ export default async function userRoutes(fastify: FastifyInstance) {
     }
   );
 
-
-
   // User login route for authentication
   fastify.post<{ Body: UserRequestBody }>("/login", async (request, reply) => {
     const { username, password } = request.body;
 
     try {
       if ((request.session as any).user) {
-        reply.send({ message: "User already logged in" });
+        reply.send({
+          user: (request.session as any).user,
+          message: "User already logged in",
+        });
         return;
       }
       const { rows } = await fastify.pg.query(
@@ -66,7 +67,7 @@ export default async function userRoutes(fastify: FastifyInstance) {
         const { password, ...rest } = rows[0] as { [key: string]: any };
         (request.session as any).user = { ...rest };
         console.log(request.session);
-        reply.send({ message: "Login successful" });
+        reply.send({ user: rest, message: "Login successful" });
       } else {
         reply.status(401).send({ error: "Authentication failed" });
         // const token = fastify.jwt.sign({ username }, { expiresIn: "1h" });
@@ -80,6 +81,6 @@ export default async function userRoutes(fastify: FastifyInstance) {
   });
   fastify.post("/logout", (request, reply) => {
     request.session.destroy();
-    reply.send("logged out");
+    reply.send({ message: "logged out" });
   });
 }

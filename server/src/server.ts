@@ -6,6 +6,7 @@ import fastifyPostgres from "@fastify/postgres";
 import fastifySession from "@fastify/session";
 import fastifyCookie from "@fastify/cookie";
 import fastifyFormbody from "@fastify/formbody";
+import fastifyCors from "@fastify/cors";
 import checkAccess from "./middleware/userAccess";
 
 const app = Fastify({ logger: true });
@@ -35,7 +36,11 @@ app.register(fastifySession, {
 });
 
 app.register(userRoutes, { prefix: "/user" });
-
+app.register(fastifyCors, {
+  // Set your desired CORS options here
+  origin: ['http://127.0.0.1:5173','http://localhost:5173'], // Replace with your front-end origin
+  methods: 'GET,POST,PUT,DELETE',
+});
 // Declare a route
 app.get("/", async function handler(request, reply) {
   return { hello: "world" };
