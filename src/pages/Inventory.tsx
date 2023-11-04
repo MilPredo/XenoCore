@@ -236,10 +236,139 @@ function Inventory() {
       initialQuantity: 30,
       reOrderLevel: 10,
     },
+    {
+      category: "Medicine",
+      productName: "Erythropoietin (EPO)",
+      cog: 200.0, // Cost in Philippine Peso
+      papers: true,
+      pricePerUnit: 450.0, // Price in Philippine Peso
+      initialQuantity: 30,
+      reOrderLevel: 10,
+    },
+    {
+      category: "Medicine",
+      productName: "Erythropoietin (EPO)",
+      cog: 200.0, // Cost in Philippine Peso
+      papers: true,
+      pricePerUnit: 450.0, // Price in Philippine Peso
+      initialQuantity: 30,
+      reOrderLevel: 10,
+    },
+    {
+      category: "Medicine",
+      productName: "Erythropoietin (EPO)",
+      cog: 200.0, // Cost in Philippine Peso
+      papers: true,
+      pricePerUnit: 450.0, // Price in Philippine Peso
+      initialQuantity: 30,
+      reOrderLevel: 10,
+    },
+    {
+      category: "Medicine",
+      productName: "Erythropoietin (EPO)",
+      cog: 200.0, // Cost in Philippine Peso
+      papers: true,
+      pricePerUnit: 450.0, // Price in Philippine Peso
+      initialQuantity: 30,
+      reOrderLevel: 10,
+    },
+    {
+      category: "Medicine",
+      productName: "Erythropoietin (EPO)",
+      cog: 200.0, // Cost in Philippine Peso
+      papers: true,
+      pricePerUnit: 450.0, // Price in Philippine Peso
+      initialQuantity: 30,
+      reOrderLevel: 10,
+    },
+    {
+      category: "Medicine",
+      productName: "Erythropoietin (EPO)",
+      cog: 200.0, // Cost in Philippine Peso
+      papers: true,
+      pricePerUnit: 450.0, // Price in Philippine Peso
+      initialQuantity: 30,
+      reOrderLevel: 10,
+    },
+    {
+      category: "Medicine",
+      productName: "Erythropoietin (EPO)",
+      cog: 200.0, // Cost in Philippine Peso
+      papers: true,
+      pricePerUnit: 450.0, // Price in Philippine Peso
+      initialQuantity: 30,
+      reOrderLevel: 10,
+    },
+    {
+      category: "Medicine",
+      productName: "Erythropoietin (EPO)",
+      cog: 200.0, // Cost in Philippine Peso
+      papers: true,
+      pricePerUnit: 450.0, // Price in Philippine Peso
+      initialQuantity: 30,
+      reOrderLevel: 10,
+    },
+    {
+      category: "Medicine",
+      productName: "Erythropoietin (EPO)",
+      cog: 200.0, // Cost in Philippine Peso
+      papers: true,
+      pricePerUnit: 450.0, // Price in Philippine Peso
+      initialQuantity: 30,
+      reOrderLevel: 10,
+    },
+    {
+      category: "Medicine",
+      productName: "Erythropoietin (EPO)",
+      cog: 200.0, // Cost in Philippine Peso
+      papers: true,
+      pricePerUnit: 450.0, // Price in Philippine Peso
+      initialQuantity: 30,
+      reOrderLevel: 10,
+    },
+    {
+      category: "Medicine",
+      productName: "Erythropoietin (EPO)",
+      cog: 200.0, // Cost in Philippine Peso
+      papers: true,
+      pricePerUnit: 450.0, // Price in Philippine Peso
+      initialQuantity: 30,
+      reOrderLevel: 10,
+    },
+    {
+      category: "Medicine",
+      productName: "Erythropoietin (EPO)",
+      cog: 200.0, // Cost in Philippine Peso
+      papers: true,
+      pricePerUnit: 450.0, // Price in Philippine Peso
+      initialQuantity: 30,
+      reOrderLevel: 10,
+    },
+    {
+      category: "Medicine",
+      productName: "Erythropoietin (EPO)",
+      cog: 200.0, // Cost in Philippine Peso
+      papers: true,
+      pricePerUnit: 450.0, // Price in Philippine Peso
+      initialQuantity: 30,
+      reOrderLevel: 10,
+    },
+    {
+      category: "Medicine",
+      productName: "Erythropoietin (EPO)",
+      cog: 200.0, // Cost in Philippine Peso
+      papers: true,
+      pricePerUnit: 450.0, // Price in Philippine Peso
+      initialQuantity: 30,
+      reOrderLevel: 10,
+    },
   ];
   const { navBarHeight } = useNavHeight();
   return (
     <>
+    {/* <Box bg='secondary.500'>
+      asd
+    </Box> */}
       <InputGroup my={{ base: 0, md: 10 }}>
         <InputLeftElement pointerEvents="none">
           <FiSearch />

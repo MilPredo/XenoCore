@@ -4,16 +4,14 @@ import Dashboard from "./Dashboard.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./pages/Login.tsx";
 import { Box, ChakraProvider, CSSReset, extendTheme } from "@chakra-ui/react";
-const theme = extendTheme({
-  config: {
-    initialColorMode: "dark",
-  },
-});
+
+
 
 import Inventory from "./pages/Inventory.tsx";
 import UserManagement from "./pages/UserManagement.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import theme from "./theme.ts";
 const router = createBrowserRouter([
   {
     path: "/dashboard",
@@ -23,14 +21,14 @@ const router = createBrowserRouter([
         path: "inventory",
         element: <Inventory />,
       },
-      {
-        path: "sales",
-        element: <Inventory />,
-      },
-      {
-        path: "usermanagement",
-        element: <UserManagement />,
-      },
+      // {
+      //   path: "sales",
+      //   element: <Inventory />,
+      // },
+      // {
+      //   path: "usermanagement",
+      //   element: <UserManagement />,
+      // },
       {
         path: "*",
         element: <NotFound />,
@@ -40,7 +38,11 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Login />,
-    errorElement: <Box w='100vw' h='100vh'><NotFound /></Box>,
+    errorElement: (
+      <Box w="100vw" h="100vh">
+        <NotFound />
+      </Box>
+    ),
   },
   {
     path: "/login",
@@ -52,6 +54,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
       <RouterProvider router={router} />
+      {/* <Dashboard/> */}
     </ChakraProvider>
   </React.StrictMode>
 );

@@ -74,7 +74,7 @@ export default function Dashboard() {
         <Outlet />
       </Flex></Flex>*/}
       {/* <Flex h="100vh" pos="sticky" top="0" bottom="0" bg="red">
-        
+
       </Flex> */}
       <SideNavBar />
       <Flex
@@ -87,15 +87,83 @@ export default function Dashboard() {
         w="100%"
         overflow="hidden"
       >
-        <Flex justify="flex-end" pos="sticky" top="0">
+        {/* <Flex justify="flex-end" pos="sticky" top="0">
           <Button>Press me</Button>
           <Button>Press me</Button>
           <Button>Press me</Button>
           <Button>Press a</Button>
           <Button>Press me</Button>
-        </Flex>
+        </Flex> */}
         <Outlet />
       </Flex>
     </HStack>
   );
 }
+
+// import {
+//   Box,
+//   Flex,
+//   HStack,
+//   Heading,
+//   Link,
+//   Spacer,
+//   StackDivider,
+//   StackItem,
+//   Text,
+//   VStack,
+// } from "@chakra-ui/react";
+// import React from "react";
+
+// function Dashboard() {
+//   return (
+//     <Flex w="100%" h="100vh" overflow='hidden'>
+//       <Box minW="240px" />
+//       <VStack minW="240px" pos="fixed">
+//         <StackItem>Project XenoCore</StackItem>
+//         <StackItem>
+//           <Link>asd</Link>
+//         </StackItem>
+//         <StackItem>
+//           <Link>dsa</Link>
+//         </StackItem>
+//         <StackDivider />
+//         <StackItem>
+//           <Link>qwe</Link>
+//         </StackItem>
+//       </VStack>
+//       <Flex flexDir="column" w="100%" maxH='100vh' overflow='auto'>
+//         <Flex bg="red" pos="sticky" top='0'>
+//           <Text>Navbar</Text>
+//           <Spacer />
+//           <Text>asd</Text>
+//         </Flex>
+//         <Box bg="orange">
+//           <Box my="8">asd</Box>
+//           <Box my="8">asd</Box>
+//           <Box my="8">asd</Box>
+//           <Box my="8">asd</Box>
+//           <Box my="8">asd</Box>
+//           <Box my="8">asd</Box>
+//           <Box my="8">asd</Box>
+//           <Box my="8">asd</Box>
+//           <Box my="8">asd</Box>
+//           <Box my="8">asd</Box>
+//           <Box my="8">asd</Box>
+//           <Box my="8">asd</Box>
+//           <Box my="8">asd</Box>
+//           <Box my="8">asd</Box>
+//           <Box my="8">asd</Box>
+//           <Box my="8">asd</Box>
+//           <Box my="8">asd</Box>
+//           <Box my="8">asd</Box>
+//           <Box my="8">asd</Box>
+//           <Box my="8">asd</Box>
+//           <Box my="8">asd</Box>
+//           <Box my="8">asd</Box>
+//         </Box>
+//       </Flex>
+//     </Flex>
+//   );
+// }
+
+// export default Dashboard;

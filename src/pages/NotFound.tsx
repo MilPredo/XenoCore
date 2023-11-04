@@ -23,7 +23,7 @@ function NotFound() {
     errorMessage = error;
   } else {
     console.error(error);
-    errorMessage = "Unknown error";
+    errorMessage = "Page is under construction 🚧";
   }
 
   return (

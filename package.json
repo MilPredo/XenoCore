@@ -28,6 +28,7 @@
     "zustand": "^4.4.1"
   },
   "devDependencies": {
+    "@chakra-ui/cli": "^2.4.1",
     "@types/react": "^18.2.22",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
