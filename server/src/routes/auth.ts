@@ -17,7 +17,7 @@ interface UserSession {
   // Add other session properties if needed
 }
 
-export default async function userRoutes(fastify: FastifyInstance) {
+export default async function authRoutes(fastify: FastifyInstance) {
   // User registration route
   fastify.post<{ Body: UserRequestBody }>(
     "/register",
@@ -66,7 +66,8 @@ export default async function userRoutes(fastify: FastifyInstance) {
       if (await bcrypt.compare(password, rows[0].password)) {
         const { password, ...rest } = rows[0] as { [key: string]: any };
         (request.session as any).user = { ...rest };
-        console.log(request.session);
+        console.log((request.session as any).user);
+        
         reply.send({ user: rest, message: "Login successful" });
       } else {
         reply.status(401).send({ error: "Authentication failed" });

@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { useNavigate } from "react-router";
-
+import Cookies from 'js-cookie';
 interface AuthState {
   isAuthenticated: boolean;
   user: any;
@@ -11,7 +11,7 @@ interface AuthState {
 
 export const useAuthStore = create<AuthState>((set) => {
   // Check if there is a user session in local storage
-  const storedUser = localStorage.getItem("user");
+  const storedUser = Cookies.get("user");
   const initialUser = storedUser ? JSON.parse(storedUser) : null;
 
   return {
@@ -45,11 +45,13 @@ export const useAuthStore = create<AuthState>((set) => {
 
         if (data.user) {
           // Store the user session in local storage
-          localStorage.setItem("user", JSON.stringify(data.user));
+          //localStorage.setItem("user", JSON.stringify(data.user));
+          Cookies.set("user", JSON.stringify(data.user));
           // const {
           //   data: { session },
           // } = await supabase.auth.getSession();
           // console.log(session);
+          console.log("data: ", localStorage.getItem("user"))
           console.log(data);
           set({ user: data.user, error: null, isAuthenticated: true });
         } else {
@@ -96,7 +98,8 @@ export const useAuthStore = create<AuthState>((set) => {
 
         let data = await response.json();
         console.log(data);
-        localStorage.removeItem("user");
+       0// localStorage.removeItem("user");
+        Cookies.remove("user")
         set({ user: null, error: null, isAuthenticated: false });
       } catch (error) {
         console.log("Error:", error);

@@ -366,7 +366,10 @@ function Inventory() {
   ];
   const { navBarHeight } = useNavHeight();
   useEffect(() => {
-    getInventory(1);
+    (async () =>{
+      let a = await getInventory(1);
+      console.log(a)
+    })()
   }, []);
 
   return (

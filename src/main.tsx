@@ -8,10 +8,10 @@ import { Box, ChakraProvider, CSSReset, extendTheme } from "@chakra-ui/react";
 
 
 import Inventory from "./pages/Inventory.tsx";
-import UserManagement from "./pages/UserManagement.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import theme from "./theme.ts";
+import Users from "./pages/Users.tsx";
 const router = createBrowserRouter([
   {
     path: "/dashboard",
@@ -25,10 +25,10 @@ const router = createBrowserRouter([
       //   path: "sales",
       //   element: <Inventory />,
       // },
-      // {
-      //   path: "usermanagement",
-      //   element: <UserManagement />,
-      // },
+      {
+        path: "users",
+        element: <Users />,
+      },
       {
         path: "*",
         element: <NotFound />,

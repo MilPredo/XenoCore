@@ -17,6 +17,7 @@ const getInventory = async (page: number) => {
         "Content-Type": "application/json",
         // You can add any other headers if necessary
       },
+      credentials: 'include'
     });
     console.log(await response.json());
   } catch (error) {

@@ -1,6 +1,5 @@
 import Fastify from "fastify";
 import jwt from "@fastify/jwt";
-import userRoutes from "./routes/auth";
 import { Pool } from "pg";
 import fastifyPostgres from "@fastify/postgres";
 import fastifySession from "@fastify/session";
@@ -9,6 +8,8 @@ import fastifyFormbody from "@fastify/formbody";
 import fastifyCors from "@fastify/cors";
 import checkAccess from "./middleware/userAccess";
 import inventoryRoutes from "./routes/inventory";
+import authRoutes from "./routes/auth";
+import userRoutes from "./routes/user";
 
 const app = Fastify({ logger: true });
 const port = 1338;
@@ -36,12 +37,23 @@ app.register(fastifySession, {
   },
 });
 
-app.register(userRoutes, { prefix: "/user" });
+app.register(authRoutes, { prefix: "/user" });
 app.register(inventoryRoutes);
+app.register(userRoutes);
 app.register(fastifyCors, {
   // Set your desired CORS options here
   origin: ["http://127.0.0.1:5173", "http://localhost:5173"], // Replace with your front-end origin
   methods: "GET,POST,PUT,DELETE",
+  credentials: true,
+});
+app.get('/profile', (request, reply) => {
+  const user = (request.session as any).user; // Retrieve the user from the session
+
+  if (user) {
+    reply.send(`Welcome, ${user.username}`);
+  } else {
+    reply.send('User not logged in');
+  }
 });
 // Declare a route
 // app.get("/", async function handler(request, reply) {
@@ -68,10 +80,10 @@ app.register(fastifyCors, {
 //   return { ...request.session };
 // });
 
-// app.get("/checkauth", async function handler(request, reply) {
-//   console.log(request.session.sessionId);
-//   return { ...request.session };
-// });
+app.get("/checkauth", async function handler(request, reply) {
+  console.log(request.session.sessionId);
+  return { ...request.session };
+});
 
 // Run the server!
 const start = async () => {
