@@ -29,8 +29,9 @@ import {
   FiSearch,
 } from "react-icons/fi";
 import { IconType } from "react-icons";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavHeight } from "../stores/navHeight";
+import getInventory from "../api/inventory";
 
 function calculateStockStatus(
   qtyInStock: number,
@@ -364,6 +365,10 @@ function Inventory() {
     },
   ];
   const { navBarHeight } = useNavHeight();
+  useEffect(() => {
+    getInventory(1);
+  }, []);
+
   return (
     <>
     {/* <Box bg='secondary.500'>
@@ -389,7 +394,7 @@ function Inventory() {
         _dark={{ bg: "rgb(31,31,63)", borderRadius: "xl" }}
         bg="white"
         overflow="auto"
-        m='8'
+        m="8"
       >
         <Table overflowX="unset" overflowY="unset" size="sm">
           <Thead

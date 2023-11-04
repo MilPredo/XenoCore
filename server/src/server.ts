@@ -8,6 +8,7 @@ import fastifyCookie from "@fastify/cookie";
 import fastifyFormbody from "@fastify/formbody";
 import fastifyCors from "@fastify/cors";
 import checkAccess from "./middleware/userAccess";
+import inventoryRoutes from "./routes/inventory";
 
 const app = Fastify({ logger: true });
 const port = 1338;
@@ -17,7 +18,7 @@ app.register(fastifyPostgres, {
   host: "localhost",
   database: "postgres",
   password: "password",
-  port: 5432, //5432 1337
+  port: 1337, //5432 1337
 });
 // Register the fastify-jwt plugin with your secret key
 // app.register(jwt, {
@@ -36,40 +37,41 @@ app.register(fastifySession, {
 });
 
 app.register(userRoutes, { prefix: "/user" });
+app.register(inventoryRoutes);
 app.register(fastifyCors, {
   // Set your desired CORS options here
-  origin: ['http://127.0.0.1:5173','http://localhost:5173'], // Replace with your front-end origin
-  methods: 'GET,POST,PUT,DELETE',
+  origin: ["http://127.0.0.1:5173", "http://localhost:5173"], // Replace with your front-end origin
+  methods: "GET,POST,PUT,DELETE",
 });
 // Declare a route
-app.get("/", async function handler(request, reply) {
-  return { hello: "world" };
-});
-app.get(
-  "/inventory",
-  {
-    preHandler: checkAccess(app, "read", "user_management_access"),
-  },
-  async (request, reply) => {
-    reply.send({ msg: "HALLO!!!!" });
-  }
-);
-app.post("/test", async function handler(request, reply) {
-  const { secret_word } = request.body as any;
-  if (secret_word === "banana") {
-    console.log(request.session.sessionId);
-    (request.session as any).authenticated = true;
-    reply.status(200);
-    return { ...request.session };
-  }
-  reply.status(200);
-  return { ...request.session };
-});
+// app.get("/", async function handler(request, reply) {
+//   return { hello: "world" };
+// });
+// app.get(
+//   "/inventory",
+//   {
+//     preHandler: checkAccess(app, "read", "user_management_access"),
+//   },
+//   async (request, reply) => {
+//     reply.send({ msg: "HALLO!!!!" });
+//   }
+// );
+// app.post("/test", async function handler(request, reply) {
+//   const { secret_word } = request.body as any;
+//   if (secret_word === "banana") {
+//     console.log(request.session.sessionId);
+//     (request.session as any).authenticated = true;
+//     reply.status(200);
+//     return { ...request.session };
+//   }
+//   reply.status(200);
+//   return { ...request.session };
+// });
 
-app.get("/checkauth", async function handler(request, reply) {
-  console.log(request.session.sessionId);
-  return { ...request.session };
-});
+// app.get("/checkauth", async function handler(request, reply) {
+//   console.log(request.session.sessionId);
+//   return { ...request.session };
+// });
 
 // Run the server!
 const start = async () => {
