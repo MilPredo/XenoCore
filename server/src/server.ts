@@ -1,5 +1,4 @@
 import Fastify from "fastify";
-import jwt from "@fastify/jwt";
 import { Pool } from "pg";
 import fastifyPostgres from "@fastify/postgres";
 import fastifySession from "@fastify/session";
@@ -28,12 +27,12 @@ app.register(fastifyPostgres, {
 app.register(fastifyFormbody);
 app.register(fastifyCookie);
 app.register(fastifySession, {
-  cookieName: "sessionId",
   secret:
     "never gonna give you up, never gonna let you down, hee hee! se no! demo sou nan ja dame, se no! sawattara taiho!",
-  //saveUninitialized: false, // Don't save uninitialized sessions
+  saveUninitialized: false, // Don't save uninitialized sessions
   cookie: {
     secure: false, // Set to true in a production environment with HTTPS
+    // sameSite: "none"
   },
 });
 

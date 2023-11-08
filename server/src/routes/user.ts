@@ -28,7 +28,8 @@ export default async function userRoutes(fastify: FastifyInstance) {
       console.log(request.query);
       // const limit = (request.query as any).limit || 100;
       let { page } = request.query as any; // Query parameters for pagination
-      page = page || 0
+      page = page - 1 || 0
+      console.log(page)
       const offset = page * 10;
       try {
         const result = await fastify.pg.query(

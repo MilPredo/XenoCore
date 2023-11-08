@@ -50,7 +50,6 @@ export default async function authRoutes(fastify: FastifyInstance) {
   // User login route for authentication
   fastify.post<{ Body: UserRequestBody }>("/login", async (request, reply) => {
     const { username, password } = request.body;
-
     try {
       if ((request.session as any).user) {
         reply.send({
@@ -67,7 +66,10 @@ export default async function authRoutes(fastify: FastifyInstance) {
         const { password, ...rest } = rows[0] as { [key: string]: any };
         (request.session as any).user = { ...rest };
         console.log((request.session as any).user);
-        
+        // reply.setCookie('sessionID', 'yourSessionID', {
+        //   httpOnly: true, // Makes the cookie accessible only via HTTP
+        //   secure: true,   // Ensures the cookie is sent over HTTPS (in production)
+        // });
         reply.send({ user: rest, message: "Login successful" });
       } else {
         reply.status(401).send({ error: "Authentication failed" });

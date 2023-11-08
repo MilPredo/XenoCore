@@ -11,7 +11,7 @@ interface AuthState {
 
 export const useAuthStore = create<AuthState>((set) => {
   // Check if there is a user session in local storage
-  const storedUser = Cookies.get("user");
+  const storedUser = Cookies.get("session");
   const initialUser = storedUser ? JSON.parse(storedUser) : null;
 
   return {
@@ -38,20 +38,22 @@ export const useAuthStore = create<AuthState>((set) => {
           method: "POST",
           body: bodyContent,
           headers: headersList,
+          credentials: 'include'
         });
 
         let data = await response.json();
         console.log(data);
+        console.log("cookie: ", response.headers.getSetCookie());
 
         if (data.user) {
           // Store the user session in local storage
           //localStorage.setItem("user", JSON.stringify(data.user));
-          Cookies.set("user", JSON.stringify(data.user));
+          Cookies.set("session", JSON.stringify(data.user));
           // const {
           //   data: { session },
           // } = await supabase.auth.getSession();
           // console.log(session);
-          console.log("data: ", localStorage.getItem("user"))
+          console.log("data: ", Cookies.get('session'))
           console.log(data);
           set({ user: data.user, error: null, isAuthenticated: true });
         } else {
