@@ -19,6 +19,7 @@ const getUsers = async (page: number) => {
     return data;
   } catch (error) {
     console.error("Fetch error:", error);
+    return [];
   }
 };
 

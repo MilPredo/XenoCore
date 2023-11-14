@@ -115,17 +115,14 @@ import {
 import React from "react";
 import SideBar from "./components/SideBar";
 import { Outlet } from "react-router";
+import TopNav from "./components/TopNav";
 
 function Dashboard() {
   return (
-    <Flex w="100%" h="100vh" overflow="hidden">
-      <SideBar/>
-      <Flex flexDir="column" w="100%" maxH="100vh" overflow="auto">
-        <Flex bg="red" pos="sticky" top="0">
-          <Text>Navbar</Text>
-          <Spacer />
-          <Text>asd</Text>
-        </Flex>
+    <Flex w="100%" h="100vh">
+      <SideBar />
+      <Flex bg='dominant.900' _light={{bg:"white"}} flexDir="column" w="100%" maxH="100vh" overflow="auto">
+        <TopNav />
         <Outlet />
       </Flex>
     </Flex>

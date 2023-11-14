@@ -12,6 +12,7 @@ import ProtectedRoute from "./components/ProtectedRoute.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import theme from "./theme.ts";
 import Users from "./pages/Users.tsx";
+import Sales from "./pages/Sales.tsx";
 const router = createBrowserRouter([
   {
     path: "/dashboard",
@@ -21,10 +22,10 @@ const router = createBrowserRouter([
         path: "inventory",
         element: <Inventory />,
       },
-      // {
-      //   path: "sales",
-      //   element: <Inventory />,
-      // },
+      {
+        path: "sales",
+        element: <Sales />,
+      },
       {
         path: "users",
         element: <Users />,

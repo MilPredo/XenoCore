@@ -373,7 +373,7 @@ function Inventory() {
   }, []);
 
   return (
-    <>
+    <Flex flexDir='column' overflow='hidden'>
     {/* <Box bg='secondary.500'>
       asd
     </Box> */}
@@ -500,7 +500,7 @@ function Inventory() {
           </Tbody>
         </Table>
       </Box>
-    </>
+    </Flex>
   );
 }
 

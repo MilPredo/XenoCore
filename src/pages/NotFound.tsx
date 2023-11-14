@@ -31,6 +31,60 @@ function NotFound() {
       <Flex flexDir="column" align={"center"}>
         <Heading size={"3xl"} m={26}>
           Oops!
+        </Heading><Heading size={"3xl"} m={26}>
+          Oops!
+        </Heading><Heading size={"3xl"} m={26}>
+          Oops!
+        </Heading><Heading size={"3xl"} m={26}>
+          Oops!
+        </Heading><Heading size={"3xl"} m={26}>
+          Oops!
+        </Heading><Heading size={"3xl"} m={26}>
+          Oops!
+        </Heading><Heading size={"3xl"} m={26}>
+          Oops!
+        </Heading><Heading size={"3xl"} m={26}>
+          Oops!
+        </Heading><Heading size={"3xl"} m={26}>
+          Oops!
+        </Heading><Heading size={"3xl"} m={26}>
+          Oops!
+        </Heading><Heading size={"3xl"} m={26}>
+          Oops!
+        </Heading><Heading size={"3xl"} m={26}>
+          Oops!
+        </Heading><Heading size={"3xl"} m={26}>
+          Oops!
+        </Heading><Heading size={"3xl"} m={26}>
+          Oops!
+        </Heading><Heading size={"3xl"} m={26}>
+          Oops!
+        </Heading><Heading size={"3xl"} m={26}>
+          Oops!
+        </Heading><Heading size={"3xl"} m={26}>
+          Oops!
+        </Heading><Heading size={"3xl"} m={26}>
+          Oops!
+        </Heading><Heading size={"3xl"} m={26}>
+          Oops!
+        </Heading><Heading size={"3xl"} m={26}>
+          Oops!
+        </Heading><Heading size={"3xl"} m={26}>
+          Oops!
+        </Heading><Heading size={"3xl"} m={26}>
+          Oops!
+        </Heading><Heading size={"3xl"} m={26}>
+          Oops!
+        </Heading><Heading size={"3xl"} m={26}>
+          Oops!
+        </Heading><Heading size={"3xl"} m={26}>
+          Oops!
+        </Heading><Heading size={"3xl"} m={26}>
+          Oops!
+        </Heading><Heading size={"3xl"} m={26}>
+          Oops!
+        </Heading><Heading size={"3xl"} m={26}>
+          Oops!
         </Heading>
         <Text fontSize={"xl"} fontWeight={"bold"}>
           Sorry, an unexpected error has occurred.
