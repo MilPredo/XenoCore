@@ -17,7 +17,7 @@ function TopNav() {
   const { logout } = useAuthStore();
   const { colorMode, toggleColorMode } = useColorMode();
   return (
-    <Flex bg="accentA.500" _light={{bg:"accentB.600"}} pos="sticky" top="0" p="2">
+    <Flex boxShadow='md' zIndex={2} m='2' borderRadius='xl' bg="accentA.500" _light={{bg:"accentB.600"}} pos="sticky" top="2" p="2">
       <Text>Navbar</Text>
       <Spacer />
       <Button

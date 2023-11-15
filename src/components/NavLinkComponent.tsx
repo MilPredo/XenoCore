@@ -78,8 +78,9 @@ function NavLinkComponent({
         <Flex
           transition="transform 0.2s"
           transform={hover ? "translateX(4px)" : ""}
+          align='center'
         >
-          {icon && <Icon mr="2" fontSize="xl" as={icon} />}
+          {icon && <Icon mr="2" fontSize="lg" as={icon} />}
           <Text
             mr="2"
             fontFamily="Hand"

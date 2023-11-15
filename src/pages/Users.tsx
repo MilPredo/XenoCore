@@ -31,7 +31,7 @@ function Users() {
   }, []);
 
   return (
-    <Flex flex={1} flexDir="column" overflow="hidden">
+    <Flex flex={1} flexDir="column" >
       {/* <Box>
         <Heading size="md">Users</Heading>
       </Box> */}

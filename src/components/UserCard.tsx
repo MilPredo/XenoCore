@@ -8,6 +8,7 @@ import {
   CardHeader,
   Flex,
   Heading,
+  Spacer,
   Text,
 } from "@chakra-ui/react";
 import React from "react";
@@ -29,7 +30,7 @@ function UserCard({
   last_name,
 }: UserCardProps) {
   return (
-    <Card flexGrow={1} bg="secondary.800" _light={{ bg: "secondary.50" }}>
+    <Card justify="center" flexGrow={1} bg="secondary.800" _light={{ bg: "secondary.50" }}>
       <CardHeader>
         <Flex align="center">
           <Avatar
@@ -44,9 +45,11 @@ function UserCard({
             >{`${first_name} ${last_name}`}</Heading>
             <Text isTruncated>@{username}</Text>
           </Flex>
+          <Spacer/>
+          <Button flex="none" variant='predo'>View Profile</Button>
         </Flex>
       </CardHeader>
-      <CardBody>
+      {/* <CardBody>
         <Text isTruncated fontWeight="bold">
           User Details
         </Text>
@@ -57,7 +60,7 @@ function UserCard({
       </CardBody>
       <CardFooter>
         <Button colorScheme="accentA.500">View Profile</Button>
-      </CardFooter>
+      </CardFooter> */}
     </Card>
   );
 }

@@ -27,77 +27,25 @@ function NotFound() {
   }
 
   return (
-    <Center w="100%" h="100%">
-      <Flex flexDir="column" align={"center"}>
-        <Heading size={"3xl"} m={26}>
-          Oops!
-        </Heading><Heading size={"3xl"} m={26}>
-          Oops!
-        </Heading><Heading size={"3xl"} m={26}>
-          Oops!
-        </Heading><Heading size={"3xl"} m={26}>
-          Oops!
-        </Heading><Heading size={"3xl"} m={26}>
-          Oops!
-        </Heading><Heading size={"3xl"} m={26}>
-          Oops!
-        </Heading><Heading size={"3xl"} m={26}>
-          Oops!
-        </Heading><Heading size={"3xl"} m={26}>
-          Oops!
-        </Heading><Heading size={"3xl"} m={26}>
-          Oops!
-        </Heading><Heading size={"3xl"} m={26}>
-          Oops!
-        </Heading><Heading size={"3xl"} m={26}>
-          Oops!
-        </Heading><Heading size={"3xl"} m={26}>
-          Oops!
-        </Heading><Heading size={"3xl"} m={26}>
-          Oops!
-        </Heading><Heading size={"3xl"} m={26}>
-          Oops!
-        </Heading><Heading size={"3xl"} m={26}>
-          Oops!
-        </Heading><Heading size={"3xl"} m={26}>
-          Oops!
-        </Heading><Heading size={"3xl"} m={26}>
-          Oops!
-        </Heading><Heading size={"3xl"} m={26}>
-          Oops!
-        </Heading><Heading size={"3xl"} m={26}>
-          Oops!
-        </Heading><Heading size={"3xl"} m={26}>
-          Oops!
-        </Heading><Heading size={"3xl"} m={26}>
-          Oops!
-        </Heading><Heading size={"3xl"} m={26}>
-          Oops!
-        </Heading><Heading size={"3xl"} m={26}>
-          Oops!
-        </Heading><Heading size={"3xl"} m={26}>
-          Oops!
-        </Heading><Heading size={"3xl"} m={26}>
-          Oops!
-        </Heading><Heading size={"3xl"} m={26}>
-          Oops!
-        </Heading><Heading size={"3xl"} m={26}>
-          Oops!
-        </Heading><Heading size={"3xl"} m={26}>
-          Oops!
-        </Heading>
-        <Text fontSize={"xl"} fontWeight={"bold"}>
-          Sorry, an unexpected error has occurred.
-        </Text>
-        <Text fontStyle={"italic"}>{errorMessage}</Text>
-        <Flex my="2em" flexDir={"column"} align={"center"}>
-          <Text>Return to </Text>
-          <Link to="/">
-            <Button>Dashboard</Button>
-          </Link>
+    <Flex flex={1}>
+      <Center w="100%" h="100%">
+        <Flex flexDir="column" align={"center"}>
+          <Heading size={"3xl"} m={26}>
+            Oops!
+          </Heading>
+          <Text fontSize={"xl"} fontWeight={"bold"}>
+            Sorry, an unexpected error has occurred.
+          </Text>
+          <Text fontStyle={"italic"}>{errorMessage}</Text>
+          <Flex my="2em" flexDir={"column"} align={"center"}>
+            <Text>Return to </Text>
+            <Link to="/">
+              <Button>Dashboard</Button>
+            </Link>
+          </Flex>
         </Flex>
-      </Flex>
-    </Center>
+      </Center>
+    </Flex>
   );
 }
 
