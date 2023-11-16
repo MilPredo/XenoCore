@@ -62,7 +62,7 @@ function NavLinkComponent({
           _hover: {
             boxShadow: "inset 0px 0px 0px 2px rgba(0, 0, 0, 1)",
           },
-          bg: isActive ? "accentB.200" : "transparent",
+          bg: isActive ? "accentB.500" : "transparent",
           boxShadow: isActive ? "inset 0px 0px 0px 2px rgba(0, 0, 0, 1)" : "",
           // boxShadow: isActive ? "md" : "base",
           borderRadius: "lg",

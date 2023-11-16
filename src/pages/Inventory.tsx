@@ -32,6 +32,7 @@ import { IconType } from "react-icons";
 import { useState, useEffect } from "react";
 import { useNavHeight } from "../stores/navHeight";
 import getInventory from "../api/inventory";
+import DynamicTable from "../components/DynamicTable";
 
 function calculateStockStatus(
   qtyInStock: number,
@@ -366,40 +367,122 @@ function Inventory() {
   ];
   const { navBarHeight } = useNavHeight();
   useEffect(() => {
-    (async () =>{
+    (async () => {
       let a = await getInventory(1);
-      console.log(a)
-    })()
+      console.log(a);
+    })();
   }, []);
 
   return (
-    <Flex flexDir='column' overflow='hidden'>
-    {/* <Box bg='secondary.500'>
+    <Flex flexDir="column" overflow="hidden">
+      {/* <Box bg='secondary.500'>
       asd
     </Box> */}
-      <InputGroup my={{ base: 0, md: 10 }}>
-        <InputLeftElement pointerEvents="none">
-          <FiSearch />
-        </InputLeftElement>
-        <Input type="text" placeholder="Search Item" />
-        <Button
-          // isLoading
-          loadingText="Loading"
-          colorScheme="teal"
-          variant="outline"
-          spinnerPlacement="start"
+               <Flex
+          p={2}
+          bg="secondary.50"
+          _dark={{ bg: "secondary.700" }}
+          borderRadius="xl"
+          m="4"
+          gap={2}
         >
-          Filter
-        </Button>
-      </InputGroup>
+          <Flex gap={2} flex={1}>
+            <Input
+              variant="filled"
+              _light={{
+                bg: "white",
+              }}
+              _dark={{
+                _hover: { _placeholder: { color: "white", opacity: 0.5 } },
+                _focus: { _placeholder: { color: "white", opacity: 0.5 } },
+              }}
+              placeholder="Search"
+            />
+
+          </Flex>
+          <Button leftIcon={<FiSearch/>} variant="solid" colorScheme="cyan">Search</Button>
+        </Flex>
       <Box
-        _light={{ boxShadow: "base" }}
-        _dark={{ bg: "rgb(31,31,63)", borderRadius: "xl" }}
+        _light={{}}
+        _dark={{ bg: "transparent" }}
+        borderRadius="xl"
+        boxShadow="base"
         bg="white"
         overflow="auto"
         m="8"
       >
-        <Table overflowX="unset" overflowY="unset" size="sm">
+        <DynamicTable
+          columns={[
+            { content: "Category" },
+            { content: "Product" },
+            { content: "COG", attributes: { isNumeric: true } },
+            { content: "Papers" },
+            { content: "Price per Unit", attributes: { isNumeric: true } },
+            { content: "Initial Quantity" },
+            { content: "Re-Order Level" },
+            { content: "Current In Stock Quantity" },
+            { content: "Status" },
+            {
+              content: "Total Inventory Cost",
+              attributes: { isNumeric: true },
+            },
+            {
+              content: "Total Inventory Value",
+              attributes: { isNumeric: true },
+            },
+          ]}
+          rows={dummyInventory.map((value) => [
+            { content: <Tag>{value.category}</Tag> },
+            { content: value.productName },
+            { content: value.cog },
+            { content: value.papers ? "✔️" : "❌" },
+            {
+              content: new Intl.NumberFormat("en-PH", {
+                style: "currency",
+                currency: "PHP",
+              }).format(value.pricePerUnit),
+              attributes: { isNumeric: true },
+            },
+            { content: value.initialQuantity },
+            { content: value.reOrderLevel },
+            { content: value.initialQuantity },
+            {
+              content: (
+                <Badge
+                  variant="solid"
+                  colorScheme={
+                    value.initialQuantity >= value.reOrderLevel
+                      ? "green"
+                      : value.initialQuantity <= 0
+                      ? "red"
+                      : "orange"
+                  }
+                >
+                  {value.initialQuantity >= value.reOrderLevel
+                    ? "In Stock"
+                    : value.initialQuantity <= 0
+                    ? "No Stock"
+                    : "Low Stock"}
+                </Badge>
+              ),
+            },
+            {
+              content: new Intl.NumberFormat("en-PH", {
+                style: "currency",
+                currency: "PHP",
+              }).format(value.cog * value.initialQuantity),
+              attributes: { isNumeric: true },
+            },
+            {
+              content: new Intl.NumberFormat("en-PH", {
+                style: "currency",
+                currency: "PHP",
+              }).format(value.pricePerUnit * value.initialQuantity),
+              attributes: { isNumeric: true },
+            },
+          ])}
+        />
+        {/* <Table overflowX="unset" overflowY="unset" size="sm">
           <Thead
             _light={{ boxShadow: "base" }}
             _dark={{ bg: "rgb(31,31,63)", borderRadius: "xl" }}
@@ -498,7 +581,7 @@ function Inventory() {
               </Tr>
             ))}
           </Tbody>
-        </Table>
+        </Table> */}
       </Box>
     </Flex>
   );

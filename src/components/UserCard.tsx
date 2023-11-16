@@ -12,12 +12,15 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React from "react";
+import { Link } from "react-router-dom";
 
 interface UserCardProps {
   username: string;
   first_name: string;
   middle_name: string;
   last_name: string;
+  occupation: string;
+  userid: string;
 }
 //dominant.900
 //secondary.800
@@ -28,25 +31,78 @@ function UserCard({
   first_name,
   middle_name,
   last_name,
+  occupation,
+  userid,
 }: UserCardProps) {
   return (
-    <Card justify="center" flexGrow={1} bg="secondary.800" _light={{ bg: "secondary.50" }}>
+    <Card
+      justify="center"
+      flexGrow={1}
+      bg="secondary.700"
+      _light={{ bg: "secondary.50" }}
+    >
       <CardHeader>
         <Flex align="center">
-          <Avatar
+          {/* <Avatar
             mr="5"
+            bg='accentA.500'
             size="lg"
             name={`${first_name} ${middle_name} ${last_name}`}
-          />
-          <Flex flexDir="column" overflow="hidden">
-            <Heading
-              size="md"
-              textTransform="capitalize"
-            >{`${first_name} ${last_name}`}</Heading>
-            <Text isTruncated>@{username}</Text>
+          /> */}
+          <Flex gap={1} flexDir="column" overflow="hidden">
+            <Flex flexDir="row">
+              <Heading
+                size="md"
+                borderWidth="2px"
+                borderColor="blackAlpha.200"
+                _dark={{
+                  borderColor: "accentA.300",
+                }}
+                p="2"
+                borderRadius="lg"
+                textTransform="capitalize"
+              >{`${first_name} ${middle_name} ${last_name}`}</Heading>
+            </Flex>
+
+            <Flex gap={2}>
+              <Flex flexDir="row" align="center">
+                <Text
+                  isTruncated
+                  borderWidth="2px"
+                  borderColor="blackAlpha.200"
+                  _dark={{
+                    borderColor: "accentA.500",
+                  }}
+                  p="2"
+                  py="0"
+                  borderRadius="lg"
+                >
+                  @{username}
+                </Text>
+              </Flex>
+              <Flex flexDir="row" align="center">
+                <Text
+                  isTruncated
+                  // borderWidth="2px"
+                  bg="blackAlpha.200"
+                  _dark={{
+                    bg: "accentA.500",
+                  }}
+                  p="2"
+                  py="0"
+                  borderRadius="lg"
+                >
+                  {occupation}
+                </Text>
+              </Flex>
+            </Flex>
           </Flex>
-          <Spacer/>
-          <Button flex="none" variant='predo'>View Profile</Button>
+          <Spacer minW={2} />
+          <Link to={`${userid}`}>
+            <Button flex="none" variant="predo">
+              View Profile
+            </Button>
+          </Link>
         </Flex>
       </CardHeader>
       {/* <CardBody>

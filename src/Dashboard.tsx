@@ -119,7 +119,7 @@ import TopNav from "./components/TopNav";
 
 function Dashboard() {
   return (
-    <Flex bg='dominant.900' _light={{bg:"white"}} w="100%" h="100vh">
+    <Flex bg='dominant.800' _light={{bg:"white"}} w="100%" h="100vh">
       <SideBar />
       <Flex flexDir="column" w="100%" maxH="100vh" overflow="auto">
         <TopNav />

@@ -13,6 +13,7 @@ import NotFound from "./pages/NotFound.tsx";
 import theme from "./theme.ts";
 import Users from "./pages/Users.tsx";
 import Sales from "./pages/Sales.tsx";
+import Profile from "./pages/Profile.tsx";
 const router = createBrowserRouter([
   {
     path: "/dashboard",
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: "users",
         element: <Users />,
+      },
+      {
+        path: "users/:id",
+        element: <Profile />,
       },
       {
         path: "*",

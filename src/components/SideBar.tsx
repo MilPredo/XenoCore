@@ -27,31 +27,6 @@ function SideBar() {
     { name: "Users", to: "users", icon: FiUsers },
     { name: "Purchases", to: "purchases", icon: FiShoppingCart },
     { name: "Sales", to: "sales", icon: FiDollarSign },
-    { name: "Statistics", to: "statistics", icon: FiBarChart },
-    { name: "Inventory", to: "inventory", icon: FiPackage },
-    { name: "Users", to: "users", icon: FiUsers },
-    { name: "Purchases", to: "purchases", icon: FiShoppingCart },
-    { name: "Sales", to: "sales", icon: FiDollarSign },
-    { name: "Statistics", to: "statistics", icon: FiBarChart },
-    { name: "Inventory", to: "inventory", icon: FiPackage },
-    { name: "Users", to: "users", icon: FiUsers },
-    { name: "Purchases", to: "purchases", icon: FiShoppingCart },
-    { name: "Sales", to: "sales", icon: FiDollarSign },
-    { name: "Statistics", to: "statistics", icon: FiBarChart },
-    { name: "Inventory", to: "inventory", icon: FiPackage },
-    { name: "Users", to: "users", icon: FiUsers },
-    { name: "Purchases", to: "purchases", icon: FiShoppingCart },
-    { name: "Sales", to: "sales", icon: FiDollarSign },
-    { name: "Statistics", to: "statistics", icon: FiBarChart },
-    { name: "Inventory", to: "inventory", icon: FiPackage },
-    { name: "Users", to: "users", icon: FiUsers },
-    { name: "Purchases", to: "purchases", icon: FiShoppingCart },
-    { name: "Sales", to: "sales", icon: FiDollarSign },
-    { name: "Statistics", to: "statistics", icon: FiBarChart },
-    { name: "Inventory", to: "inventory", icon: FiPackage },
-    { name: "Users", to: "users", icon: FiUsers },
-    { name: "Purchases", to: "purchases", icon: FiShoppingCart },
-    { name: "Sales", to: "sales", icon: FiDollarSign },
   ]);
   return (
     <Flex  flexDir="column" >
@@ -66,12 +41,12 @@ function SideBar() {
             Inventory System
           </Heading>
         </Center>
-      <Stack bg="secondary.800" _light={{bg:"secondary.50"}} flex={1} overflow="auto" m='2' borderRadius='xl'>
+      <Stack boxShadow='md' zIndex={2} bg="secondary.700" _light={{bg:"secondary.50"}} flex={1} overflow="auto" m='2' borderRadius='xl'>
         {/* <StackItem mt="2">
           Project XenoCore
         </StackItem> */}
         <Stack
-          pt='1'
+          py='1'
           spacing={0}
           overflowY={"scroll"}
           sx={{
