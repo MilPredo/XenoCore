@@ -104,7 +104,7 @@ function Users() {
             </Flex>
           ))}
         </SimpleGrid>
-        <Pagination/>
+        <Pagination currentPage={1} maxPage={20}/>
       </Box>
     </Flex>
   );
