@@ -6,7 +6,7 @@ import {
   Stack,
   Flex,
   Heading,
-  Center
+  Center,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import {
@@ -19,6 +19,7 @@ import {
 import { Link, NavLink } from "react-router-dom";
 import NavLinkComponent from "./NavLinkComponent";
 import "../fonts.css";
+import { useAuthStore } from "../stores/authStore";
 
 function SideBar() {
   const [modules, setModules] = useState([
@@ -28,25 +29,31 @@ function SideBar() {
     { name: "Purchases", to: "purchases", icon: FiShoppingCart },
     { name: "Sales", to: "sales", icon: FiDollarSign },
   ]);
+  const { user } = useAuthStore();
   return (
-    <Flex  flexDir="column" >
-        <Center mx="2" py="4" borderRadius={"xl"}>
-          <Heading
-            textAlign="center"
-            fontFamily="MostlyMono"
-            _light={{ letterSpacing: "widest" }}
-            _dark={{ fontFamily: "NeverMindBauhaus-Bold" }}
-            maxW="240px" 
-          >
-            Inventory System
-          </Heading>
-        </Center>
-      <Stack boxShadow='md' zIndex={2} bg="secondary.700" _light={{bg:"secondary.50"}} flex={1} overflow="auto" m='2' borderRadius='xl'>
+    <Flex flexDir="column">
+      <Center mx="2" py="4" borderRadius={"xl"}>
+        <Heading
+          textAlign="center"
+          fontFamily="MostlyMono"
+          _light={{ letterSpacing: "widest" }}
+          _dark={{ fontFamily: "NeverMindBauhaus-Bold" }}
+          maxW="240px"
+        >
+          Inventory System
+        </Heading>
+      </Center>
+      <Flex gap="2" flexDir={"column"} flex={1} overflow="auto" m="2">
         {/* <StackItem mt="2">
           Project XenoCore
         </StackItem> */}
         <Stack
-          py='1'
+          boxShadow="md"
+          zIndex={2}
+          bg="secondary.700"
+          _light={{ bg: "secondary.50" }}
+          borderRadius="xl"
+          py="1"
           spacing={0}
           overflowY={"scroll"}
           sx={{
@@ -74,7 +81,29 @@ function SideBar() {
             </NavLink>
           ))}
         </Stack>
-      </Stack>
+        <Flex
+          boxShadow="md"
+          zIndex={2}
+          bg="secondary.700"
+          _light={{ bg: "secondary.50" }}
+          borderRadius="xl"
+          p="2"
+          flexDir={"column"}
+          align="center"
+        >
+          <Heading size="sm" fontWeight="bold">
+            Logged in as
+          </Heading>
+          <Heading size="sm" fontWeight="medium" textTransform="capitalize">
+            {`${user.last_name}, ${user.first_name} ${user.middle_name}`}
+          </Heading>
+          <Flex>
+            <Text>
+              @{user.username}
+            </Text>
+          </Flex>
+        </Flex>
+      </Flex>
     </Flex>
     // <Box p="2">
     //   <Box minW="240px" m='5' >

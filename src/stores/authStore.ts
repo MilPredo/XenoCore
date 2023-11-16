@@ -91,6 +91,7 @@ export const useAuthStore = create<AuthState>((set) => {
         // const res = await supabase.auth.signOut();
         let headersList = {
           Accept: "*/*",
+          credentials: 'include'
         };
 
         let response = await fetch("http://127.0.0.1:1338/user/logout", {
@@ -100,7 +101,7 @@ export const useAuthStore = create<AuthState>((set) => {
 
         let data = await response.json();
         console.log(data);
-       0// localStorage.removeItem("user");
+       // localStorage.removeItem("user");
         Cookies.remove("user")
         set({ user: null, error: null, isAuthenticated: false });
       } catch (error) {
