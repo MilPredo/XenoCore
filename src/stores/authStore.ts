@@ -91,12 +91,12 @@ export const useAuthStore = create<AuthState>((set) => {
         // const res = await supabase.auth.signOut();
         let headersList = {
           Accept: "*/*",
-          credentials: 'include'
         };
 
         let response = await fetch("http://127.0.0.1:1338/user/logout", {
           method: "POST",
           headers: headersList,
+          credentials: 'include'
         });
 
         let data = await response.json();

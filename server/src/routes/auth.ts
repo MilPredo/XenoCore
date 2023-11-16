@@ -79,11 +79,20 @@ export default async function authRoutes(fastify: FastifyInstance) {
     } catch (error) {
       const fastifyError = error as FastifyError;
       fastifyError.code;
-      reply.status(500).send({ error: "Authentication failed" });
+      reply
+        .status(500)
+        .send({ error: error, message: "Authentication failed" });
     }
   });
   fastify.post("/logout", (request, reply) => {
-    request.session.destroy();
-    reply.send({ message: "logged out" });
+    try {
+      request.session.destroy();
+      console.log(request.session);
+      reply.send({ message: "logged out" });
+    } catch (error) {
+      const fastifyError = error as FastifyError;
+      fastifyError.code;
+      reply.status(500).send({ error: error, message: "Logout failed" });
+    }
   });
 }

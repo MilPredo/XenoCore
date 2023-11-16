@@ -16,6 +16,7 @@ import React, { useEffect, useState } from "react";
 import getUsers from "../api/users";
 import UserCard from "../components/UserCard";
 import { FiPlus, FiSearch } from "react-icons/fi";
+import Pagination from "../components/Pagination";
 function Users() {
   const [users, setUsers] = useState<
     Array<{
@@ -103,6 +104,7 @@ function Users() {
             </Flex>
           ))}
         </SimpleGrid>
+        <Pagination/>
       </Box>
     </Flex>
   );
