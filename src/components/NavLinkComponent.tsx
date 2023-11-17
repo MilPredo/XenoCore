@@ -46,15 +46,15 @@ function NavLinkComponent({
             // bgGradient: isActive
             //   ? "linear(to-tl, purple.500, blue.500)"
             //   : "linear(to-tl, blue.400, cyan.400)",
-            boxShadow:
-              "inset 0px 0px 8px 2px rgba(255, 255, 255, 0.5), 0px 0px 8px 2px rgba(255, 255, 255, 0.5)",
+            boxShadow:"inset 0px 0px 8px 2px rgba(255, 255, 255, 0.125), 0px 0px 8px 2px rgba(255, 255, 255, 0.125)",
+             // "inset 0px 0px 8px 2px rgba(255, 255, 255, 0.5), 0px 0px 8px 2px rgba(255, 255, 255, 0.5)",
           },
           bg: isActive ? "accentA.500" : "transparent",
           // bgGradient: isActive
           //   ? "linear(to-tl, cyan.600, cyan.600)"
           //   : "linear(to-tl, blue.500, cyan.500)",
           boxShadow: isActive
-            ? "inset 0px 0px 8px 2px rgba(255, 255, 255, 0.5), 0px 0px 8px 2px rgba(255, 255, 255, 0.25)"
+            ? "inset 0px 0px 8px 2px rgba(255, 255, 255, 0.125), 0px 0px 8px 2px rgba(255, 255, 255, 0.125)"
             : "",
           borderRadius: "lg",
         }}
@@ -77,7 +77,7 @@ function NavLinkComponent({
       >
         <Flex
           transition="transform 0.2s"
-          transform={hover ? "translateX(4px)" : ""}
+          transform={hover && !isActive ? "translateX(6px)" : isActive ? "translateX(2px)" : ""}
           align='center'
         >
           {icon && <Icon mr="2" fontSize="lg" as={icon} />}
