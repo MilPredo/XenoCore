@@ -10,8 +10,9 @@ import {
 interface PaginationProps {
   currentPage: number;
   maxPage: number;
+  onPageChange?: (currentPage: number) => void;
 }
-function Pagination({ currentPage = 1, maxPage = 10 }: PaginationProps) {
+function Pagination({ currentPage = 1, maxPage = 10, onPageChange }: PaginationProps) {
   const [pagination, setPagination] = useState({
     currentPage: 1,
     maxPage: 100,
@@ -20,13 +21,18 @@ function Pagination({ currentPage = 1, maxPage = 10 }: PaginationProps) {
     return Math.min(Math.max(number, min), max);
   }
   useEffect(() => {
+    if (onPageChange) onPageChange(pagination.currentPage)
+  }, [pagination.currentPage]);
+
+  useEffect(() => {
     setPagination({ currentPage, maxPage });
   }, [maxPage, currentPage]);
 
   return (
-    <Flex justify="center">
+    <Flex justify="center" hidden={maxPage <= 1}>
       <Flex gap={1} bg="secondary.700" p="2" borderRadius="lg">
         <Button
+          hidden={maxPage <= 5}
           size="sm"
           onClick={() =>
             setPagination({
@@ -51,11 +57,17 @@ function Pagination({ currentPage = 1, maxPage = 10 }: PaginationProps) {
         </Button>
         {(() => {
           let pageButtons = [];
-          for (let i = -2; i <= 2; i++) {
-            //
-            pageButtons.push(
-              i + clamp(pagination.currentPage, 1 + 2, pagination.maxPage - 2)
-            );
+          if (pagination.maxPage < 5) {
+            for (var i = 1; i <= pagination.maxPage; i++) {
+              pageButtons.push(i);
+            }
+          } else {
+            for (let i = -2; i <= 2; i++) {
+              //
+              pageButtons.push(
+                i + clamp(pagination.currentPage, 1 + 2, pagination.maxPage - 2)
+              );
+            }
           }
           return pageButtons;
         })().map((value, index) => (
@@ -84,6 +96,7 @@ function Pagination({ currentPage = 1, maxPage = 10 }: PaginationProps) {
           <FiChevronRight />
         </Button>
         <Button
+          hidden={maxPage <= 5}
           size="sm"
           onClick={() =>
             setPagination({

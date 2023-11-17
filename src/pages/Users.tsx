@@ -104,7 +104,7 @@ function Users() {
             </Flex>
           ))}
         </SimpleGrid>
-        <Pagination currentPage={1} maxPage={20}/>
+        <Pagination currentPage={1} maxPage={5} onPageChange={(page)=>{console.log(page)}}/>
       </Box>
     </Flex>
   );
