@@ -25,7 +25,7 @@ function Pagination({ currentPage = 1, maxPage = 10, onPageChange }: PaginationP
   }, [pagination.currentPage]);
 
   useEffect(() => {
-    setPagination({ currentPage, maxPage });
+    setPagination({ currentPage, maxPage: Math.ceil(maxPage) });
   }, [maxPage, currentPage]);
 
   return (

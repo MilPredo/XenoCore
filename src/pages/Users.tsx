@@ -26,13 +26,17 @@ function Users() {
       last_name: string;
     }>
   >([]);
+  const [count, setCount] = useState(0);
+  const [page, setPage] = useState(1);
+
   useEffect(() => {
     (async () => {
-      let a = await getUsers(1);
-      setUsers(a);
+      let a = await getUsers(page);
+      setUsers(a.rows);
+      setCount(a.count);
       console.log(a);
     })();
-  }, []);
+  }, [page]);
 
   return (
     <Flex flex={1} flexDir="column">
@@ -94,17 +98,28 @@ function Users() {
               placeholder="Last Name"
             />
           </Flex>
-          <Button leftIcon={<FiSearch/>} variant="solid" colorScheme="cyan">Search</Button>
-          <Button leftIcon={<FiPlus/>} variant="solid" colorScheme="green">Create New User</Button>
+          <Button leftIcon={<FiSearch />} variant="solid" colorScheme="cyan">
+            Search
+          </Button>
+          <Button leftIcon={<FiPlus />} variant="solid" colorScheme="green">
+            Create New User
+          </Button>
         </Flex>
         <SimpleGrid columns={{ sm: 1, md: 2, "2xl": 4 }} spacing={2} m="4">
           {users.map((value, index) => (
             <Flex flexDir="column" key={index}>
-              <UserCard {...value} occupation="Agent" userid={""+index} />
+              <UserCard {...value} occupation="Agent" userid={"" + index} />
             </Flex>
           ))}
         </SimpleGrid>
-        <Pagination currentPage={1} maxPage={5} onPageChange={(page)=>{console.log(page)}}/>
+        <Pagination
+          currentPage={1}
+          maxPage={count/10}
+          onPageChange={(page) => {
+            console.log(page);
+            setPage(page);
+          }}
+        />
       </Box>
     </Flex>
   );

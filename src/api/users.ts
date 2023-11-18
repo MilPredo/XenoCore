@@ -9,17 +9,20 @@ const getUsers = async (page: number) => {
       credentials: "include",
     });
 
-    let data: Array<{
-      username: string;
-      first_name: string;
-      middle_name: string;
-      last_name: string;
-    }> = await response.json();
+    let data: {
+      rows: Array<{
+        username: string;
+        first_name: string;
+        middle_name: string;
+        last_name: string;
+      }>;
+      count: number;
+    } = await response.json();
     console.log(data);
     return data;
   } catch (error) {
     console.error("Fetch error:", error);
-    return [];
+    return { rows: [], count: 0 };
   }
 };
 
