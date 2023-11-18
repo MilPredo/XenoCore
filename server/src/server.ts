@@ -18,7 +18,7 @@ app.register(fastifyPostgres, {
   host: "localhost",
   database: "postgres",
   password: "password",
-  port: 1337, //5432 1337
+  port: 5432, //5432 1337
 });
 // Register the fastify-jwt plugin with your secret key
 // app.register(jwt, {
