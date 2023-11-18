@@ -7,6 +7,7 @@ import {
   Flex,
   Heading,
   Center,
+  Badge,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import {
@@ -91,16 +92,23 @@ function SideBar() {
           flexDir={"column"}
           align="center"
         >
-          <Heading size="sm" fontWeight="bold">
-            Logged in as
-          </Heading>
-          <Heading size="sm" fontWeight="medium" textTransform="capitalize">
+          <Flex gap='1'>
+            <Heading size="sm" fontWeight="bold" flexDir="column">
+              Logged in as
+            </Heading>
+            <Heading size="sm" fontWeight="extrabold">
+              @{user.username}
+            </Heading>
+          </Flex><Badge>
+              
+              {`${user.last_name}, ${user.first_name} ${user.middle_name}`}
+              </Badge>
+          <Heading size="sm" fontWeight="medium" textTransform="uppercase">
+      
             {`${user.last_name}, ${user.first_name} ${user.middle_name}`}
           </Heading>
           <Flex>
-            <Text>
-              @{user.username}
-            </Text>
+            <Text>@{user.username}</Text>
           </Flex>
         </Flex>
       </Flex>
