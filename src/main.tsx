@@ -14,6 +14,7 @@ import theme from "./theme.ts";
 import Users from "./pages/Users.tsx";
 import Sales from "./pages/Sales.tsx";
 import Profile from "./pages/Profile.tsx";
+import Purchases from "./pages/Purchases.tsx";
 const router = createBrowserRouter([
   {
     path: "/dashboard",
@@ -28,11 +29,15 @@ const router = createBrowserRouter([
         element: <Sales />,
       },
       {
+        path: "purchases",
+        element: <Purchases />,
+      },
+      {
         path: "users",
         element: <Users />,
       },
       {
-        path: "users/:id",
+        path: "user/:id",
         element: <Profile />,
       },
       {
