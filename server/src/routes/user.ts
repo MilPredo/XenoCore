@@ -27,19 +27,20 @@ export default async function userRoutes(fastify: FastifyInstance) {
     async (request, reply) => {
       console.log(request.query);
       // const limit = (request.query as any).limit || 100;
+      let limit = 16;
       let { page } = request.query as any; // Query parameters for pagination
       page = page - 1 || 0
       console.log(page)
-      const offset = page * 10;
+      const offset = page * limit;
       try {
         const users = await fastify.pg.query(
-          "SELECT username, first_name, middle_name, last_name FROM users ORDER BY id LIMIT $1 OFFSET $2",
-          [10, offset]
+          "SELECT username, first_name, middle_name, last_name FROM users ORDER BY id DESC LIMIT $1 OFFSET $2",
+          [limit, offset]
         );
         const count = await fastify.pg.query(
           "SELECT COUNT(*) FROM users"
         );
-        reply.send({rows:users.rows,count:count.rows[0].count});
+        reply.status(200).send({rows:users.rows,count:count.rows[0].count});
       } catch (error) {
         console.log((error as any).detail);
         console.log(error);

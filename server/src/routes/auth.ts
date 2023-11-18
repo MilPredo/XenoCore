@@ -87,8 +87,8 @@ export default async function authRoutes(fastify: FastifyInstance) {
   fastify.post("/logout", (request, reply) => {
     try {
       request.session.destroy();
-      console.log(request.session);
-      reply.send({ message: "logged out" });
+      console.log("session: ",request.session);
+      reply.send({ user: null, message: "logged out" });
     } catch (error) {
       const fastifyError = error as FastifyError;
       fastifyError.code;

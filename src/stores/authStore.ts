@@ -13,9 +13,9 @@ export const useAuthStore = create<AuthState>((set) => {
   // Check if there is a user session in local storage
   const storedUser = Cookies.get("session");
   const initialUser = storedUser ? JSON.parse(storedUser) : null;
-
+  //console.log("useAuthStore",JSON.parse(storedUser??""))
   return {
-    isAuthenticated: !!initialUser,
+    isAuthenticated: initialUser,
     user: initialUser,
     error: null,
     login: async (username: string, password: string) => {
@@ -101,11 +101,13 @@ export const useAuthStore = create<AuthState>((set) => {
 
         let data = await response.json();
         console.log(data);
-       // localStorage.removeItem("user");
-        Cookies.remove("user")
+       //localStorage.removeItem("user");
+        Cookies.remove("session")
+        Cookies.remove("sessionId")
         set({ user: null, error: null, isAuthenticated: false });
       } catch (error) {
         console.log("Error:", error);
+        // set({ user: null, error: null, isAuthenticated: false });
       }
     },
   };

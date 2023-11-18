@@ -27,13 +27,14 @@ function Pagination({ currentPage = 1, maxPage = 10, onPageChange }: PaginationP
   useEffect(() => {
     setPagination({ currentPage, maxPage: Math.ceil(maxPage) });
   }, [maxPage, currentPage]);
-
+  
   return (
     <Flex justify="center" hidden={maxPage <= 1}>
-      <Flex gap={1} bg="secondary.700" p="2" borderRadius="lg">
+      <Flex gap={1} bg="secondary.700" _light={{bg:"secondary.50"}} p="2" borderRadius="lg">
         <Button
           hidden={maxPage <= 5}
           size="sm"
+          _light={{}}
           onClick={() =>
             setPagination({
               ...pagination,

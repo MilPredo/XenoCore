@@ -92,24 +92,38 @@ function SideBar() {
           flexDir={"column"}
           align="center"
         >
-          <Flex gap='1'>
+          <Flex gap="1" align="center">
             <Heading size="sm" fontWeight="bold" flexDir="column">
               Logged in as
             </Heading>
-            <Heading size="sm" fontWeight="extrabold">
+            <Heading
+              p="4px"
+              borderRadius="md"
+              bg="accentA.500"
+              _light={{
+                bg: "accentB.500"
+              }}
+              size="sm"
+              fontWeight="extrabold"
+            >
               @{user.username}
             </Heading>
-          </Flex><Badge>
-              
-              {`${user.last_name}, ${user.first_name} ${user.middle_name}`}
-              </Badge>
-          <Heading size="sm" fontWeight="medium" textTransform="uppercase">
-      
+          </Flex>
+          <Heading
+            px={2}
+            py={1}
+            my={2}
+            borderRadius="md"
+            bg="secondary.800" 
+            _light={{
+              bg: "secondary.100", 
+            }}
+            size="sm"
+            fontWeight="medium"
+            textTransform="uppercase"
+          >
             {`${user.last_name}, ${user.first_name} ${user.middle_name}`}
           </Heading>
-          <Flex>
-            <Text>@{user.username}</Text>
-          </Flex>
         </Flex>
       </Flex>
     </Flex>
