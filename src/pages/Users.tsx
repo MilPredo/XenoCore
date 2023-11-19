@@ -24,9 +24,9 @@ import {
   FormErrorMessage,
 } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
-import getUsers, { registerUser } from "../api/users";
+import { registerUser, getUsers} from "../api/users";
 import UserCard from "../components/UserCard";
-import { FiPlus, FiSearch } from "react-icons/fi";
+import { FiPlus, FiSearch, FiUserPlus } from "react-icons/fi";
 import Pagination from "../components/Pagination";
 import { useFormik } from "formik";
 
@@ -40,12 +40,13 @@ interface RegisterFormValues {
 function Users() {
   const [users, setUsers] = useState<
     Array<{
+      id:number,
       username: string;
       first_name: string;
       middle_name: string;
       last_name: string;
     }>
-  >([{ username: "", first_name: "", last_name: "", middle_name: "" }]);
+  >([{ id:0, username: "", first_name: "", last_name: "", middle_name: "" }]);
   const [count, setCount] = useState(0);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState<{
@@ -62,7 +63,7 @@ function Users() {
         search.username,
         search.first_name,
         search.middle_name,
-        search.middle_name
+        search.last_name
       );
       setUsers(a.rows);
       setCount(a.count);
@@ -78,10 +79,10 @@ function Users() {
     (async () => {
       let a = await getUsers(
         page,
-        search.username,
-        search.first_name,
-        search.middle_name,
-        search.middle_name
+        search.username.trim(),
+        search.first_name.trim(),
+        search.middle_name.trim(),
+        search.last_name.trim()
       );
       setUsers(a.rows);
       setCount(a.count);
@@ -136,7 +137,7 @@ function Users() {
               search.username,
               search.first_name,
               search.middle_name,
-              search.middle_name
+              search.last_name
             );
             setUsers(a.rows);
             setCount(a.count);
@@ -179,7 +180,7 @@ function Users() {
               placeholder="Username"
               value={search.username}
               onChange={(e) => {
-                setSearch({ ...search, username: e.target.value });
+                setSearch({ ...search, username: e.target.value.trim() });
               }}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
@@ -258,7 +259,7 @@ function Users() {
           </Button>
           <Button
             onClick={onOpen}
-            leftIcon={<FiPlus />}
+            leftIcon={<FiUserPlus />}
             variant="solid"
             colorScheme="green"
           >
@@ -386,7 +387,7 @@ function Users() {
           {count
             ? users.map((value, index) => (
                 <Flex flexDir="column" key={index}>
-                  <UserCard {...value} occupation="Agent" userid={"" + index} />
+                  <UserCard {...value} occupation="Agent" />
                 </Flex>
               ))
             : "Cannot view: User is unauthorized."}

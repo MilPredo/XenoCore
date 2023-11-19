@@ -10,6 +10,7 @@ import {
   Heading,
   Spacer,
   Text,
+  useColorMode,
 } from "@chakra-ui/react";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -20,7 +21,7 @@ interface UserCardProps {
   middle_name: string;
   last_name: string;
   occupation: string;
-  userid: string;
+  id: number;
 }
 //dominant.900
 //secondary.800
@@ -32,8 +33,9 @@ function UserCard({
   middle_name,
   last_name,
   occupation,
-  userid,
+  id,
 }: UserCardProps) {
+  const {colorMode} = useColorMode()
   return (
     <Card
       justify="center"
@@ -98,8 +100,8 @@ function UserCard({
             </Flex>
           </Flex>
           <Spacer minW={2} />
-          <Link to={`${userid}`}>
-            <Button flex="none" variant="predo">
+          <Link  to={`${id}`}>
+            <Button flex="none" colorScheme="green" variant={colorMode === "dark" ? "predo" : "outline"}>
               View Profile
             </Button>
           </Link>

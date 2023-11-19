@@ -18,7 +18,6 @@ interface UserSession {
 }
 
 export default async function userRoutes(fastify: FastifyInstance) {
-  // User registration route
   fastify.get(
     "/user",
     {
@@ -36,30 +35,82 @@ export default async function userRoutes(fastify: FastifyInstance) {
       try {
         const users = await fastify.pg.query(
           `
-  SELECT username, first_name, middle_name, last_name
-  FROM users
-  WHERE (username LIKE '%' || $1 || '%' OR $1 IS NULL)
-    AND (first_name LIKE '%' || $2 || '%' OR $2 IS NULL)
-    AND (middle_name LIKE '%' || $3 || '%' OR $3 IS NULL)
-    AND (last_name LIKE '%' || $4 || '%' OR $4 IS NULL)
-  ORDER BY id DESC
-  LIMIT $5 OFFSET $6;
+          SELECT id, username, first_name, middle_name, last_name
+          FROM users
+          WHERE (LOWER(username) LIKE '%' || $1 || '%' OR $1 IS NULL)
+            AND (LOWER(first_name) LIKE '%' || $2 || '%' OR $2 IS NULL)
+            AND (LOWER(middle_name) LIKE '%' || $3 || '%' OR $3 IS NULL)
+            AND (LOWER(last_name) LIKE '%' || $4 || '%' OR $4 IS NULL)
+          ORDER BY id DESC
+          LIMIT $5 OFFSET $6;
 `,
           [username, first_name, middle_name, last_name, limit, offset]
         );
         const count = await fastify.pg.query(
           `
-  SELECT COUNT(*) FROM users
-  WHERE (username LIKE '%' || $1 || '%' OR $1 IS NULL)
-    AND (first_name LIKE '%' || $2 || '%' OR $2 IS NULL)
-    AND (middle_name LIKE '%' || $3 || '%' OR $3 IS NULL)
-    AND (last_name LIKE '%' || $4 || '%' OR $4 IS NULL);
+          SELECT COUNT(*) FROM users
+          WHERE (LOWER(username) LIKE '%' || $1 || '%' OR $1 IS NULL)
+            AND (LOWER(first_name) LIKE '%' || $2 || '%' OR $2 IS NULL)
+            AND (LOWER(middle_name) LIKE '%' || $3 || '%' OR $3 IS NULL)
+            AND (LOWER(last_name) LIKE '%' || $4 || '%' OR $4 IS NULL);
         `,
           [username, first_name, middle_name, last_name]
         );
         reply
           .status(200)
           .send({ rows: users.rows, count: count.rows[0].count });
+      } catch (error) {
+        console.log((error as any).detail);
+        console.log(error);
+        reply
+          .status((error as any).code === "23505" ? 409 : 500)
+          .send({ message: (error as { detail: string }).detail });
+      }
+    }
+  );
+
+  fastify.get(
+    "/user/:id",
+    {
+      preHandler: checkAccess(fastify, ["read"], "user_management_access"),
+    },
+    async (request, reply) => {
+      console.log(request.query);
+      // const limit = (request.query as any).limit || 100;
+      const { id } = request.params as { id: number };
+      console.log("id type", typeof id);
+      console.log("id", id);
+      try {
+        const user = await fastify.pg.query(
+          `
+          SELECT id, username, first_name, middle_name, last_name
+          FROM users
+	        WHERE id = $1
+        `,
+          [id]
+        );
+        const user_management_access = await fastify.pg.query(
+          `
+          SELECT "create", "read", "update", "delete"
+	        FROM user_management_access
+	        WHERE userid = $1
+        `,
+          [id]
+        );
+        // let all_access
+        console.log("user", user.rows);
+        console.log("access", user_management_access.rows);
+        if (user.rows) {
+          console.log(user.rows);
+          reply.status(200).send({
+            user: user.rows[0],
+            access: {
+              user_management_access: user_management_access.rows[0],
+            },
+          });
+        } else {
+          reply.send("hello");
+        }
       } catch (error) {
         console.log((error as any).detail);
         console.log(error);

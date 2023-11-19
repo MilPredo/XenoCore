@@ -21,7 +21,7 @@ export const getUsers = async (
     queryParams.append("last_name", `${last_name}`);
   }
   const apiUrl = `${baseUrl}?${queryParams.toString()}`;
-  console.log(apiUrl)
+  console.log(apiUrl);
   try {
     let response = await fetch(apiUrl, {
       method: "GET",
@@ -30,6 +30,7 @@ export const getUsers = async (
 
     let data: {
       rows: Array<{
+        id: number,
         username: string;
         first_name: string;
         middle_name: string;
@@ -86,4 +87,18 @@ export const registerUser = async (
   }
 };
 
-export default getUsers;
+export const getUsersProfile = async (id: number) => {
+  const baseUrl = `http://127.0.0.1:1338/user/${id}`;
+  try {
+    let response = await fetch(baseUrl, {
+      method: "GET",
+      credentials: "include",
+    });
+    let data = await response.json();
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Fetch error:", error);
+    return { rows: [], count: 0 };
+  }
+};
