@@ -1,8 +1,27 @@
-export const getUsers = async (page: number) => {
+export const getUsers = async (
+  page: number,
+  username?: string,
+  first_name?: string,
+  middle_name?: string,
+  last_name?: string
+) => {
   const baseUrl = "http://127.0.0.1:1338/user";
   const queryParams = new URLSearchParams();
   queryParams.append("page", `${page}`);
+  if (username) {
+    queryParams.append("username", `${username}`);
+  }
+  if (first_name) {
+    queryParams.append("first_name", `${first_name}`);
+  }
+  if (middle_name) {
+    queryParams.append("middle_name", `${middle_name}`);
+  }
+  if (last_name) {
+    queryParams.append("last_name", `${last_name}`);
+  }
   const apiUrl = `${baseUrl}?${queryParams.toString()}`;
+  console.log(apiUrl)
   try {
     let response = await fetch(apiUrl, {
       method: "GET",
@@ -49,17 +68,18 @@ export const registerUser = async (
       middle_name: middle_name,
       last_name: last_name,
     });
-    authority
+    authority;
 
     let response = await fetch("http://127.0.0.1:1338/user/register", {
       method: "POST",
       body: bodyContent,
       headers: headersList,
+      credentials: "include",
     });
 
     let data = await response.json();
     console.log(data.message);
-    alert(data)
+    alert(data);
     return response;
   } catch (error) {
     console.error("Fetch error:", error);

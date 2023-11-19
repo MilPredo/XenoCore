@@ -8,7 +8,7 @@ type accessTable =
 
 const checkAccess = (
   app: FastifyInstance,
-  operation: CRUD,
+  operation: CRUD[],
   table: accessTable
 ) => {
   return async (
@@ -26,28 +26,26 @@ const checkAccess = (
     // Get user ID from session
     const userId = (request.session as any).user.id;
     // Check if user has access
+
     const { rows } = await app.pg.query(
       `
-      select "${operation}" 
-      from "${table}" 
-      where userid = $1
+      SELECT ${operation.map((column) => `"${column}"`).join(", ")}
+      FROM "${table}"
+      WHERE userid = $1
       `,
       [userId]
     );
     if (rows.length <= 0) {
       return done(new Error("User does not have authorization set."));
-    } else if (rows[0].read) {
-      console.log(rows[0]);
+    } else if (rows[0]) {
+      operation.forEach((ops) => {
+        if (!rows[0][`${ops}`])
+          return done(new Error("User is not authorized."));
+      });
       return done();
     } else {
       return done(new Error("User is not authorized."));
     }
-    // const hasAccess = results[0][operation];
-
-    // if (!hasAccess) {
-    //   reply.code(403).send("Access denied");
-    //   return;
-    // }
   };
 };
 

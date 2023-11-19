@@ -48,10 +48,22 @@ function Users() {
   >([{ username: "", first_name: "", last_name: "", middle_name: "" }]);
   const [count, setCount] = useState(0);
   const [page, setPage] = useState(1);
+  const [search, setSearch] = useState<{
+    username: string;
+    first_name: string;
+    middle_name: string;
+    last_name: string;
+  }>({ username: "", first_name: "", last_name: "", middle_name: "" });
 
   useEffect(() => {
     (async () => {
-      let a = await getUsers(page);
+      let a = await getUsers(
+        page,
+        search.username,
+        search.first_name,
+        search.middle_name,
+        search.middle_name
+      );
       setUsers(a.rows);
       setCount(a.count);
       console.log(a);
@@ -61,6 +73,21 @@ function Users() {
   // function handleRegister() {
   //   registerUser();
   // }
+
+  function doSearch() {
+    (async () => {
+      let a = await getUsers(
+        page,
+        search.username,
+        search.first_name,
+        search.middle_name,
+        search.middle_name
+      );
+      setUsers(a.rows);
+      setCount(a.count);
+      console.log(a);
+    })();
+  }
 
   const formik = useFormik<RegisterFormValues>({
     initialValues: {
@@ -102,10 +129,15 @@ function Users() {
         values.last_name,
         ""
       ).then((response) => {
-
-        if (response?.status===200) {
+        if (response?.status === 200) {
           (async () => {
-            let a = await getUsers(page);
+            let a = await getUsers(
+              page,
+              search.username,
+              search.first_name,
+              search.middle_name,
+              search.middle_name
+            );
             setUsers(a.rows);
             setCount(a.count);
             console.log(a);
@@ -145,6 +177,15 @@ function Users() {
                 _focus: { _placeholder: { color: "white", opacity: 0.5 } },
               }}
               placeholder="Username"
+              value={search.username}
+              onChange={(e) => {
+                setSearch({ ...search, username: e.target.value });
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  doSearch();
+                }
+              }}
             />
             <Input
               variant="filled"
@@ -156,6 +197,15 @@ function Users() {
                 _focus: { _placeholder: { color: "white", opacity: 0.5 } },
               }}
               placeholder="First Name"
+              value={search.first_name}
+              onChange={(e) => {
+                setSearch({ ...search, first_name: e.target.value });
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  doSearch();
+                }
+              }}
             />
             <Input
               variant="filled"
@@ -167,6 +217,15 @@ function Users() {
                 _focus: { _placeholder: { color: "white", opacity: 0.5 } },
               }}
               placeholder="Middle Name"
+              value={search.middle_name}
+              onChange={(e) => {
+                setSearch({ ...search, middle_name: e.target.value });
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  doSearch();
+                }
+              }}
             />
             <Input
               variant="filled"
@@ -178,9 +237,23 @@ function Users() {
                 _focus: { _placeholder: { color: "white", opacity: 0.5 } },
               }}
               placeholder="Last Name"
+              value={search.last_name}
+              onChange={(e) => {
+                setSearch({ ...search, last_name: e.target.value });
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  doSearch();
+                }
+              }}
             />
           </Flex>
-          <Button leftIcon={<FiSearch />} variant="solid" colorScheme="cyan">
+          <Button
+            onClick={doSearch}
+            leftIcon={<FiSearch />}
+            variant="solid"
+            colorScheme="cyan"
+          >
             Search
           </Button>
           <Button

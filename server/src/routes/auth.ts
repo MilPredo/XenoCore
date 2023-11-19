@@ -21,6 +21,11 @@ export default async function authRoutes(fastify: FastifyInstance) {
   // User registration route
   fastify.post<{ Body: UserRequestBody }>(
     "/register",
+    {
+      preHandler: [
+        checkAccess(fastify, ["create", "update"], "user_management_access"),
+      ],
+    },
     async (request, reply) => {
       const { username, password, first_name, middle_name, last_name } =
         request.body;
@@ -70,7 +75,7 @@ export default async function authRoutes(fastify: FastifyInstance) {
         //   httpOnly: true, // Makes the cookie accessible only via HTTP
         //   secure: true,   // Ensures the cookie is sent over HTTPS (in production)
         // });
-        reply.send({ user: rest, message: "Login successful" });
+        reply.send({ user: rest, message: "Login successful", modules: {} });
       } else {
         reply.status(401).send({ error: "Authentication failed" });
         // const token = fastify.jwt.sign({ username }, { expiresIn: "1h" });
@@ -87,7 +92,7 @@ export default async function authRoutes(fastify: FastifyInstance) {
   fastify.post("/logout", (request, reply) => {
     try {
       request.session.destroy();
-      console.log("session: ",request.session);
+      console.log("session: ", request.session);
       reply.send({ user: null, message: "logged out" });
     } catch (error) {
       const fastifyError = error as FastifyError;
