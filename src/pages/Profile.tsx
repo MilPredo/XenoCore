@@ -17,10 +17,10 @@ function Profile() {
     };
     access: {
       [key: string]: {
-        create: boolean;
-        read: boolean;
-        update: boolean;
-        delete: boolean;
+        canCreate: boolean;
+        canRead: boolean;
+        canUpdate: boolean;
+        canDelete: boolean;
       };
     };
   }>();
@@ -102,7 +102,7 @@ function Profile() {
                 content: (
                   <Checkbox
                     isReadOnly
-                    isChecked={profile?.access["user_management_access"]?.create ?? false}
+                    isChecked={profile?.access["user_management_access"]?.canCreate ?? false}
                   />
                 ),
               },
@@ -110,7 +110,7 @@ function Profile() {
                 content: (
                   <Checkbox
                     isReadOnly
-                    isChecked={profile?.access["user_management_access"]?.read ?? false}
+                    isChecked={profile?.access["user_management_access"]?.canRead ?? false}
                   />
                 ),
               },
@@ -118,7 +118,7 @@ function Profile() {
                 content: (
                   <Checkbox
                     isReadOnly
-                    isChecked={profile?.access["user_management_access"]?.update ?? false}
+                    isChecked={profile?.access["user_management_access"]?.canUpdate ?? false}
                   />
                 ),
               },
@@ -126,7 +126,7 @@ function Profile() {
                 content: (
                   <Checkbox
                     isReadOnly
-                    isChecked={profile?.access["user_management_access"]?.delete ?? false}
+                    isChecked={profile?.access["user_management_access"]?.canDelete ?? false}
                   />
                 ),
               },

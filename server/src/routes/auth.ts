@@ -23,7 +23,11 @@ export default async function authRoutes(fastify: FastifyInstance) {
     "/register",
     {
       preHandler: [
-        checkAccess(fastify, ["create", "update"], "user_management_access"),
+        checkAccess(
+          fastify,
+          ["canCreate", "canUpdate"],
+          "user_management_access"
+        ),
       ],
     },
     async (request, reply) => {
@@ -31,16 +35,41 @@ export default async function authRoutes(fastify: FastifyInstance) {
         request.body;
       try {
         const hashedPassword = await bcrypt.hash(password, 10); // Hash the password
-        await fastify.pg.query(
-          "INSERT INTO users(username, password, first_name, middle_name, last_name) VALUES($1, $2, $3, $4, $5)",
-          [
-            username,
-            hashedPassword,
-            first_name || null,
-            middle_name || null,
-            last_name || null,
-          ]
-        );
+        const client = await fastify.pg.connect();
+
+        try {
+          await client.query("BEGIN");
+
+          // Insert into users table
+          const userResult = await client.query(
+            `INSERT INTO users(username, password, first_name, middle_name, last_name)
+             VALUES($1, $2, $3, $4, $5)
+             RETURNING id`,
+            [
+              username,
+              hashedPassword,
+              first_name || null,
+              middle_name || null,
+              last_name || null,
+            ]
+          );
+
+          const user_id = userResult.rows[0].id;
+
+          // Insert into user_management_access table using the user_id obtained from the previous insert
+          await client.query(
+            `INSERT INTO user_management_access(userid)
+             VALUES($1)`,
+            [user_id]
+          );
+
+          await client.query("COMMIT");
+        } catch (error) {
+          await client.query("ROLLBACK");
+          throw error;
+        } finally {
+          client.release();
+        }
         reply.send({ message: "User registered successfully" });
       } catch (error) {
         console.log((error as any).detail);

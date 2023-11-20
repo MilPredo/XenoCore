@@ -1,6 +1,6 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 
-type CRUD = "create" | "read" | "update" | "delete";
+type CRUD = "canCreate" | "canRead" | "canUpdate" | "canDelete";
 type accessTable =
   | "user_management_access"
   | "inventory_access"

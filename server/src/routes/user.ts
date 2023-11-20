@@ -21,7 +21,7 @@ export default async function userRoutes(fastify: FastifyInstance) {
   fastify.get(
     "/user",
     {
-      preHandler: checkAccess(fastify, ["read"], "user_management_access"),
+      preHandler: checkAccess(fastify, ["canRead"], "user_management_access"),
     },
     async (request, reply) => {
       console.log(request.query);
@@ -72,7 +72,7 @@ export default async function userRoutes(fastify: FastifyInstance) {
   fastify.get(
     "/user/:id",
     {
-      preHandler: checkAccess(fastify, ["read"], "user_management_access"),
+      preHandler: checkAccess(fastify, ["canRead"], "user_management_access"),
     },
     async (request, reply) => {
       console.log(request.query);
@@ -91,7 +91,7 @@ export default async function userRoutes(fastify: FastifyInstance) {
         );
         const user_management_access = await fastify.pg.query(
           `
-          SELECT "create", "read", "update", "delete"
+          SELECT "canCreate", "canRead", "canUpdate", "canDelete"
 	        FROM user_management_access
 	        WHERE userid = $1
         `,
