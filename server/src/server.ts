@@ -14,11 +14,11 @@ const app = Fastify({ logger: true });
 const port = 1338;
 
 app.register(fastifyPostgres, {
-  user: "postgres",
-  host: "localhost",
-  database: "postgres",
-  password: "password",
-  port: 1337, //5432 1337
+  user: "otsxmkfc",
+  host: "rain.db.elephantsql.com",
+  database: "otsxmkfc",
+  password: "I_eBormFu7QbBv_5vb2Oa0ISUqIOS70h",
+  port: 5432, //5432 1337
 });
 // Register the fastify-jwt plugin with your secret key
 // app.register(jwt, {
