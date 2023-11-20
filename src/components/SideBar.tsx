@@ -12,7 +12,9 @@ import {
 import React, { useState } from "react";
 import {
   FiBarChart,
+  FiBox,
   FiDollarSign,
+  FiGift,
   FiPackage,
   FiShoppingCart,
   FiUsers,
@@ -29,6 +31,8 @@ function SideBar() {
     { name: "Users", to: "users", icon: FiUsers },
     { name: "Purchases", to: "purchases", icon: FiShoppingCart },
     { name: "Sales", to: "sales", icon: FiDollarSign },
+    { name: "Products", to: "products", icon: FiGift },
+    { name: "Suppliers", to: "suppliers", icon: FiBox },
   ]);
   const { user } = useAuthStore();
   return (

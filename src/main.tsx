@@ -15,6 +15,8 @@ import Users from "./pages/Users.tsx";
 import Sales from "./pages/Sales.tsx";
 import Profile from "./pages/Profile.tsx";
 import Purchases from "./pages/Purchases.tsx";
+import Products from "./pages/Products.tsx";
+import Suppliers from "./pages/Suppliers.tsx";
 const router = createBrowserRouter([
   {
     path: "/dashboard",
@@ -25,12 +27,20 @@ const router = createBrowserRouter([
         element: <Inventory />,
       },
       {
+        path: "products",
+        element: <Products />
+      },
+      {
         path: "sales",
         element: <Sales />,
       },
       {
         path: "purchases",
         element: <Purchases />,
+      },
+      {
+        path: "suppliers",
+        element: <Suppliers />,
       },
       {
         path: "users",
