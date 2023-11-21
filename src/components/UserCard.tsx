@@ -93,6 +93,8 @@ function UserCard({
                   p="2"
                   py="0"
                   borderRadius="lg"
+                  textTransform='capitalize'
+                  fontWeight='bold'
                 >
                   {occupation}
                 </Text>

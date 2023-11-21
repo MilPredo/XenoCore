@@ -45,8 +45,9 @@ function Users() {
       first_name: string;
       middle_name: string;
       last_name: string;
+      occupation: string;
     }>
-  >([{ id:0, username: "", first_name: "", last_name: "", middle_name: "" }]);
+  >([{ id:0, username: "", first_name: "", last_name: "", middle_name: "", occupation: "" }]);
   const [count, setCount] = useState(0);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState<{
@@ -387,7 +388,7 @@ function Users() {
           {count
             ? users.map((value, index) => (
                 <Flex flexDir="column" key={index}>
-                  <UserCard {...value} occupation="Agent" />
+                  <UserCard {...value} occupation={value.occupation} />
                 </Flex>
               ))
             : "Cannot view: User is unauthorized."}

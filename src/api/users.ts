@@ -3,7 +3,7 @@ export const getUsers = async (
   username?: string,
   first_name?: string,
   middle_name?: string,
-  last_name?: string
+  last_name?: string,
 ) => {
   const baseUrl = "http://127.0.0.1:1338/user";
   const queryParams = new URLSearchParams();
@@ -35,6 +35,7 @@ export const getUsers = async (
         first_name: string;
         middle_name: string;
         last_name: string;
+        occupation: string;
       }>;
       count: number;
     } = await response.json();

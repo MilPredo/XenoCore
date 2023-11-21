@@ -14,6 +14,7 @@ function Profile() {
       first_name: string;
       middle_name: string;
       last_name: string;
+      occupation: string;
     };
     access: {
       [key: string]: {
@@ -88,6 +89,18 @@ function Profile() {
                 fontSize="xl"
               >
                 @{profile?.user.username}
+              </Text>
+              <Text
+                borderRadius="md"
+                bg="accentA.500"
+                _light={{ bg: "accentB.500" }}
+                px="1"
+                py="0"
+                fontWeight="bold"
+                fontSize="xl"
+                textTransform="capitalize"
+              >
+                {profile?.user.occupation}
               </Text>
             </Flex>
           </Flex>

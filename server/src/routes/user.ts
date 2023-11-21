@@ -35,7 +35,7 @@ export default async function userRoutes(fastify: FastifyInstance) {
       try {
         const users = await fastify.pg.query(
           `
-          SELECT id, username, first_name, middle_name, last_name
+          SELECT id, username, first_name, middle_name, last_name, occupation
           FROM users
           WHERE (LOWER(username) LIKE '%' || $1 || '%' OR $1 IS NULL)
             AND (LOWER(first_name) LIKE '%' || $2 || '%' OR $2 IS NULL)
@@ -83,7 +83,7 @@ export default async function userRoutes(fastify: FastifyInstance) {
       try {
         const user = await fastify.pg.query(
           `
-          SELECT id, username, first_name, middle_name, last_name
+          SELECT id, username, first_name, middle_name, last_name, occupation
           FROM users
 	        WHERE id = $1
         `,

@@ -17,6 +17,7 @@ import {
   FiGift,
   FiPackage,
   FiShoppingCart,
+  FiUser,
   FiUsers,
 } from "react-icons/fi";
 import { Link, NavLink } from "react-router-dom";
@@ -28,11 +29,12 @@ function SideBar() {
   const [modules, setModules] = useState([
     { name: "Statistics", to: "statistics", icon: FiBarChart },
     { name: "Inventory", to: "inventory", icon: FiPackage },
-    { name: "Users", to: "users", icon: FiUsers },
     { name: "Purchases", to: "purchases", icon: FiShoppingCart },
     { name: "Sales", to: "sales", icon: FiDollarSign },
-    { name: "Products", to: "products", icon: FiGift },
+    { name: "Customers", to: "customers", icon: FiUser },
     { name: "Suppliers", to: "suppliers", icon: FiBox },
+    { name: "Products", to: "products", icon: FiGift },
+    { name: "Users", to: "users", icon: FiUsers },
   ]);
   const { user } = useAuthStore();
   return (
