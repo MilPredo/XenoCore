@@ -12,7 +12,11 @@ import userRoutes from "./routes/user";
 
 const app = Fastify({ logger: true });
 const port = 1338;
-
+class Asd {
+  dsa() {console.log("lol")}
+}
+const asddd = new Asd();
+asddd.dsa()
 app.register(fastifyPostgres, {
   user: "otsxmkfc",
   host: "rain.db.elephantsql.com",

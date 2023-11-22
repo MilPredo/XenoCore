@@ -1,4 +1,4 @@
-import { FastifyRequest, FastifyReply, FastifyInstance } from "fastify";
+import { FastifyInstance } from "fastify";
 /*
 Service:
   Responsibility: Services contain the application's business logic. They encapsulate the functionality related to specific entities or features and are responsible for data manipulation, validation, and communication with the data storage layer (e.g., database).
@@ -23,8 +23,8 @@ export class UserService {
     last_name: string
   ) {
     const offset = (page - 1) * pageSize;
-      const result = await this.fastify.pg.query(
-        `
+    const result = await this.fastify.pg.query(
+      `
         SELECT id, username, first_name, middle_name, last_name, occupation
         FROM users
         WHERE (LOWER(username) LIKE '%' || $1 || '%' OR $1 IS NULL)
@@ -34,24 +34,24 @@ export class UserService {
         ORDER BY id DESC
         LIMIT $5 OFFSET $6;
 `,
-        [username, first_name, middle_name, last_name, pageSize, offset]
-      );
-      const users = result.rows;
+      [username, first_name, middle_name, last_name, pageSize, offset]
+    );
+    const users = result.rows;
 
-      // Fetch total count of users
-      const totalCountResult = await this.fastify.pg.query(
-        `
+    // Fetch total count of users
+    const totalCountResult = await this.fastify.pg.query(
+      `
         SELECT COUNT(*) FROM users
         WHERE (LOWER(username) LIKE '%' || $1 || '%' OR $1 IS NULL)
           AND (LOWER(first_name) LIKE '%' || $2 || '%' OR $2 IS NULL)
           AND (LOWER(middle_name) LIKE '%' || $3 || '%' OR $3 IS NULL)
           AND (LOWER(last_name) LIKE '%' || $4 || '%' OR $4 IS NULL);
       `,
-        [username, first_name, middle_name, last_name]
-      );
-      const totalCount = parseInt(totalCountResult.rows[0].count, 10);
+      [username, first_name, middle_name, last_name]
+    );
+    const totalCount = parseInt(totalCountResult.rows[0].count, 10);
 
-      return { users, totalCount };
+    return { users, totalCount };
   }
 
   async getUserById(id: number) {
@@ -71,8 +71,13 @@ export class UserService {
         this.fastify.pg.query(userQuery, [id]),
         this.fastify.pg.query(accessQuery, [id]),
       ]);
-
-      return { user, user_management_access };
+      console.log()
+      return {
+        user: user.rows[0],
+        access: {
+          user_management_access: user_management_access.rows[0],
+        },
+      };
     } catch (error) {
       if (error instanceof Error) {
         console.error("Error executing SQL query:", error.message);

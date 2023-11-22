@@ -11,12 +11,23 @@ export class UserController {
     try {
       const { page, username, first_name, middle_name, last_name } =
         request.query as any; // Query parameters for pagination
-        console.log(this.userService)
-        const result = await this.userService.getAllUsers(page, 16, username, first_name, middle_name, last_name)
-      reply.status(200).send({ rows: result.users, count: result.totalCount, message: "success" });
+      const result = await this.userService.getAllUsers(
+        page,
+        16,
+        username,
+        first_name,
+        middle_name,
+        last_name
+      );
+      reply.status(200).send({
+        rows: result.users,
+        count: result.totalCount,
+        message: "success",
+      });
     } catch (error) {
-       console.log((error as any).detail);
-      console.log(error);
+      // console.log("error");
+      // console.log((error as any).detail);
+      // console.log(error);
       reply
         .status((error as any).code === "23505" ? 409 : 500)
         .send({ message: (error as { detail: string }).detail });
@@ -24,7 +35,16 @@ export class UserController {
   }
 
   async getUserById(request: FastifyRequest, reply: FastifyReply) {
-    // Logic to get a user by ID
+    try {
+      const { id } = request.params as any;
+      const result = await this.userService.getUserById(id);
+      reply.status(200).send(result);
+    } catch (error) {
+      // console.log("error");
+      // console.log((error as any).detail);
+      // console.log(error);
+      reply.status(500).send({ message: (error as { detail: string }).detail });
+    }
   }
 
   async createUser(request: FastifyRequest, reply: FastifyReply) {
