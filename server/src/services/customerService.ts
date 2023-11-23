@@ -17,12 +17,12 @@ export class CustomerService {
     const result = await this.fastify.pg.query(
       `
         SELECT *
-        FROM suppliers
-        WHERE (LOWER(customer_name) LIKE '%' || $1 || '%' OR $1 IS NULL)
-        AND (LOWER(middle_name) LIKE '%' || $3 || '%' OR $3 IS NULL)
-        AND (LOWER(last_name) LIKE '%' || $4 || '%' OR $4 IS NULL)
+        FROM customers
+        WHERE (LOWER(first_name) LIKE '%' || $1 || '%' OR $1 IS NULL)
+        AND (LOWER(middle_name) LIKE '%' || $2 || '%' OR $2 IS NULL)
+        AND (LOWER(last_name) LIKE '%' || $3 || '%' OR $3 IS NULL)
         ORDER BY id DESC
-        LIMIT $2 OFFSET $3;
+        LIMIT $4 OFFSET $5;
 `,
       [first_name, middle_name, last_name, pageSize, offset]
     );
@@ -32,11 +32,11 @@ export class CustomerService {
     const totalCountResult = await this.fastify.pg.query(
       `
         SELECT COUNT(*) FROM customers
-        WHERE (LOWER(username) LIKE '%' || $1 || '%' OR $1 IS NULL)
-        AND (LOWER(middle_name) LIKE '%' || $3 || '%' OR $3 IS NULL)
-        AND (LOWER(last_name) LIKE '%' || $4 || '%' OR $4 IS NULL)
+        WHERE (LOWER(first_name) LIKE '%' || $1 || '%' OR $1 IS NULL)
+        AND (LOWER(middle_name) LIKE '%' || $2 || '%' OR $2 IS NULL)
+        AND (LOWER(last_name) LIKE '%' || $3 || '%' OR $3 IS NULL)
       `,
-      [first_name, middle_name, last_name, pageSize, offset]
+      [first_name, middle_name, last_name]
     );
     const totalCount = parseInt(totalCountResult.rows[0].count, 10);
 
