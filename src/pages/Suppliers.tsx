@@ -40,6 +40,7 @@ function Suppliers() {
           ["Arasaka", "Big St, Night City", "09232323232", "arasaka@arasaka.com", "ewan"],
           ["Biotechnica", "Smol St, Night City", "09232275232", "biotechnica@biotechnica.com", "para di aa ahaha"],
         ]}
+        count={1}
       />
     </Flex>
   );

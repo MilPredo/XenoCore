@@ -35,6 +35,7 @@ function Sales() {
         </Button>
       </Flex>
       <DynamicTable
+        count={1}
         columns={[
           "Product",
           "Customer",

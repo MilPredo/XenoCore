@@ -29,6 +29,7 @@ import UserCard from "../components/UserCard";
 import { FiPlus, FiSearch, FiUserPlus } from "react-icons/fi";
 import Pagination from "../components/Pagination";
 import { useFormik } from "formik";
+import AddUserButton from "../components/AddUserButton";
 
 interface RegisterFormValues {
   username: string;
@@ -91,69 +92,69 @@ function Users() {
     })();
   }
 
-  const formik = useFormik<RegisterFormValues>({
-    initialValues: {
-      username: "",
-      password: "",
-      first_name: "",
-      last_name: "",
-      middle_name: "",
-    },
-    validate: (values) => {
-      const errors: Partial<RegisterFormValues> = {};
-      if (!values.username) {
-        errors.username = "Username is required";
-      }
+  // const formik = useFormik<RegisterFormValues>({
+  //   initialValues: {
+  //     username: "",
+  //     password: "",
+  //     first_name: "",
+  //     last_name: "",
+  //     middle_name: "",
+  //   },
+  //   validate: (values) => {
+  //     const errors: Partial<RegisterFormValues> = {};
+  //     if (!values.username) {
+  //       errors.username = "Username is required";
+  //     }
 
-      if (!values.password) {
-        errors.password = "Password is required";
-      }
+  //     if (!values.password) {
+  //       errors.password = "Password is required";
+  //     }
 
-      if (!values.first_name) {
-        errors.first_name = "First name is required";
-      }
+  //     if (!values.first_name) {
+  //       errors.first_name = "First name is required";
+  //     }
 
-      if (!values.middle_name) {
-        errors.middle_name = "Middle name is required";
-      }
+  //     if (!values.middle_name) {
+  //       errors.middle_name = "Middle name is required";
+  //     }
 
-      if (!values.last_name) {
-        errors.last_name = "Last name is required";
-      }
-      return errors;
-    },
-    onSubmit: (values, { resetForm }) => {
-      registerUser(
-        values.username,
-        values.password,
-        values.first_name,
-        values.middle_name,
-        values.last_name,
-        ""
-      ).then((response) => {
-        if (response?.status === 200) {
-          (async () => {
-            let a = await getUsers(
-              page,
-              search.username,
-              search.first_name,
-              search.middle_name,
-              search.last_name
-            );
-            setUsers(a.rows);
-            setCount(a.count);
-            console.log(a);
-          })();
-          resetForm();
-          onClose();
-        }
-        console.log(response);
-      });
-    },
-  });
+  //     if (!values.last_name) {
+  //       errors.last_name = "Last name is required";
+  //     }
+  //     return errors;
+  //   },
+  //   onSubmit: (values, { resetForm }) => {
+  //     registerUser(
+  //       values.username,
+  //       values.password,
+  //       values.first_name,
+  //       values.middle_name,
+  //       values.last_name,
+  //       ""
+  //     ).then((response) => {
+  //       if (response?.status === 200) {
+  //         (async () => {
+  //           let a = await getUsers(
+  //             page,
+  //             search.username,
+  //             search.first_name,
+  //             search.middle_name,
+  //             search.last_name
+  //           );
+  //           setUsers(a.rows);
+  //           setCount(a.count);
+  //           console.log(a);
+  //         })();
+  //         resetForm();
+  //         onClose();
+  //       }
+  //       console.log(response);
+  //     });
+  //   },
+  // });
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const initialRef = useRef(null);
+  // const { isOpen, onOpen, onClose } = useDisclosure();
+  // const initialRef = useRef(null);
   return (
     <Flex flex={1} flexDir="column">
       {/* <Box>
@@ -258,7 +259,8 @@ function Users() {
           >
             Search
           </Button>
-          <Button
+          <AddUserButton />
+          {/* <Button
             onClick={onOpen}
             leftIcon={<FiUserPlus />}
             variant="solid"
@@ -382,7 +384,7 @@ function Users() {
                 </ModalFooter>
               </ModalContent>
             </form>
-          </Modal>
+          </Modal> */}
         </Flex>
         <SimpleGrid columns={{ sm: 1, md: 2, "2xl": 4 }} spacing={2} m="4">
           {count

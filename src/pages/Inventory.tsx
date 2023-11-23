@@ -405,6 +405,7 @@ function Inventory() {
       </Flex>
 
       <DynamicTable
+        count={1}
         columns={[
           "Category",
           "Product",

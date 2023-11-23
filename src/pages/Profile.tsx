@@ -107,6 +107,7 @@ function Profile() {
         </Flex>
 
         <DynamicTable
+        count={1}
           columns={["Module", "Create", "Read", "Update", "Delete"]}
           rows={[
             [

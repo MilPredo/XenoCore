@@ -31,10 +31,10 @@ function NotFound() {
       <Center w="100%" h="100%">
         <Flex flexDir="column" align={"center"}>
           <Heading size={"3xl"} m={26}>
-            Oops!
+            Hmm..
           </Heading>
           <Text fontSize={"xl"} fontWeight={"bold"}>
-            Sorry, an unexpected error has occurred.
+            Looks like this page is being shy right now...
           </Text>
           <Text fontStyle={"italic"}>{errorMessage}</Text>
           <Flex my="2em" flexDir={"column"} align={"center"}>

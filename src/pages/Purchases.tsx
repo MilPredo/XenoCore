@@ -35,6 +35,7 @@ function Purchases() {
         </Button>
       </Flex>
       <DynamicTable
+        count={1}
         columns={[
           "Product",
           { content: "Quantity", attributes: { isNumeric: true } },

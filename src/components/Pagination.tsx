@@ -17,22 +17,28 @@ function Pagination({ currentPage = 1, maxPage = 10, onPageChange }: PaginationP
     currentPage: 1,
     maxPage: 100,
   });
+
   function clamp(number: number, min: number, max: number) {
     return Math.min(Math.max(number, min), max);
   }
+
   useEffect(() => {
     if (onPageChange) onPageChange(pagination.currentPage)
   }, [pagination.currentPage]);
 
   useEffect(() => {
-    setPagination({ currentPage, maxPage: Math.ceil(maxPage) });
+    if (Number.isNaN(maxPage)){
+      setPagination({ currentPage: 1, maxPage: 1 });
+    } else {
+      setPagination({ currentPage, maxPage: Math.ceil(maxPage) });
+    }
   }, [maxPage, currentPage]);
   
   return (
-    <Flex justify="center" hidden={maxPage <= 1}>
+    <Flex justify="center" hidden={pagination.maxPage <= 1}>
       <Flex gap={1} bg="secondary.700" _light={{bg:"secondary.50"}} p="2" borderRadius="lg">
         <Button
-          hidden={maxPage <= 5}
+          hidden={pagination.maxPage <= 5}
           size="sm"
           _light={{}}
           onClick={() =>
@@ -97,7 +103,7 @@ function Pagination({ currentPage = 1, maxPage = 10, onPageChange }: PaginationP
           <FiChevronRight />
         </Button>
         <Button
-          hidden={maxPage <= 5}
+          hidden={pagination.maxPage <= 5}
           size="sm"
           onClick={() =>
             setPagination({

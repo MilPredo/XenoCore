@@ -35,6 +35,7 @@ function Customers() {
         </Button>
       </Flex>
       <DynamicTable
+        count={1}
         columns={["First Name", "Middle Name", "Last Name", "Address", "Notes"]}
         rows={[
           ["Manny", "Pacman", "Pakyaw", "Seneral Gantos", "Eyy boksingero pre!!"],

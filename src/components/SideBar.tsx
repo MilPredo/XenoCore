@@ -11,11 +11,12 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import {
-  FiBarChart,
+  FiBarChart2,
   FiBox,
   FiDollarSign,
-  FiGift,
   FiPackage,
+  FiPieChart,
+  FiShoppingBag,
   FiShoppingCart,
   FiUser,
   FiUsers,
@@ -27,15 +28,15 @@ import { useAuthStore } from "../stores/authStore";
 
 function SideBar() {
   const [modules, setModules] = useState([
-    { name: "Statistics", to: "statistics", icon: FiBarChart },
+    { name: "Statistics", to: "statistics", icon: FiBarChart2 },
     { name: "Inventory", to: "inventory", icon: FiPackage },
     { name: "Purchases", to: "purchases", icon: FiShoppingCart },
     { name: "Sales", to: "sales", icon: FiDollarSign },
     { name: "Customers", to: "customers", icon: FiUser },
     { name: "Suppliers", to: "suppliers", icon: FiBox },
-    { name: "Products", to: "products", icon: FiGift },
+    { name: "Products", to: "products", icon: FiShoppingBag },
     { name: "Users", to: "users", icon: FiUsers },
-    { name: "Reports", to: "report", icon: FiBarChart },
+    { name: "Reports", to: "report", icon: FiPieChart },
   ]);
   const { user } = useAuthStore();
   return (
