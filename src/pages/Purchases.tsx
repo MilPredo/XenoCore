@@ -1,7 +1,7 @@
 import { Button, Flex, Input } from "@chakra-ui/react";
 import React from "react";
 import DynamicTable from "../components/DynamicTable";
-import { FiSearch } from "react-icons/fi";
+import { FiPlus, FiSearch } from "react-icons/fi";
 
 function Purchases() {
   return (
@@ -29,6 +29,9 @@ function Purchases() {
         </Flex>
         <Button leftIcon={<FiSearch />} variant="solid" colorScheme="cyan">
           Search
+        </Button>
+        <Button leftIcon={<FiPlus />} variant="solid" colorScheme="green">
+          Add New
         </Button>
       </Flex>
       <DynamicTable

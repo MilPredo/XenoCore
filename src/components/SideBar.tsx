@@ -35,6 +35,7 @@ function SideBar() {
     { name: "Suppliers", to: "suppliers", icon: FiBox },
     { name: "Products", to: "products", icon: FiGift },
     { name: "Users", to: "users", icon: FiUsers },
+    { name: "Reports", to: "report", icon: FiBarChart },
   ]);
   const { user } = useAuthStore();
   return (

@@ -1,7 +1,7 @@
 import { Box, Button, Flex, Input } from "@chakra-ui/react";
 import React from "react";
 import DynamicTable from "../components/DynamicTable";
-import { FiSearch } from "react-icons/fi";
+import { FiPlus, FiSearch } from "react-icons/fi";
 
 function Sales() {
   return (
@@ -30,6 +30,9 @@ function Sales() {
         <Button leftIcon={<FiSearch />} variant="solid" colorScheme="cyan">
           Search
         </Button>
+        <Button leftIcon={<FiPlus />} variant="solid" colorScheme="green">
+          Add New
+        </Button>
       </Flex>
       <DynamicTable
         columns={[
@@ -39,7 +42,9 @@ function Sales() {
           { content: "Sale Price", attributes: { isNumeric: true } },
           "Payment Method",
           "Remittance Status",
-          "Agent",
+          "Date of transaction",
+          "User",
+          "User Type",
         ]}
         rows={[
           [
@@ -55,7 +60,9 @@ function Sales() {
             },
             "Cash",
             "Un-Remitted",
+            "December 1, 2023",
             "LAST, FIRST MIDDLE",
+            "Doctor"
           ],
         ]}
       />
