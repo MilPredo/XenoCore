@@ -1,8 +1,8 @@
-import { Box, Checkbox, Flex, Heading, Icon, Text } from "@chakra-ui/react";
+import { Box, Button, Checkbox, Flex, Heading, Icon, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { getUsersProfile } from "../api/users";
-import { FiUser } from "react-icons/fi";
+import { FiArrowLeft, FiUser } from "react-icons/fi";
 import DynamicTable from "../components/DynamicTable";
 
 function Profile() {
@@ -34,6 +34,9 @@ function Profile() {
   return (
     <Flex flex={1} flexDir="column">
       <Flex p="4" m="4" flexDir="column" gap="2">
+        <Link to='/dashboard/users'>
+        <Button leftIcon={<FiArrowLeft/>} colorScheme="cyan">Back</Button>
+        </Link>
         <Flex flexDir="row">
           <Flex
             flexDir="column"

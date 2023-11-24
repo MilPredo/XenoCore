@@ -24,7 +24,7 @@ import {
   FormErrorMessage,
 } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
-import { registerUser, getUsers} from "../api/users";
+import { registerUser, getUsers } from "../api/users";
 import UserCard from "../components/UserCard";
 import { FiPlus, FiSearch, FiUserPlus } from "react-icons/fi";
 import Pagination from "../components/Pagination";
@@ -41,14 +41,23 @@ interface RegisterFormValues {
 function Users() {
   const [users, setUsers] = useState<
     Array<{
-      id:number,
+      id: number;
       username: string;
       first_name: string;
       middle_name: string;
       last_name: string;
       occupation: string;
     }>
-  >([{ id:0, username: "", first_name: "", last_name: "", middle_name: "", occupation: "" }]);
+  >([
+    {
+      id: 0,
+      username: "",
+      first_name: "",
+      last_name: "",
+      middle_name: "",
+      occupation: "",
+    },
+  ]);
   const [count, setCount] = useState(0);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState<{
@@ -259,7 +268,13 @@ function Users() {
           >
             Search
           </Button>
-          <AddUserButton />
+          <AddUserButton
+            onSubmit={(val) => {
+              if (val) {
+                doSearch();
+              }
+            }}
+          />
           {/* <Button
             onClick={onOpen}
             leftIcon={<FiUserPlus />}

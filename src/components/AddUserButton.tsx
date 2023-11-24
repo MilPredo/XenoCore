@@ -10,7 +10,10 @@ interface RegisterFormValues {
   middle_name: string;
   last_name: string;
 }
-function AddUserButton() {
+interface AddUserButtonProps{
+
+}
+function AddUserButton({onSubmit}:{onSubmit:(val:boolean)=>void}) {
   const formik = useFormik<RegisterFormValues>({
     initialValues: {
       username: "",
@@ -51,6 +54,8 @@ function AddUserButton() {
         values.last_name,
         ""
       ).then((response) => {
+        
+        onSubmit(response?.status === 200)
         if (response?.status === 200) {
           // (async () => {
           //   let a = await getUsers(
