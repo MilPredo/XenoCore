@@ -5,7 +5,7 @@ import { FiPlus, FiSearch } from "react-icons/fi";
 
 function Suppliers() {
   return (
-    <Flex flex={1} flexDir="column">
+    <Flex flex={1} flexDir="column" overflow="hidden">
       <Flex
         p={2}
         bg="secondary.50"
@@ -34,14 +34,49 @@ function Suppliers() {
           Add Supplier
         </Button>
       </Flex>
-      <DynamicTable
-        columns={["Supplier", "Address", "Contact Number", "Email", "Notes"]}
-        rows={[
-          ["Arasaka", "Big St, Night City", "09232323232", "arasaka@arasaka.com", "ewan"],
-          ["Biotechnica", "Smol St, Night City", "09232275232", "biotechnica@biotechnica.com", "para di aa ahaha"],
-        ]}
-        count={1}
-      />
+      <Flex flex={1} flexDir="column" m="6" overflow="hidden">
+        <DynamicTable
+          columns={["Supplier", "Address", "Contact Number", "Email", "Notes"]}
+          rows={[
+            [
+              "United Laboratories (Unilab)",
+              "123 Pharma Street, Metro Manila",
+              "09171234567",
+              "info@unilab.com",
+              "Leading pharmaceutical company in the Philippines",
+            ],
+            [
+              "Pfizer Philippines",
+              "456 Med Lane, Quezon City",
+              "09281234567",
+              "info@pfizer.ph",
+              "Global pharmaceutical giant",
+            ],
+            [
+              "GlaxoSmithKline (GSK) Philippines",
+              "789 Pharma Avenue, Makati City",
+              "09391234567",
+              "info@gsk.ph",
+              "Multinational pharmaceutical company",
+            ],
+            [
+              "Merck Philippines",
+              "101 Health Drive, Taguig",
+              "09451234567",
+              "info@merck.com.ph",
+              "Global healthcare and life sciences company",
+            ],
+            [
+              "Sanofi Philippines",
+              "555 Wellness Street, Manila",
+              "09561234567",
+              "info@sanofi.ph",
+              "Global pharmaceutical company",
+            ],
+          ]}
+          count={1}
+        />
+      </Flex>
     </Flex>
   );
 }

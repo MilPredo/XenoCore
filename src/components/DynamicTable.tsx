@@ -36,7 +36,7 @@ const DynamicTable = (props: DynamicTableProps) => {
   // });
   return (
     <>
-      <Box borderRadius="md" boxShadow="base" overflow="auto" m="8">
+      <Box borderRadius="md" boxShadow="base" overflow="auto" m="2">
         <Table size="sm">
           <Thead
             bg="secondary.50"
@@ -64,7 +64,7 @@ const DynamicTable = (props: DynamicTableProps) => {
               )}
             </Tr>
           </Thead>
-          <Tbody>
+          <Tbody textTransform='uppercase'>
             {props.rows.map((row, index) => (
               <Tr key={index}>
                 {row.map((cell, index) =>

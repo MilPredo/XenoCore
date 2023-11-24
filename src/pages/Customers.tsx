@@ -2,10 +2,11 @@ import React from "react";
 import DynamicTable from "../components/DynamicTable";
 import { Button, Flex, Input } from "@chakra-ui/react";
 import { FiPlus, FiSearch, FiUserPlus } from "react-icons/fi";
+import AddCustomerButton from "../components/AddCustomerButton";
 
 function Customers() {
   return (
-    <Flex flex={1} flexDir="column">
+    <Flex flex={1} flexDir="column" overflow="hidden">
       <Flex
         p={2}
         bg="secondary.50"
@@ -30,18 +31,91 @@ function Customers() {
         <Button leftIcon={<FiSearch />} variant="solid" colorScheme="cyan">
           Search
         </Button>
-        <Button leftIcon={<FiUserPlus />} variant="solid" colorScheme="green">
-          Add Customer
-        </Button>
+        <AddCustomerButton />
       </Flex>
-      <DynamicTable
-        count={1}
-        columns={["First Name", "Middle Name", "Last Name", "Address", "Notes"]}
-        rows={[
-          ["Manny", "Pacman", "Pakyaw", "Seneral Gantos", "Eyy boksingero pre!!"],
-          ["Elon", "Martian", "Mars", "Elon City, Mars", "Is da GOAT!!!!"],
-        ]}
-      />
+
+      <Flex flex={1} flexDir="column" m="6" overflow='hidden'>
+        <DynamicTable
+          count={1}
+          columns={[
+            "First Name",
+            "Middle Name",
+            "Last Name",
+            "Contact Number",
+            "Notes",
+          ]}
+          rows={[
+            ["Juan", "Carlos", "Santos", "09171234567", ""],
+            ["Maria", "Cristina", "Lazaro", "09281234567", ""],
+            [
+              "Roberto",
+              "Jose",
+              "Del Rosario",
+              "09391234567",
+              "Providing feedback on recent service",
+            ],
+            ["Emilio", "Andres", "Reyes", "09451234567", ""],
+            ["Daniela", "Patricia", "Mendoza", "09561234567", ""],
+            ["Sofia", "Rosa", "Villanueva", "09671234567", ""],
+            [
+              "Mateo",
+              "David",
+              "Lim",
+              "09781234567",
+              "Scheduling a follow-up appointment",
+            ],
+            ["Olivia", "Luz", "Santiago", "09891234567", ""],
+            ["Alejandro", "Lu", "Gomez", "09991234567", ""],
+            [
+              "Emma",
+              "Nicole",
+              "Ramos",
+              "09101234567",
+              "Checking the status of an order",
+            ],
+            [
+              "Guillermo",
+              "Eduardo",
+              "Aquino",
+              "09211234567",
+              "Interested in special offers",
+            ],
+            ["Isabella", "Maria", "Castro", "09311234567", ""],
+            [
+              "Jaime",
+              "Tomas",
+              "Hernandez",
+              "09411234567",
+              "Providing feedback on recent purchase",
+            ],
+            ["Isabela", "Marie", "Lopez", "09511234567", ""],
+            ["Eduardo", "Jacob", "Garcia", "09611234567", ""],
+            [
+              "Mia",
+              "Gabriela",
+              "Reyes",
+              "09711234567",
+              "Inquiring about product warranty",
+            ],
+            ["Miguel", "Willie", "Torres", "09811234567", ""],
+            [
+              "Sophie",
+              "Paige",
+              "Collado",
+              "09911234567",
+              "Updating account information",
+            ],
+            ["Benjamin", "Carlos", "Rivera", "09121234567", ""],
+            [
+              "Alden",
+              "Jose",
+              "Yap",
+              "09221234567",
+              "Inquiring about shipping details",
+            ],
+          ]}
+        />
+      </Flex>
     </Flex>
   );
 }

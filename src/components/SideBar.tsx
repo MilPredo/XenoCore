@@ -8,6 +8,7 @@ import {
   Heading,
   Center,
   Badge,
+  Image,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import {
@@ -28,7 +29,7 @@ import { useAuthStore } from "../stores/authStore";
 
 function SideBar() {
   const [modules, setModules] = useState([
-    { name: "Statistics", to: "statistics", icon: FiBarChart2 },
+    { name: "Dashboard", to: "", icon: FiBarChart2 },
     { name: "Inventory", to: "inventory", icon: FiPackage },
     { name: "Purchases", to: "purchases", icon: FiShoppingCart },
     { name: "Sales", to: "sales", icon: FiDollarSign },
@@ -40,9 +41,9 @@ function SideBar() {
   ]);
   const { user } = useAuthStore();
   return (
-    <Flex flexDir="column">
+    <Flex flexDir="column" maxW="240px">
       <Center mx="2" py="4" borderRadius={"xl"}>
-        <Heading
+        {/* <Heading
           textAlign="center"
           fontFamily="MostlyMono"
           _light={{ letterSpacing: "widest" }}
@@ -50,7 +51,12 @@ function SideBar() {
           maxW="240px"
         >
           Inventory System
-        </Heading>
+        </Heading> */}
+        <Image
+          src="/InSys4.png"
+          alt="InSys Logo"
+          _dark={{ filter: "invert(1)"}}
+        />
       </Center>
       <Flex gap="2" flexDir={"column"} flex={1} overflow="auto" m="2">
         {/* <StackItem mt="2">
@@ -109,7 +115,7 @@ function SideBar() {
               borderRadius="md"
               bg="accentA.500"
               _light={{
-                bg: "accentB.500"
+                bg: "accentB.500",
               }}
               size="sm"
               fontWeight="extrabold"
@@ -122,9 +128,9 @@ function SideBar() {
             py={1}
             my={2}
             borderRadius="md"
-            bg="secondary.800" 
+            bg="secondary.800"
             _light={{
-              bg: "secondary.100", 
+              bg: "secondary.100",
             }}
             size="sm"
             fontWeight="medium"

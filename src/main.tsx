@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import Dashboard from "./Dashboard.tsx";
+import Dashboard from "./Root.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./pages/Login.tsx";
 import { Box, ChakraProvider, CSSReset, extendTheme } from "@chakra-ui/react";
@@ -18,7 +18,7 @@ import Purchases from "./pages/Purchases.tsx";
 import Products from "./pages/Products.tsx";
 import Suppliers from "./pages/Suppliers.tsx";
 import Customers from "./pages/Customers.tsx";
-import Statistics from "./pages/Statistics.tsx";
+import Statistics from "./pages/Dashboard.tsx";
 const router = createBrowserRouter([
   {
     path: "/dashboard",
@@ -29,7 +29,7 @@ const router = createBrowserRouter([
         element: <Inventory />,
       },
       {
-        path: "statistics",
+        path: "",
         element: <Statistics />,
       },
       {

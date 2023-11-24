@@ -404,78 +404,80 @@ function Inventory() {
         </Button>
       </Flex>
 
-      <DynamicTable
-        count={1}
-        columns={[
-          "Category",
-          "Product",
-          { content: "COG", attributes: { isNumeric: true } },
-          "Papers",
-          { content: "Price per Unit", attributes: { isNumeric: true } },
-          "Initial Quantity",
-          "Re-Order Level",
-          "Current In Stock Quantity",
-          "Status",
-          {
-            content: "Total Inventory Cost",
-            attributes: { isNumeric: true },
-          },
-          {
-            content: "Total Inventory Value",
-            attributes: { isNumeric: true },
-          },
-        ]}
-        rows={dummyInventory.map((value) => [
-          { content: <Tag>{value.category}</Tag> },
-          value.productName,
-          value.cog + "",
-          value.papers ? "✔️" : "❌",
-          {
-            content: new Intl.NumberFormat("en-PH", {
-              style: "currency",
-              currency: "PHP",
-            }).format(value.pricePerUnit),
-            attributes: { isNumeric: true },
-          },
-          value.initialQuantity + "",
-          value.reOrderLevel + "",
-          value.initialQuantity + "",
-          {
-            content: (
-              <Badge
-                variant="solid"
-                colorScheme={
-                  value.initialQuantity >= value.reOrderLevel
-                    ? "green"
+      <Flex flex={1} flexDir="column" m="6" overflow='hidden'>
+        <DynamicTable
+          count={1}
+          columns={[
+            "Category",
+            "Product",
+            { content: "COG", attributes: { isNumeric: true } },
+            "Papers",
+            { content: "Price per Unit", attributes: { isNumeric: true } },
+            "Initial Quantity",
+            "Re-Order Level",
+            "Current In Stock Quantity",
+            "Status",
+            {
+              content: "Total Inventory Cost",
+              attributes: { isNumeric: true },
+            },
+            {
+              content: "Total Inventory Value",
+              attributes: { isNumeric: true },
+            },
+          ]}
+          rows={dummyInventory.map((value) => [
+            { content: <Tag>{value.category}</Tag> },
+            value.productName,
+            value.cog + "",
+            value.papers ? "✔️" : "❌",
+            {
+              content: new Intl.NumberFormat("en-PH", {
+                style: "currency",
+                currency: "PHP",
+              }).format(value.pricePerUnit),
+              attributes: { isNumeric: true },
+            },
+            value.initialQuantity + "",
+            value.reOrderLevel + "",
+            value.initialQuantity + "",
+            {
+              content: (
+                <Badge
+                  variant="solid"
+                  colorScheme={
+                    value.initialQuantity >= value.reOrderLevel
+                      ? "green"
+                      : value.initialQuantity <= 0
+                      ? "red"
+                      : "orange"
+                  }
+                >
+                  {value.initialQuantity >= value.reOrderLevel
+                    ? "In Stock"
                     : value.initialQuantity <= 0
-                    ? "red"
-                    : "orange"
-                }
-              >
-                {value.initialQuantity >= value.reOrderLevel
-                  ? "In Stock"
-                  : value.initialQuantity <= 0
-                  ? "No Stock"
-                  : "Low Stock"}
-              </Badge>
-            ),
-          },
-          {
-            content: new Intl.NumberFormat("en-PH", {
-              style: "currency",
-              currency: "PHP",
-            }).format(value.cog * value.initialQuantity),
-            attributes: { isNumeric: true },
-          },
-          {
-            content: new Intl.NumberFormat("en-PH", {
-              style: "currency",
-              currency: "PHP",
-            }).format(value.pricePerUnit * value.initialQuantity),
-            attributes: { isNumeric: true },
-          },
-        ])}
-      />
+                    ? "No Stock"
+                    : "Low Stock"}
+                </Badge>
+              ),
+            },
+            {
+              content: new Intl.NumberFormat("en-PH", {
+                style: "currency",
+                currency: "PHP",
+              }).format(value.cog * value.initialQuantity),
+              attributes: { isNumeric: true },
+            },
+            {
+              content: new Intl.NumberFormat("en-PH", {
+                style: "currency",
+                currency: "PHP",
+              }).format(value.pricePerUnit * value.initialQuantity),
+              attributes: { isNumeric: true },
+            },
+          ])}
+        />
+      </Flex>
       {/* <Table overflowX="unset" overflowY="unset" size="sm">
           <Thead
             _light={{ boxShadow: "base" }}
