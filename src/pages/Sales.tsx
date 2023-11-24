@@ -2,6 +2,7 @@ import { Box, Button, Flex, Input } from "@chakra-ui/react";
 import React from "react";
 import DynamicTable from "../components/DynamicTable";
 import { FiPlus, FiSearch } from "react-icons/fi";
+import AddSalesButton from "../components/AddSalesButton";
 
 function Sales() {
   return (
@@ -30,9 +31,7 @@ function Sales() {
         <Button leftIcon={<FiSearch />} variant="solid" colorScheme="cyan">
           Search
         </Button>
-        <Button leftIcon={<FiPlus />} variant="solid" colorScheme="green">
-          Add New
-        </Button>
+        <AddSalesButton />
       </Flex>
       <DynamicTable
         count={1}
