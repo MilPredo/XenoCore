@@ -130,7 +130,7 @@ function AddSupplierButton() {
             </ModalBody>
             <ModalFooter>
               <Button type="submit" colorScheme="green" mr={3}>
-                Add Customer
+                Add Supplier
               </Button>
               <Button onClick={onClose}>Close</Button>
             </ModalFooter>

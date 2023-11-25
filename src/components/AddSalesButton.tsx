@@ -241,7 +241,7 @@ function AddSalesButton({ onSubmit }: { onSubmit?: (val: boolean) => void }) {
             </ModalBody>
             <ModalFooter>
               <Button type="submit" colorScheme="green" mr={3}>
-                Add
+                Sell
               </Button>
               <Button onClick={onClose}>Close</Button>
             </ModalFooter>

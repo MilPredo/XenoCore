@@ -194,7 +194,7 @@ function AddPurchaseButton() {
             </ModalBody>
             <ModalFooter>
               <Button type="submit" colorScheme="green" mr={3}>
-                Add
+                Purchase
               </Button>
               <Button onClick={onClose}>Close</Button>
             </ModalFooter>
