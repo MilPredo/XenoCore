@@ -30,7 +30,7 @@ function Login() {
   useEffect(() => {
     if (isAuthenticated) {
       //console.log(user);
-      navigate("/dashboard");
+      navigate("/dashboard/dashboard");
     }
 
     if (error) {

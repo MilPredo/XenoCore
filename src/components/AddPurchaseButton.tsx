@@ -111,13 +111,10 @@ function AddPurchaseButton() {
 
               <InputGroup gap={4}>
                 <FormControl mt={4}>
-                  <FormLabel>First Name</FormLabel>
+                  <FormLabel>Supplier Name</FormLabel>
                   <Input
-                    placeholder="First Name"
                     onChange={formik.handleChange}
                     value={formik.values.first_name}
-                    id="first_name"
-                    name="first_name"
                   />
                 </FormControl>
                 <FormControl mt={4}>

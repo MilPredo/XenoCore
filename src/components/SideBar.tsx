@@ -29,7 +29,7 @@ import { useAuthStore } from "../stores/authStore";
 
 function SideBar() {
   const [modules, setModules] = useState([
-    { name: "Dashboard", to: "", icon: FiBarChart2 },
+    { name: "Dashboard", to: "dashboard", icon: FiBarChart2 },
     { name: "Inventory", to: "inventory", icon: FiPackage },
     { name: "Purchases", to: "purchases", icon: FiShoppingCart },
     { name: "Sales", to: "sales", icon: FiDollarSign },

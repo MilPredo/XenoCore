@@ -123,7 +123,6 @@ function AddSalesButton({ onSubmit }: { onSubmit?: (val: boolean) => void }) {
                 <FormControl mt={4}>
                   <FormLabel>First Name</FormLabel>
                   <Input
-                    placeholder="First Name"
                     onChange={formik.handleChange}
                     value={formik.values.first_name}
                     id="first_name"
@@ -134,7 +133,6 @@ function AddSalesButton({ onSubmit }: { onSubmit?: (val: boolean) => void }) {
                 <FormControl mt={4}>
                   <FormLabel>Middle Name</FormLabel>
                   <Input
-                    placeholder="Middle Name"
                     onChange={formik.handleChange}
                     value={formik.values.middle_name}
                     id="middle_name"
@@ -145,7 +143,6 @@ function AddSalesButton({ onSubmit }: { onSubmit?: (val: boolean) => void }) {
                 <FormControl mt={4}>
                   <FormLabel>Last Name</FormLabel>
                   <Input
-                    placeholder="Last Name"
                     onChange={formik.handleChange}
                     value={formik.values.last_name}
                     id="last_name"
