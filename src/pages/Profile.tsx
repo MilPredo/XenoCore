@@ -34,18 +34,13 @@ function Profile() {
   return (
     <Flex flex={1} flexDir="column">
       <Flex p="4" m="4" flexDir="column" gap="2">
-        <Link to='/dashboard/users'>
-        <Button leftIcon={<FiArrowLeft/>} colorScheme="cyan">Back</Button>
+        <Link to="/dashboard/users">
+          <Button leftIcon={<FiArrowLeft />} colorScheme="cyan">
+            Back
+          </Button>
         </Link>
         <Flex flexDir="row">
-          <Flex
-            flexDir="column"
-            borderRadius="xl"
-            gap="2"
-            p="4"
-            bg="secondary.700"
-            _light={{ bg: "secondary.50" }}
-          >
+          <Flex flexDir="column" borderRadius="xl" gap="2" p="4" bg="secondary.700" _light={{ bg: "secondary.50" }}>
             <Flex flexDir="row" gap="2">
               <Heading
                 bg="dominant.600"
@@ -110,42 +105,127 @@ function Profile() {
         </Flex>
 
         <DynamicTable
-        count={1}
+          count={1}
           columns={["Module", "Create", "Read", "Update", "Delete"]}
           rows={[
             [
               "User Management",
               {
-                content: (
-                  <Checkbox
-                    isReadOnly
-                    isChecked={profile?.access["user_management_access"]?.canCreate ?? false}
-                  />
-                ),
+                content: <Checkbox defaultChecked={profile?.access["user_management_access"]?.canCreate ?? false} />,
               },
               {
-                content: (
-                  <Checkbox
-                    isReadOnly
-                    isChecked={profile?.access["user_management_access"]?.canRead ?? false}
-                  />
-                ),
+                content: <Checkbox defaultChecked={profile?.access["user_management_access"]?.canRead ?? false} />,
               },
               {
-                content: (
-                  <Checkbox
-                    isReadOnly
-                    isChecked={profile?.access["user_management_access"]?.canUpdate ?? false}
-                  />
-                ),
+                content: <Checkbox defaultChecked={profile?.access["user_management_access"]?.canUpdate ?? false} />,
               },
               {
-                content: (
-                  <Checkbox
-                    isReadOnly
-                    isChecked={profile?.access["user_management_access"]?.canDelete ?? false}
-                  />
-                ),
+                content: <Checkbox defaultChecked={profile?.access["user_management_access"]?.canDelete ?? false} />,
+              },
+            ],
+            [
+              "Products",
+              {
+                content: <Checkbox />,
+              },
+              {
+                content: <Checkbox />,
+              },
+              {
+                content: <Checkbox />,
+              },
+              {
+                content: <Checkbox />,
+              },
+            ],
+            [
+              "Suppliers",
+              {
+                content: <Checkbox />,
+              },
+              {
+                content: <Checkbox />,
+              },
+              {
+                content: <Checkbox />,
+              },
+              {
+                content: <Checkbox />,
+              },
+            ],
+            [
+              "Sales",
+              {
+                content: <Checkbox />,
+              },
+              {
+                content: <Checkbox />,
+              },
+              {
+                content: <Checkbox />,
+              },
+              {
+                content: <Checkbox />,
+              },
+            ],
+            [
+              "Purchases",
+              {
+                content: <Checkbox />,
+              },
+              {
+                content: <Checkbox />,
+              },
+              {
+                content: <Checkbox />,
+              },
+              {
+                content: <Checkbox />,
+              },
+            ],
+            [
+              "Customers",
+              {
+                content: <Checkbox />,
+              },
+              {
+                content: <Checkbox />,
+              },
+              {
+                content: <Checkbox />,
+              },
+              {
+                content: <Checkbox />,
+              },
+            ],
+            [
+              "Inventory",
+              {
+                content: <Checkbox />,
+              },
+              {
+                content: <Checkbox />,
+              },
+              {
+                content: <Checkbox />,
+              },
+              {
+                content: <Checkbox />,
+              },
+            ],
+            [
+              "Reports",
+              {
+                content: <Checkbox />,
+              },
+              {
+                content: <Checkbox />,
+              },
+              {
+                content: <Checkbox />,
+              },
+              {
+                content: <Checkbox />,
               },
             ],
           ]}

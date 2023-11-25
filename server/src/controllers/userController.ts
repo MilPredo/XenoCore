@@ -29,7 +29,8 @@ export class UserController {
       // console.log((error as any).detail);
       // console.log(error);
       reply
-        .status((error as any).code === "23505" ? 409 : 500)
+        //.status((error as any).code === "23505" ? 409 : 500)
+        .status(500)
         .send({ message: (error as { detail: string }).detail });
     }
   }
@@ -43,7 +44,10 @@ export class UserController {
       // console.log("error");
       // console.log((error as any).detail);
       // console.log(error);
-      reply.status(500).send({ message: (error as { detail: string }).detail });
+      reply
+        .status(500)
+        .status(500)
+        .send({ message: (error as { detail: string }).detail });
     }
   }
 

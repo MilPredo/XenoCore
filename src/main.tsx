@@ -1,11 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import Dashboard from "./Root.tsx";
+import Root from "./Root.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./pages/Login.tsx";
 import { Box, ChakraProvider, CSSReset, extendTheme } from "@chakra-ui/react";
-
-
 
 import Inventory from "./pages/Inventory.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
@@ -18,11 +16,11 @@ import Purchases from "./pages/Purchases.tsx";
 import Products from "./pages/Products.tsx";
 import Suppliers from "./pages/Suppliers.tsx";
 import Customers from "./pages/Customers.tsx";
-import Statistics from "./pages/Dashboard.tsx";
+import Dashboard from "./pages/Dashboard.tsx";
 const router = createBrowserRouter([
   {
     path: "/dashboard",
-    element: <ProtectedRoute element={<Dashboard />} />,
+    element: <ProtectedRoute element={<Root />} />,
     children: [
       {
         path: "inventory",
@@ -30,11 +28,11 @@ const router = createBrowserRouter([
       },
       {
         path: "",
-        element: <Statistics />,
+        element: <Dashboard />,
       },
       {
         path: "products",
-        element: <Products />
+        element: <Products />,
       },
       {
         path: "sales",

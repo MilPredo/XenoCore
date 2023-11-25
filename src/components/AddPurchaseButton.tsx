@@ -21,41 +21,33 @@ import {
   NumberInputStepper,
   Select,
   Text,
+  Textarea,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import React, { useRef } from "react";
-import { FiPlus, FiSearch } from "react-icons/fi";
-import { AutoComplete, AutoCompleteInput, AutoCompleteItem, AutoCompleteList } from "@choc-ui/chakra-autocomplete";
+import { FiPlus, FiSearch, FiUserPlus } from "react-icons/fi";
 import AddCustomerButton from "./AddCustomerButton";
 import DynamicTable from "./DynamicTable";
-
+import { AutoComplete, AutoCompleteInput, AutoCompleteItem, AutoCompleteList } from "@choc-ui/chakra-autocomplete";
+import AddProductButton from "./AddProductButton";
 interface RegisterFormValues {
-  username: string;
-  password: string;
   first_name: string;
   middle_name: string;
   last_name: string;
+  contact_number: string;
 }
 
-function AddSalesButton({ onSubmit }: { onSubmit?: (val: boolean) => void }) {
+function AddPurchaseButton() {
   const formik = useFormik<RegisterFormValues>({
     initialValues: {
-      username: "",
-      password: "",
       first_name: "",
       last_name: "",
       middle_name: "",
+      contact_number: "",
     },
     validate: (values) => {
       const errors: Partial<RegisterFormValues> = {};
-      if (!values.username) {
-        errors.username = "Username is required";
-      }
-
-      if (!values.password) {
-        errors.password = "Password is required";
-      }
 
       if (!values.first_name) {
         errors.first_name = "First name is required";
@@ -100,24 +92,22 @@ function AddSalesButton({ onSubmit }: { onSubmit?: (val: boolean) => void }) {
       // });
     },
   });
-  const products = ["bonamine", "neozef", "cetirizine", "bioflu", "ibroprufen"];
-  //https://github.com/anubra266/choc-autocomplete
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = useRef(null);
-  
+  const products = ["bonamine", "neozef", "cetirizine", "bioflu", "ibroprufen"];
   return (
     <>
       <Button onClick={onOpen} leftIcon={<FiPlus />} variant="solid" colorScheme="green">
-        Add New Sale
+        Add New Purchase
       </Button>
       <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose} isCentered size="6xl">
         <form onSubmit={formik.handleSubmit}>
           <ModalOverlay />
           <ModalContent>
-            <ModalHeader>Add new sale</ModalHeader>
+            <ModalHeader>Add new purchase</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-              <Heading size="sm">Select customer</Heading>
+              <Heading size="sm">Select supplier</Heading>
 
               <InputGroup gap={4}>
                 <FormControl mt={4}>
@@ -130,47 +120,23 @@ function AddSalesButton({ onSubmit }: { onSubmit?: (val: boolean) => void }) {
                     name="first_name"
                   />
                 </FormControl>
-
-                <FormControl mt={4}>
-                  <FormLabel>Middle Name</FormLabel>
-                  <Input
-                    placeholder="Middle Name"
-                    onChange={formik.handleChange}
-                    value={formik.values.middle_name}
-                    id="middle_name"
-                    name="middle_name"
-                  />
-                </FormControl>
-
-                <FormControl mt={4}>
-                  <FormLabel>Last Name</FormLabel>
-                  <Input
-                    placeholder="Last Name"
-                    onChange={formik.handleChange}
-                    value={formik.values.last_name}
-                    id="last_name"
-                    name="last_name"
-                  />
-                </FormControl>
                 <FormControl mt={4}>
                   <FormLabel>Actions</FormLabel>
                   <Flex gap={2}>
                     <Button leftIcon={<FiSearch />} variant="solid" colorScheme="cyan">
                       Search
-                    </Button>
-                    <AddCustomerButton />
+                    </Button> 
+                    <AddProductButton />
                   </Flex>
                 </FormControl>
               </InputGroup>
               <Flex flex={1} flexDir="column" overflow="hidden" mt={6}>
                 <DynamicTable
                   count={1}
-                  columns={["First Name", "Middle Name", "Last Name", "Contact Number", "Action"]}
+                  columns={["Supplier", "Contact Number", "Action"]}
                   rows={[
                     [
-                      "Juan",
-                      "Carlos",
-                      "Santos",
+                      "UNITED LABORATORIES (UNILAB)",
                       "09171234567",
                       {
                         content: (
@@ -184,9 +150,9 @@ function AddSalesButton({ onSubmit }: { onSubmit?: (val: boolean) => void }) {
                 />
               </Flex>
               <Flex>
-                <FormLabel>Currently Selected Customer:</FormLabel>
+                <FormLabel>Currently Selected Supplier:</FormLabel>
                 <Text fontWeight="bold" textTransform="uppercase">
-                  Juan Carlos Santos
+                UNITED LABORATORIES (UNILAB)
                 </Text>
               </Flex>
               <InputGroup gap={4}>
@@ -215,31 +181,18 @@ function AddSalesButton({ onSubmit }: { onSubmit?: (val: boolean) => void }) {
                   </NumberInput>
                 </FormControl>
                 <FormControl mt={4}>
-                  <FormLabel>Payment Method</FormLabel>
-                  <Select placeholder="...">
-                    <option>Cash (Full Payment)</option>
-                    <option>Cash (Partial Payment)</option>
-                    <option>E-Wallet</option>
-                    <option>Cheque (Full Payment/PDC)</option>
-                    <option>Cheque (Full Payment/Dated)</option>
-                    <option>Cheque (Partial Payment/PDC)</option>
-                    <option>Cheque (Partial Payment/Dated)</option>
-                  </Select>
-                </FormControl>
+                  <FormLabel>Delivery Date</FormLabel>
+                  <Input type="date"></Input>
+                </FormControl> 
                 <FormControl mt={4}>
-                  <FormLabel>Select Remittance Status</FormLabel>
-                  <Select placeholder="...">
-                    <option>Remitted</option>
-                    <option>Un-Remitted</option>
+                  <FormLabel>Order Status</FormLabel>
+                  <Select defaultValue="Ordered" width="150px">
+                    <option value="Ordered">Ordered</option>
+                    <option value="Delivered">Delivered</option>
+                    <option value="Incomplete">Incomplete</option>
+                    <option value="Problematic">Problematic</option>
                   </Select>
-                </FormControl>
-                <FormControl mt={4}>
-                  <FormLabel>Sold as</FormLabel>
-                  <Select placeholder="...">
-                    <option>Agent</option>
-                    <option>Doctor</option>
-                  </Select>
-                </FormControl>
+                </FormControl> 
               </InputGroup>
             </ModalBody>
             <ModalFooter>
@@ -255,4 +208,4 @@ function AddSalesButton({ onSubmit }: { onSubmit?: (val: boolean) => void }) {
   );
 }
 
-export default AddSalesButton;
+export default AddPurchaseButton;

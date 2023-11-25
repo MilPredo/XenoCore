@@ -50,317 +50,155 @@ function calculateStockStatus(
 function Inventory() {
   const dummyInventory = [
     {
-      category: "Machines",
-      productName: "Hemodialysis Machine",
-      cog: 25000.0, // Cost in Philippine Peso
-      papers: false,
-      pricePerUnit: 45000.0, // Price in Philippine Peso
-      initialQuantity: 5,
-      reOrderLevel: 2,
+      category: "E",
+      productName: "AMOXICILLIN",
+      cog: 15.99,
+      papers: true,
+      pricePerUnit: 15.99,
+      initialQuantity: 700,
+      reOrderLevel: 300,
     },
     {
-      category: "Supplies",
-      productName: "Dialyzer",
-      cog: 150.0, // Cost in Philippine Peso
+      category: "E",
+      productName: "LOPERAMIDE",
+      cog: 9.49,
       papers: true,
-      pricePerUnit: 300.0, // Price in Philippine Peso
-      initialQuantity: 100,
-      reOrderLevel: 50,
-    },
-    {
-      category: "Supplies",
-      productName: "Blood Tubing Set",
-      cog: 25.0, // Cost in Philippine Peso
-      papers: true,
-      pricePerUnit: 60.0, // Price in Philippine Peso
-      initialQuantity: 200,
+      pricePerUnit: 9.49,
+      initialQuantity: 300,
       reOrderLevel: 100,
     },
     {
-      category: "Medicine",
-      productName: "Heparin Solution",
-      cog: 10.0, // Cost in Philippine Peso
+      category: "E",
+      productName: "RANITIDINE",
+      cog: 11.99,
       papers: true,
-      pricePerUnit: 25.0, // Price in Philippine Peso
-      initialQuantity: 50,
-      reOrderLevel: 20,
+      pricePerUnit: 11.99,
+      initialQuantity: 200,
+      reOrderLevel: 120,
     },
     {
-      category: "Machines",
-      productName: "Reverse Osmosis System",
-      cog: 8000.0, // Cost in Philippine Peso
+      category: "E",
+      productName: "SALBUTAMOL INHALER",
+      cog: 18.99,
       papers: false,
-      pricePerUnit: 15000.0, // Price in Philippine Peso
+      pricePerUnit: 18.99,
       initialQuantity: 0,
       reOrderLevel: 1,
     },
     {
-      category: "Supplies",
-      productName: "Dialysis Catheters",
-      cog: 80.0, // Cost in Philippine Peso
+      category: "E",
+      productName: "HYDROCHLOROTHIAZIDE",
+      cog: 14.99,
       papers: true,
-      pricePerUnit: 150.0, // Price in Philippine Peso
+      pricePerUnit: 14.99,
+      initialQuantity: 120,
+      reOrderLevel: 24,
+    },
+    {
+      category: "E",
+      productName: "OMEPRAZOLE",
+      cog: 17.49,
+      papers: true,
+      pricePerUnit: 17.49,
+      initialQuantity: 100,
+      reOrderLevel: 20,
+    },
+    {
+      category: "A",
+      productName: "PARACETAMOL",
+      cog: 5.99,
+      papers: false,
+      pricePerUnit: 5.99,
+      initialQuantity: 1000,
+      reOrderLevel: 20,
+    },
+    {
+      category: "B",
+      productName: "IBUPROFEN",
+      cog: 12.49,
+      papers: false,
+      pricePerUnit: 12.49,
+      initialQuantity: 800,
+      reOrderLevel: 30,
+    },
+    {
+      category: "C",
+      productName: "CETIRIZINE",
+      cog: 8.99,
+      papers: true,
+      pricePerUnit: 8.99,
+      initialQuantity: 1200,
+      reOrderLevel: 40,
+    },
+    {
+      category: "D",
+      productName: "ASCORBIC ACID (VITAMIN C)",
+      cog: 15.99,
+      papers: true,
+      pricePerUnit: 15.99,
+      initialQuantity: 500,
+      reOrderLevel: 20,
+    },
+    {
+      category: "E",
+      productName: "AMOXICILLIN",
+      cog: 9.49,
+      papers: true,
+      pricePerUnit: 9.49,
+      initialQuantity: 700,
+      reOrderLevel: 300,
+    },
+    {
+      category: "A",
+      productName: "LOPERAMIDE",
+      cog: 11.99,
+      papers: true,
+      pricePerUnit: 11.99,
+      initialQuantity: 300,
+      reOrderLevel: 100,
+    },
+    {
+      category: "B",
+      productName: "RANITIDINE",
+      cog: 15.99,
+      papers: true,
+      pricePerUnit: 15.99,
+      initialQuantity: 200,
+      reOrderLevel: 120,
+    },
+    {
+      category: "D",
+      productName: "ASCORBIC ACID (VITAMIN C)",
+      cog: 5.99,
+      papers: false,
+      pricePerUnit: 5.99,
+      initialQuantity: 1000,
+      reOrderLevel: 20,
+    },
+    {
+      category: "E",
+      productName: "LOPERAMIDE",
+      cog: 11.99,
+      papers: true,
+      pricePerUnit: 11.99,
+      initialQuantity: 300,
+      reOrderLevel: 100,
+    },
+    {
+      category: "A",
+      productName: "RANITIDINE",
+      cog: 80.0,
+      papers: true,
+      pricePerUnit: 150.0,
       initialQuantity: 50,
       reOrderLevel: 100,
     },
     {
-      category: "Medicine",
-      productName: "Erythropoietin (EPO)",
-      cog: 200.0, // Cost in Philippine Peso
+      category: "D",
+      productName: "ASCORBIC ACID (VITAMIN C)",
+      cog: 200.0,
       papers: true,
-      pricePerUnit: 450.0, // Price in Philippine Peso
-      initialQuantity: 30,
-      reOrderLevel: 10,
-    },
-    {
-      category: "Medicine",
-      productName: "Erythropoietin (EPO)",
-      cog: 200.0, // Cost in Philippine Peso
-      papers: true,
-      pricePerUnit: 450.0, // Price in Philippine Peso
-      initialQuantity: 30,
-      reOrderLevel: 10,
-    },
-    {
-      category: "Medicine",
-      productName: "Erythropoietin (EPO)",
-      cog: 200.0, // Cost in Philippine Peso
-      papers: true,
-      pricePerUnit: 450.0, // Price in Philippine Peso
-      initialQuantity: 30,
-      reOrderLevel: 10,
-    },
-    {
-      category: "Medicine",
-      productName: "Erythropoietin (EPO)",
-      cog: 200.0, // Cost in Philippine Peso
-      papers: true,
-      pricePerUnit: 450.0, // Price in Philippine Peso
-      initialQuantity: 30,
-      reOrderLevel: 10,
-    },
-    {
-      category: "Medicine",
-      productName: "Erythropoietin (EPO)",
-      cog: 200.0, // Cost in Philippine Peso
-      papers: true,
-      pricePerUnit: 450.0, // Price in Philippine Peso
-      initialQuantity: 30,
-      reOrderLevel: 10,
-    },
-    {
-      category: "Medicine",
-      productName: "Erythropoietin (EPO)",
-      cog: 200.0, // Cost in Philippine Peso
-      papers: true,
-      pricePerUnit: 450.0, // Price in Philippine Peso
-      initialQuantity: 30,
-      reOrderLevel: 10,
-    },
-    {
-      category: "Medicine",
-      productName: "Erythropoietin (EPO)",
-      cog: 200.0, // Cost in Philippine Peso
-      papers: true,
-      pricePerUnit: 450.0, // Price in Philippine Peso
-      initialQuantity: 30,
-      reOrderLevel: 10,
-    },
-    {
-      category: "Medicine",
-      productName: "Erythropoietin (EPO)",
-      cog: 200.0, // Cost in Philippine Peso
-      papers: true,
-      pricePerUnit: 450.0, // Price in Philippine Peso
-      initialQuantity: 30,
-      reOrderLevel: 10,
-    },
-    {
-      category: "Medicine",
-      productName: "Erythropoietin (EPO)",
-      cog: 200.0, // Cost in Philippine Peso
-      papers: true,
-      pricePerUnit: 450.0, // Price in Philippine Peso
-      initialQuantity: 30,
-      reOrderLevel: 10,
-    },
-    {
-      category: "Medicine",
-      productName: "Erythropoietin (EPO)",
-      cog: 200.0, // Cost in Philippine Peso
-      papers: true,
-      pricePerUnit: 450.0, // Price in Philippine Peso
-      initialQuantity: 30,
-      reOrderLevel: 10,
-    },
-    {
-      category: "Medicine",
-      productName: "Erythropoietin (EPO)",
-      cog: 200.0, // Cost in Philippine Peso
-      papers: true,
-      pricePerUnit: 450.0, // Price in Philippine Peso
-      initialQuantity: 30,
-      reOrderLevel: 10,
-    },
-    {
-      category: "Medicine",
-      productName: "Erythropoietin (EPO)",
-      cog: 200.0, // Cost in Philippine Peso
-      papers: true,
-      pricePerUnit: 450.0, // Price in Philippine Peso
-      initialQuantity: 30,
-      reOrderLevel: 10,
-    },
-    {
-      category: "Medicine",
-      productName: "Erythropoietin (EPO)",
-      cog: 200.0, // Cost in Philippine Peso
-      papers: true,
-      pricePerUnit: 450.0, // Price in Philippine Peso
-      initialQuantity: 30,
-      reOrderLevel: 10,
-    },
-    {
-      category: "Medicine",
-      productName: "Erythropoietin (EPO)",
-      cog: 200.0, // Cost in Philippine Peso
-      papers: true,
-      pricePerUnit: 450.0, // Price in Philippine Peso
-      initialQuantity: 30,
-      reOrderLevel: 10,
-    },
-    {
-      category: "Medicine",
-      productName: "Erythropoietin (EPO)",
-      cog: 200.0, // Cost in Philippine Peso
-      papers: true,
-      pricePerUnit: 450.0, // Price in Philippine Peso
-      initialQuantity: 30,
-      reOrderLevel: 10,
-    },
-    {
-      category: "Medicine",
-      productName: "Erythropoietin (EPO)",
-      cog: 200.0, // Cost in Philippine Peso
-      papers: true,
-      pricePerUnit: 450.0, // Price in Philippine Peso
-      initialQuantity: 30,
-      reOrderLevel: 10,
-    },
-    {
-      category: "Medicine",
-      productName: "Erythropoietin (EPO)",
-      cog: 200.0, // Cost in Philippine Peso
-      papers: true,
-      pricePerUnit: 450.0, // Price in Philippine Peso
-      initialQuantity: 30,
-      reOrderLevel: 10,
-    },
-    {
-      category: "Medicine",
-      productName: "Erythropoietin (EPO)",
-      cog: 200.0, // Cost in Philippine Peso
-      papers: true,
-      pricePerUnit: 450.0, // Price in Philippine Peso
-      initialQuantity: 30,
-      reOrderLevel: 10,
-    },
-    {
-      category: "Medicine",
-      productName: "Erythropoietin (EPO)",
-      cog: 200.0, // Cost in Philippine Peso
-      papers: true,
-      pricePerUnit: 450.0, // Price in Philippine Peso
-      initialQuantity: 30,
-      reOrderLevel: 10,
-    },
-    {
-      category: "Medicine",
-      productName: "Erythropoietin (EPO)",
-      cog: 200.0, // Cost in Philippine Peso
-      papers: true,
-      pricePerUnit: 450.0, // Price in Philippine Peso
-      initialQuantity: 30,
-      reOrderLevel: 10,
-    },
-    {
-      category: "Medicine",
-      productName: "Erythropoietin (EPO)",
-      cog: 200.0, // Cost in Philippine Peso
-      papers: true,
-      pricePerUnit: 450.0, // Price in Philippine Peso
-      initialQuantity: 30,
-      reOrderLevel: 10,
-    },
-    {
-      category: "Medicine",
-      productName: "Erythropoietin (EPO)",
-      cog: 200.0, // Cost in Philippine Peso
-      papers: true,
-      pricePerUnit: 450.0, // Price in Philippine Peso
-      initialQuantity: 30,
-      reOrderLevel: 10,
-    },
-    {
-      category: "Medicine",
-      productName: "Erythropoietin (EPO)",
-      cog: 200.0, // Cost in Philippine Peso
-      papers: true,
-      pricePerUnit: 450.0, // Price in Philippine Peso
-      initialQuantity: 30,
-      reOrderLevel: 10,
-    },
-    {
-      category: "Medicine",
-      productName: "Erythropoietin (EPO)",
-      cog: 200.0, // Cost in Philippine Peso
-      papers: true,
-      pricePerUnit: 450.0, // Price in Philippine Peso
-      initialQuantity: 30,
-      reOrderLevel: 10,
-    },
-    {
-      category: "Medicine",
-      productName: "Erythropoietin (EPO)",
-      cog: 200.0, // Cost in Philippine Peso
-      papers: true,
-      pricePerUnit: 450.0, // Price in Philippine Peso
-      initialQuantity: 30,
-      reOrderLevel: 10,
-    },
-    {
-      category: "Medicine",
-      productName: "Erythropoietin (EPO)",
-      cog: 200.0, // Cost in Philippine Peso
-      papers: true,
-      pricePerUnit: 450.0, // Price in Philippine Peso
-      initialQuantity: 30,
-      reOrderLevel: 10,
-    },
-    {
-      category: "Medicine",
-      productName: "Erythropoietin (EPO)",
-      cog: 200.0, // Cost in Philippine Peso
-      papers: true,
-      pricePerUnit: 450.0, // Price in Philippine Peso
-      initialQuantity: 30,
-      reOrderLevel: 10,
-    },
-    {
-      category: "Medicine",
-      productName: "Erythropoietin (EPO)",
-      cog: 200.0, // Cost in Philippine Peso
-      papers: true,
-      pricePerUnit: 450.0, // Price in Philippine Peso
-      initialQuantity: 30,
-      reOrderLevel: 10,
-    },
-    {
-      category: "Medicine",
-      productName: "Erythropoietin (EPO)",
-      cog: 200.0, // Cost in Philippine Peso
-      papers: true,
-      pricePerUnit: 450.0, // Price in Philippine Peso
+      pricePerUnit: 450.0,
       initialQuantity: 30,
       reOrderLevel: 10,
     },

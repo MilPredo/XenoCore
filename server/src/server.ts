@@ -21,7 +21,7 @@ app.register(fastifyPostgres, {
   user: "otsxmkfc",
   host: "rain.db.elephantsql.com",
   database: "otsxmkfc",
-  password: "I_eBormFu7QbBv_5vb2Oa0ISUqIOS70h",
+  password: "Yq80wlq6E7pmcacRxRPK3gaLJQADPPrO",
   port: 5432, //5432 1337
 });
 // Register the fastify-jwt plugin with your secret key
