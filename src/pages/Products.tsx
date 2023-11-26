@@ -31,7 +31,6 @@ function Products() {
           count={1}
           columns={[
             "Item ID",
-            "Supplier",
             "Product",
             {
               content: "Current Sale Price Per Item",
