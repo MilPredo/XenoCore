@@ -46,7 +46,6 @@ function Purchases() {
               "Paracetamol",
               "1000",
               {
-                attributes: { isNumeric: true },
                 content: new Intl.NumberFormat("en-PH", { style: "currency", currency: "PHP" }).format(5.99),
               },
               "2023-11-01",
@@ -70,7 +69,6 @@ function Purchases() {
               "Ibuprofen",
               "800",
               {
-                attributes: { isNumeric: true },
                 content: new Intl.NumberFormat("en-PH", { style: "currency", currency: "PHP" }).format(12.49),
               },
               "2023-11-02",
@@ -94,7 +92,6 @@ function Purchases() {
               "Cetirizine",
               "1200",
               {
-                attributes: { isNumeric: true },
                 content: new Intl.NumberFormat("en-PH", { style: "currency", currency: "PHP" }).format(8.99),
               },
               "2023-11-03",
@@ -118,7 +115,6 @@ function Purchases() {
               "Ascorbic Acid (Vitamin C)",
               "500",
               {
-                attributes: { isNumeric: true },
                 content: new Intl.NumberFormat("en-PH", { style: "currency", currency: "PHP" }).format(15.99),
               },
               "2023-11-04",
@@ -142,7 +138,6 @@ function Purchases() {
               "Amoxicillin",
               "700",
               {
-                attributes: { isNumeric: true },
                 content: new Intl.NumberFormat("en-PH", { style: "currency", currency: "PHP" }).format(9.49),
               },
               "2023-11-05",
@@ -166,7 +161,6 @@ function Purchases() {
               "Loperamide",
               "300",
               {
-                attributes: { isNumeric: true },
                 content: new Intl.NumberFormat("en-PH", { style: "currency", currency: "PHP" }).format(11.99),
               },
               "2023-11-06",
@@ -190,7 +184,6 @@ function Purchases() {
               "Ranitidine",
               "1500",
               {
-                attributes: { isNumeric: true },
                 content: new Intl.NumberFormat("en-PH", { style: "currency", currency: "PHP" }).format(18.99),
               },
               "2023-11-07",
@@ -214,7 +207,6 @@ function Purchases() {
               "Salbutamol Inhaler",
               "200",
               {
-                attributes: { isNumeric: true },
                 content: new Intl.NumberFormat("en-PH", { style: "currency", currency: "PHP" }).format(14.99),
               },
               "2023-11-08",
@@ -238,7 +230,6 @@ function Purchases() {
               "Hydrochlorothiazide",
               "1000",
               {
-                attributes: { isNumeric: true },
                 content: new Intl.NumberFormat("en-PH", { style: "currency", currency: "PHP" }).format(17.49),
               },
               "2023-11-09",
@@ -262,7 +253,6 @@ function Purchases() {
               "Omeprazole",
               "500",
               {
-                attributes: { isNumeric: true },
                 content: new Intl.NumberFormat("en-PH", { style: "currency", currency: "PHP" }).format(16.99),
               },
               "2023-11-10",
@@ -286,7 +276,6 @@ function Purchases() {
               "Simvastatin",
               "600",
               {
-                attributes: { isNumeric: true },
                 content: new Intl.NumberFormat("en-PH", { style: "currency", currency: "PHP" }).format(20.99),
               },
               "2023-11-11",
@@ -310,7 +299,6 @@ function Purchases() {
               "Metformin",
               "400",
               {
-                attributes: { isNumeric: true },
                 content: new Intl.NumberFormat("en-PH", { style: "currency", currency: "PHP" }).format(13.99),
               },
               "2023-11-12",
@@ -334,7 +322,6 @@ function Purchases() {
               "Acetylsalicylic Acid (Aspirin)",
               "800",
               {
-                attributes: { isNumeric: true },
                 content: new Intl.NumberFormat("en-PH", { style: "currency", currency: "PHP" }).format(8.49),
               },
               "2023-11-13",
@@ -358,7 +345,6 @@ function Purchases() {
               "Loratadine",
               "200",
               {
-                attributes: { isNumeric: true },
                 content: new Intl.NumberFormat("en-PH", { style: "currency", currency: "PHP" }).format(10.49),
               },
               "2023-11-14",
@@ -382,7 +368,6 @@ function Purchases() {
               "Ciprofloxacin",
               "300",
               {
-                attributes: { isNumeric: true },
                 content: new Intl.NumberFormat("en-PH", { style: "currency", currency: "PHP" }).format(19.99),
               },
               "2023-11-15",
@@ -406,7 +391,6 @@ function Purchases() {
               "Folic Acid",
               "400",
               {
-                attributes: { isNumeric: true },
                 content: new Intl.NumberFormat("en-PH", { style: "currency", currency: "PHP" }).format(6.99),
               },
               "2023-11-16",

@@ -7,14 +7,7 @@ import AddProductButton from "../components/AddProductButton";
 function Products() {
   return (
     <Flex flex={1} flexDir="column" overflow="hidden">
-      <Flex
-        p={2}
-        bg="secondary.50"
-        _dark={{ bg: "secondary.700" }}
-        borderRadius="xl"
-        m="4"
-        gap={2}
-      >
+      <Flex p={2} bg="secondary.50" _dark={{ bg: "secondary.700" }} borderRadius="xl" m="4" gap={2}>
         <Flex gap={2} flex={1}>
           <Input
             variant="filled"
@@ -33,7 +26,7 @@ function Products() {
         </Button>
         <AddProductButton />
       </Flex>
-      <Flex flex={1} flexDir="column" m="6" overflow='hidden'>
+      <Flex flex={1} flexDir="column" m="6" overflow="hidden">
         <DynamicTable
           count={1}
           columns={[
@@ -41,7 +34,6 @@ function Products() {
             "Supplier",
             "Product",
             {
-              attributes: { isNumeric: true },
               content: "Current Sale Price Per Item",
             },
             "Description",
@@ -51,7 +43,6 @@ function Products() {
               "P001",
               "Paracetamol",
               {
-                attributes: { isNumeric: true },
                 content: new Intl.NumberFormat("en-PH", {
                   style: "currency",
                   currency: "PHP",
@@ -64,7 +55,6 @@ function Products() {
               "P002",
               "Ibuprofen",
               {
-                attributes: { isNumeric: true },
                 content: new Intl.NumberFormat("en-PH", {
                   style: "currency",
                   currency: "PHP",
@@ -77,7 +67,6 @@ function Products() {
               "P003",
               "Cetirizine",
               {
-                attributes: { isNumeric: true },
                 content: new Intl.NumberFormat("en-PH", {
                   style: "currency",
                   currency: "PHP",
@@ -90,7 +79,6 @@ function Products() {
               "P004",
               "Ascorbic Acid (Vitamin C)",
               {
-                attributes: { isNumeric: true },
                 content: new Intl.NumberFormat("en-PH", {
                   style: "currency",
                   currency: "PHP",
@@ -103,7 +91,6 @@ function Products() {
               "P005",
               "Amoxicillin",
               {
-                attributes: { isNumeric: true },
                 content: new Intl.NumberFormat("en-PH", {
                   style: "currency",
                   currency: "PHP",
@@ -116,7 +103,6 @@ function Products() {
               "P006",
               "Loperamide",
               {
-                attributes: { isNumeric: true },
                 content: new Intl.NumberFormat("en-PH", {
                   style: "currency",
                   currency: "PHP",
@@ -129,7 +115,6 @@ function Products() {
               "P007",
               "Ranitidine",
               {
-                attributes: { isNumeric: true },
                 content: new Intl.NumberFormat("en-PH", {
                   style: "currency",
                   currency: "PHP",
@@ -142,7 +127,6 @@ function Products() {
               "P008",
               "Salbutamol Inhaler",
               {
-                attributes: { isNumeric: true },
                 content: new Intl.NumberFormat("en-PH", {
                   style: "currency",
                   currency: "PHP",
@@ -155,7 +139,6 @@ function Products() {
               "P009",
               "Hydrochlorothiazide",
               {
-                attributes: { isNumeric: true },
                 content: new Intl.NumberFormat("en-PH", {
                   style: "currency",
                   currency: "PHP",
@@ -168,7 +151,6 @@ function Products() {
               "P010",
               "Omeprazole",
               {
-                attributes: { isNumeric: true },
                 content: new Intl.NumberFormat("en-PH", {
                   style: "currency",
                   currency: "PHP",
@@ -181,7 +163,6 @@ function Products() {
               "P011",
               "Simvastatin",
               {
-                attributes: { isNumeric: true },
                 content: new Intl.NumberFormat("en-PH", {
                   style: "currency",
                   currency: "PHP",
@@ -194,7 +175,6 @@ function Products() {
               "P012",
               "Metformin",
               {
-                attributes: { isNumeric: true },
                 content: new Intl.NumberFormat("en-PH", {
                   style: "currency",
                   currency: "PHP",
@@ -207,7 +187,6 @@ function Products() {
               "P013",
               "Acetylsalicylic Acid (Aspirin)",
               {
-                attributes: { isNumeric: true },
                 content: new Intl.NumberFormat("en-PH", {
                   style: "currency",
                   currency: "PHP",
@@ -220,7 +199,6 @@ function Products() {
               "P014",
               "Loratadine",
               {
-                attributes: { isNumeric: true },
                 content: new Intl.NumberFormat("en-PH", {
                   style: "currency",
                   currency: "PHP",
@@ -233,7 +211,6 @@ function Products() {
               "P015",
               "Ciprofloxacin",
               {
-                attributes: { isNumeric: true },
                 content: new Intl.NumberFormat("en-PH", {
                   style: "currency",
                   currency: "PHP",
@@ -246,7 +223,6 @@ function Products() {
               "P016",
               "Folic Acid",
               {
-                attributes: { isNumeric: true },
                 content: new Intl.NumberFormat("en-PH", {
                   style: "currency",
                   currency: "PHP",
@@ -259,7 +235,6 @@ function Products() {
               "P017",
               "Dextromethorphan",
               {
-                attributes: { isNumeric: true },
                 content: new Intl.NumberFormat("en-PH", {
                   style: "currency",
                   currency: "PHP",
@@ -272,7 +247,6 @@ function Products() {
               "P018",
               "Naproxen",
               {
-                attributes: { isNumeric: true },
                 content: new Intl.NumberFormat("en-PH", {
                   style: "currency",
                   currency: "PHP",
@@ -285,7 +259,6 @@ function Products() {
               "P019",
               "Esomeprazole",
               {
-                attributes: { isNumeric: true },
                 content: new Intl.NumberFormat("en-PH", {
                   style: "currency",
                   currency: "PHP",
@@ -298,7 +271,6 @@ function Products() {
               "P020",
               "Mefenamic Acid",
               {
-                attributes: { isNumeric: true },
                 content: new Intl.NumberFormat("en-PH", {
                   style: "currency",
                   currency: "PHP",
@@ -311,7 +283,6 @@ function Products() {
               "P021",
               "Bonamine",
               {
-                attributes: { isNumeric: true },
                 content: new Intl.NumberFormat("en-PH", {
                   style: "currency",
                   currency: "PHP",

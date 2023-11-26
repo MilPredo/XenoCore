@@ -1,14 +1,4 @@
-import {
-  Box,
-  Table,
-  TableCellProps,
-  TableColumnHeaderProps,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr,
-} from "@chakra-ui/react";
+import { Box, Flex, Table, TableCellProps, TableColumnHeaderProps, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 import React, { useState } from "react";
 import Pagination from "./Pagination";
 type ColumnType = {
@@ -53,26 +43,28 @@ const DynamicTable = (props: DynamicTableProps) => {
             <Tr>
               {props.columns.map((value, index) =>
                 typeof value === "string" ? (
-                  <Th py={3} key={index}>
+                  <Th textAlign="center" py={3} key={index}>
                     {value}
                   </Th>
                 ) : (
-                  <Th py={3} {...value.attributes} key={index}>
+                  <Th textAlign="center" py={3} {...value.attributes} key={index}>
                     {value.content}
                   </Th>
                 )
               )}
             </Tr>
           </Thead>
-          <Tbody textTransform='uppercase'>
+          <Tbody textTransform="uppercase">
             {props.rows.map((row, index) => (
               <Tr key={index}>
                 {row.map((cell, index) =>
                   typeof cell === "string" ? (
-                    <Td key={index}>{cell}</Td>
+                    <Td textAlign="center" key={index}>
+                      {cell}
+                    </Td>
                   ) : (
-                    <Td {...cell.attributes} key={index}>
-                      {cell.content}
+                    <Td textAlign="center" {...cell.attributes} key={index}>
+                      <Flex justify="center">{cell.content}</Flex>
                     </Td>
                   )
                 )}

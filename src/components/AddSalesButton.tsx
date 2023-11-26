@@ -104,7 +104,7 @@ function AddSalesButton({ onSubmit }: { onSubmit?: (val: boolean) => void }) {
   //https://github.com/anubra266/choc-autocomplete
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = useRef(null);
-  
+
   return (
     <>
       <Button onClick={onOpen} leftIcon={<FiPlus />} variant="solid" colorScheme="green">

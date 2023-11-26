@@ -83,21 +83,10 @@ function AddCustomerButton() {
   const initialRef = useRef(null);
   return (
     <>
-      <Button
-        onClick={onOpen}
-        leftIcon={<FiUserPlus />}
-        variant="solid"
-        colorScheme="green"
-      >
+      <Button onClick={onOpen} leftIcon={<FiUserPlus />} variant="solid" colorScheme="green">
         Add New Customer
       </Button>
-      <Modal
-        initialFocusRef={initialRef}
-        isOpen={isOpen}
-        onClose={onClose}
-        isCentered
-        size="6xl"
-      >
+      <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose} isCentered size="6xl">
         <form onSubmit={formik.handleSubmit}>
           <ModalOverlay />
           <ModalContent>
@@ -105,12 +94,7 @@ function AddCustomerButton() {
             <ModalCloseButton />
             <ModalBody>
               <InputGroup gap={4}>
-                <FormControl
-                  mt={4}
-                  isInvalid={
-                    !!formik.errors.first_name && formik.touched.first_name
-                  }
-                >
+                <FormControl mt={4} isInvalid={!!formik.errors.first_name && formik.touched.first_name}>
                   <FormLabel>First Name</FormLabel>
                   <Input
                     placeholder="First Name"
@@ -119,17 +103,10 @@ function AddCustomerButton() {
                     id="first_name"
                     name="first_name"
                   />
-                  <FormErrorMessage>
-                    {formik.errors.first_name}
-                  </FormErrorMessage>
+                  <FormErrorMessage>{formik.errors.first_name}</FormErrorMessage>
                 </FormControl>
 
-                <FormControl
-                  mt={4}
-                  isInvalid={
-                    !!formik.errors.middle_name && formik.touched.middle_name
-                  }
-                >
+                <FormControl mt={4} isInvalid={!!formik.errors.middle_name && formik.touched.middle_name}>
                   <FormLabel>Middle Name</FormLabel>
                   <Input
                     placeholder="Middle Name"
@@ -138,17 +115,10 @@ function AddCustomerButton() {
                     id="middle_name"
                     name="middle_name"
                   />
-                  <FormErrorMessage>
-                    {formik.errors.middle_name}
-                  </FormErrorMessage>
+                  <FormErrorMessage>{formik.errors.middle_name}</FormErrorMessage>
                 </FormControl>
 
-                <FormControl
-                  mt={4}
-                  isInvalid={
-                    !!formik.errors.last_name && formik.touched.last_name
-                  }
-                >
+                <FormControl mt={4} isInvalid={!!formik.errors.last_name && formik.touched.last_name}>
                   <FormLabel>Last Name</FormLabel>
                   <Input
                     placeholder="Last Name"
@@ -159,12 +129,7 @@ function AddCustomerButton() {
                   />
                   <FormErrorMessage>{formik.errors.last_name}</FormErrorMessage>
                 </FormControl>
-                <FormControl
-                  mt={4}
-                  isInvalid={
-                    !!formik.errors.last_name && formik.touched.last_name
-                  }
-                >
+                <FormControl mt={4} isInvalid={!!formik.errors.last_name && formik.touched.last_name}>
                   <FormLabel>Contact Number</FormLabel>
                   <Input
                     placeholder="Contact Number"
@@ -177,8 +142,8 @@ function AddCustomerButton() {
                   <FormErrorMessage>{formik.errors.last_name}</FormErrorMessage>
                 </FormControl>
               </InputGroup>
-              
-              <FormLabel mt={4} >Additional Notes</FormLabel>
+
+              <FormLabel mt={4}>Additional Notes</FormLabel>
               <Textarea />
             </ModalBody>
             <ModalFooter>

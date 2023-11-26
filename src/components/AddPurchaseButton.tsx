@@ -112,17 +112,14 @@ function AddPurchaseButton() {
               <InputGroup gap={4}>
                 <FormControl mt={4}>
                   <FormLabel>Supplier Name</FormLabel>
-                  <Input
-                    onChange={formik.handleChange}
-                    value={formik.values.first_name}
-                  />
+                  <Input onChange={formik.handleChange} value={formik.values.first_name} />
                 </FormControl>
                 <FormControl mt={4}>
                   <FormLabel>Actions</FormLabel>
                   <Flex gap={2}>
                     <Button leftIcon={<FiSearch />} variant="solid" colorScheme="cyan">
                       Search
-                    </Button> 
+                    </Button>
                     <AddProductButton />
                   </Flex>
                 </FormControl>
@@ -149,7 +146,7 @@ function AddPurchaseButton() {
               <Flex>
                 <FormLabel>Currently Selected Supplier:</FormLabel>
                 <Text fontWeight="bold" textTransform="uppercase">
-                UNITED LABORATORIES (UNILAB)
+                  UNITED LABORATORIES (UNILAB)
                 </Text>
               </Flex>
               <InputGroup gap={4}>
@@ -180,7 +177,7 @@ function AddPurchaseButton() {
                 <FormControl mt={4}>
                   <FormLabel>Delivery Date</FormLabel>
                   <Input type="date"></Input>
-                </FormControl> 
+                </FormControl>
                 <FormControl mt={4}>
                   <FormLabel>Order Status</FormLabel>
                   <Select defaultValue="Ordered" width="150px">
@@ -189,7 +186,7 @@ function AddPurchaseButton() {
                     <option value="Incomplete">Incomplete</option>
                     <option value="Problematic">Problematic</option>
                   </Select>
-                </FormControl> 
+                </FormControl>
               </InputGroup>
             </ModalBody>
             <ModalFooter>

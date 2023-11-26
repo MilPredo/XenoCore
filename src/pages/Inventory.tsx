@@ -17,27 +17,14 @@ import {
   Button,
   Flex,
 } from "@chakra-ui/react";
-import {
-  FiHome,
-  FiTrendingUp,
-  FiCompass,
-  FiStar,
-  FiSettings,
-  FiMenu,
-  FiList,
-  FiX,
-  FiSearch,
-} from "react-icons/fi";
+import { FiHome, FiTrendingUp, FiCompass, FiStar, FiSettings, FiMenu, FiList, FiX, FiSearch } from "react-icons/fi";
 import { IconType } from "react-icons";
 import { useState, useEffect } from "react";
 import { useNavHeight } from "../stores/navHeight";
 import getInventory from "../api/inventory";
 import DynamicTable from "../components/DynamicTable";
 
-function calculateStockStatus(
-  qtyInStock: number,
-  reorderLevel: number
-): string {
+function calculateStockStatus(qtyInStock: number, reorderLevel: number): string {
   if (qtyInStock <= 0) {
     return "No Stock"; // If qtyInStock is less than or equal to 0, return "No Stock".
   } else if (qtyInStock > reorderLevel) {
@@ -216,14 +203,7 @@ function Inventory() {
       {/* <Box bg='secondary.500'>
       asd
     </Box> */}
-      <Flex
-        p={2}
-        bg="secondary.50"
-        _dark={{ bg: "secondary.700" }}
-        borderRadius="xl"
-        m="4"
-        gap={2}
-      >
+      <Flex p={2} bg="secondary.50" _dark={{ bg: "secondary.700" }} borderRadius="xl" m="4" gap={2}>
         <Flex gap={2} flex={1}>
           <Input
             variant="filled"
@@ -242,26 +222,24 @@ function Inventory() {
         </Button>
       </Flex>
 
-      <Flex flex={1} flexDir="column" m="6" overflow='hidden'>
+      <Flex flex={1} flexDir="column" m="6" overflow="hidden">
         <DynamicTable
           count={1}
           columns={[
             "Category",
             "Product",
-            { content: "COG", attributes: { isNumeric: true } },
+            { content: "COG" },
             "Papers",
-            { content: "Price per Unit", attributes: { isNumeric: true } },
+            { content: "Price per Unit" },
             "Initial Quantity",
             "Re-Order Level",
             "Current In Stock Quantity",
             "Status",
             {
               content: "Total Inventory Cost",
-              attributes: { isNumeric: true },
             },
             {
               content: "Total Inventory Value",
-              attributes: { isNumeric: true },
             },
           ]}
           rows={dummyInventory.map((value) => [
@@ -274,7 +252,6 @@ function Inventory() {
                 style: "currency",
                 currency: "PHP",
               }).format(value.pricePerUnit),
-              attributes: { isNumeric: true },
             },
             value.initialQuantity + "",
             value.reOrderLevel + "",
@@ -304,14 +281,12 @@ function Inventory() {
                 style: "currency",
                 currency: "PHP",
               }).format(value.cog * value.initialQuantity),
-              attributes: { isNumeric: true },
             },
             {
               content: new Intl.NumberFormat("en-PH", {
                 style: "currency",
                 currency: "PHP",
               }).format(value.pricePerUnit * value.initialQuantity),
-              attributes: { isNumeric: true },
             },
           ])}
         />
