@@ -175,6 +175,10 @@ function AddPurchaseButton() {
                   </NumberInput>
                 </FormControl>
                 <FormControl mt={4}>
+                  <FormLabel>Order Date</FormLabel>
+                  <Input type="date"></Input>
+                </FormControl>
+                <FormControl mt={4}>
                   <FormLabel>Delivery Date</FormLabel>
                   <Input type="date"></Input>
                 </FormControl>
