@@ -23,6 +23,7 @@ import { useState, useEffect } from "react";
 import { useNavHeight } from "../stores/navHeight";
 import getInventory from "../api/inventory";
 import DynamicTable from "../components/DynamicTable";
+import EditableCell from "../components/EditableCell";
 
 function calculateStockStatus(qtyInStock: number, reorderLevel: number): string {
   if (qtyInStock <= 0) {
@@ -244,15 +245,10 @@ function Inventory() {
           ]}
           rows={dummyInventory.map((value) => [
             { content: <Tag>{value.category}</Tag> },
-            value.productName,
-            value.cog + "",
+            value.productName,//value.productName,
+            {content: <EditableCell defaultValue={value.cog} />},
             value.papers ? "✔️" : "❌",
-            {
-              content: new Intl.NumberFormat("en-PH", {
-                style: "currency",
-                currency: "PHP",
-              }).format(value.pricePerUnit),
-            },
+            {content: <EditableCell defaultValue={value.pricePerUnit} />},
             value.initialQuantity + "",
             value.reOrderLevel + "",
             value.initialQuantity + "",
