@@ -16,6 +16,7 @@ import {
   Input,
   Button,
   Flex,
+  Checkbox,
 } from "@chakra-ui/react";
 import { FiHome, FiTrendingUp, FiCompass, FiStar, FiSettings, FiMenu, FiList, FiX, FiSearch } from "react-icons/fi";
 import { IconType } from "react-icons";
@@ -245,12 +246,12 @@ function Inventory() {
           ]}
           rows={dummyInventory.map((value) => [
             { content: <Tag>{value.category}</Tag> },
-            value.productName,//value.productName,
-            {content: <EditableCell defaultValue={value.cog} />},
-            value.papers ? "✔️" : "❌",
-            {content: <EditableCell defaultValue={value.pricePerUnit} />},
-            value.initialQuantity + "",
-            value.reOrderLevel + "",
+            value.productName,
+            { content: <EditableCell defaultValue={value.cog} /> },
+            { content: <Checkbox defaultChecked={value.papers} /> },
+            { content: <EditableCell defaultValue={value.pricePerUnit} /> },
+            { content: <EditableCell defaultValue={value.initialQuantity} type="number" /> },
+            { content: <EditableCell defaultValue={value.reOrderLevel} type="number" /> }, //value.reOrderLevel + "",
             value.initialQuantity + "",
             {
               content: (
