@@ -119,7 +119,7 @@ function AddSalesButton({ onSubmit }: { onSubmit?: (val: boolean) => void }) {
             <ModalBody>
               <Heading size="sm">Select customer</Heading>
 
-              <InputGroup gap={4}>
+              <Flex gap={4}>
                 <FormControl mt={4}>
                   <FormLabel>First Name</FormLabel>
                   <Input
@@ -158,7 +158,7 @@ function AddSalesButton({ onSubmit }: { onSubmit?: (val: boolean) => void }) {
                     <AddCustomerButton />
                   </Flex>
                 </FormControl>
-              </InputGroup>
+              </Flex>
               <Flex flex={1} flexDir="column" overflow="hidden" mt={6}>
                 <DynamicTable
                   count={1}
@@ -185,6 +185,14 @@ function AddSalesButton({ onSubmit }: { onSubmit?: (val: boolean) => void }) {
                 <Text fontWeight="bold" textTransform="uppercase">
                   Juan Carlos Santos
                 </Text>
+              </Flex>
+              <Flex gap={2} m={2}>
+                <Flex flex={1} bg='purple' >
+a
+                </Flex>
+                <Flex flex={1} bg='yellow' >
+a
+                </Flex>
               </Flex>
               <InputGroup gap={4}>
                 <FormControl mt={4} isInvalid={!!formik.errors.last_name && formik.touched.last_name}>

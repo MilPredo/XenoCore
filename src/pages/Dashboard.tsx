@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   Center,
   ChakraComponent,
@@ -55,7 +56,7 @@ function Dashboard() {
     // Add event listener for window resize
     window.addEventListener("resize", updateSize);
 
-    // Remove event listener on component unmount
+    // Remove event listener on component unmount1
     return () => {
       window.removeEventListener("resize", updateSize);
     };
@@ -63,14 +64,33 @@ function Dashboard() {
 
   return (
     <Flex flex={1} flexDir="column" p={4}>
-      <Grid templateRows="repeat(5, 1fr)" templateColumns="repeat(3, 1fr)" flex={1} gap={6}>
-        <GridItem rowSpan={1} colSpan={1} bg="secondary.700" _light={{ bg: "secondary.50" }} borderRadius="xl" p={2}>
+      <Grid
+        templateRows="repeat(5, 1fr)"
+        templateColumns="repeat(3, 1fr)"
+        flex={1}
+        gap={6}
+      >
+        <GridItem
+          rowSpan={1}
+          colSpan={1}
+          bg="secondary.700"
+          _light={{ bg: "secondary.50" }}
+          borderRadius="xl"
+          p={2}
+        >
           <Flex flexDir="column" h="100%" align="center" justify="center">
             <Text>PRODUCTS</Text>
             <Heading>21</Heading>
           </Flex>
         </GridItem>
-        <GridItem rowSpan={1} colSpan={1} bg="secondary.700" _light={{ bg: "secondary.50" }} borderRadius="xl" p={2}>
+        <GridItem
+          rowSpan={1}
+          colSpan={1}
+          bg="secondary.700"
+          _light={{ bg: "secondary.50" }}
+          borderRadius="xl"
+          p={2}
+        >
           <Flex flexDir="column" h="100%" align="center" justify="center">
             <Text>TOTAL INVENTORY VALUE</Text>
             <Heading>
@@ -81,7 +101,14 @@ function Dashboard() {
             </Heading>
           </Flex>
         </GridItem>
-        <GridItem rowSpan={1} colSpan={1} bg="secondary.700" _light={{ bg: "secondary.50" }} borderRadius="xl" p={2}>
+        <GridItem
+          rowSpan={1}
+          colSpan={1}
+          bg="secondary.700"
+          _light={{ bg: "secondary.50" }}
+          borderRadius="xl"
+          p={2}
+        >
           <Flex flexDir="column" h="100%" align="center" justify="center">
             <Text>TOTAL INVENTORY COST</Text>
             <Heading>
@@ -92,7 +119,14 @@ function Dashboard() {
             </Heading>
           </Flex>
         </GridItem>
-        <GridItem rowSpan={2} colSpan={1} bg="secondary.700" _light={{ bg: "secondary.50" }} borderRadius="xl" p={2}>
+        <GridItem
+          rowSpan={2}
+          colSpan={1}
+          bg="secondary.700"
+          _light={{ bg: "secondary.50" }}
+          borderRadius="xl"
+          p={2}
+        >
           <Chart
             options={{
               title: {
@@ -125,14 +159,24 @@ function Dashboard() {
             height="100%"
           />
         </GridItem>
-        <GridItem rowSpan={4} colSpan={2} bg="secondary.700" _light={{ bg: "secondary.50" }} borderRadius="xl" p={2}>
+        <GridItem
+          rowSpan={2}
+          colSpan={2}
+          bg="secondary.700"
+          _light={{ bg: "secondary.50" }}
+          borderRadius="xl"
+          p={2}
+        >
           <Chart
             options={{
               chart: {
                 type: "bar",
               },
               grid: {
-                borderColor: colorMode === "dark" ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)",
+                borderColor:
+                  colorMode === "dark"
+                    ? "rgba(255,255,255,0.5)"
+                    : "rgba(0,0,0,0.5)",
                 yaxis: { lines: { show: false } },
 
                 xaxis: { lines: { show: true } },
@@ -147,8 +191,19 @@ function Dashboard() {
                 enabled: true,
               },
               xaxis: {
-                axisBorder: { color: colorMode === "dark" ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)" },
-                categories: ["Paracetamol", "Cetirizine", "Neozef", "Bonamine", "Ibuprofen"],
+                axisBorder: {
+                  color:
+                    colorMode === "dark"
+                      ? "rgba(255,255,255,0.5)"
+                      : "rgba(0,0,0,0.5)",
+                },
+                categories: [
+                  "Paracetamol",
+                  "Cetirizine",
+                  "Neozef",
+                  "Bonamine",
+                  "Ibuprofen",
+                ],
                 labels: {
                   style: {
                     colors: colorMode === "dark" ? "white" : "black",
@@ -187,7 +242,14 @@ function Dashboard() {
             height="100%"
           />
         </GridItem>
-        <GridItem rowSpan={2} colSpan={1} bg="secondary.700" _light={{ bg: "secondary.50" }} borderRadius="xl" p={2}>
+        <GridItem
+          rowSpan={2}
+          colSpan={1}
+          bg="secondary.700"
+          _light={{ bg: "secondary.50" }}
+          borderRadius="xl"
+          p={2}
+        >
           <Chart
             options={{
               chart: {
@@ -195,11 +257,7 @@ function Dashboard() {
               },
               labels: ["In-Stock", "Low-Stock", "No Stock"],
 
-              colors: [
-                 "#22bb33",
-                "#f0ad4e",
-                "#bb2124",
-              ],
+              colors: ["#22bb33", "#f0ad4e", "#bb2124"],
               dataLabels: {
                 enabled: true,
               },
@@ -217,6 +275,34 @@ function Dashboard() {
             height="100%"
           />
         </GridItem>
+        <GridItem
+          rowSpan={2}
+          colSpan={1}
+          bg="secondary.700"
+          _light={{ bg: "secondary.50" }}
+          borderRadius="xl"
+          p={2}
+        >
+          <Flex flex={1}  flexDir='column' h='100%' >
+          <Heading textAlign="center" size="lg">
+            AGENT OF THE MONTH
+          </Heading>
+            <Center h="100%">
+              <Box >
+                <Avatar size='2xl' name="Mil Goku Predo" m="2" />
+                <Heading size="md">Mil Goku Predo</Heading>
+              </Box>
+            </Center>
+          </Flex>
+        </GridItem>
+        <GridItem
+          rowSpan={2}
+          colSpan={1}
+          bg="secondary.700"
+          _light={{ bg: "secondary.50" }}
+          borderRadius="xl"
+          p={2}
+        ></GridItem>
       </Grid>
       {/* <Grid templateRows="repeat(4, 1fr)" templateColumns="repeat(3, 1fr)" h='0'>
         <GridItem rowSpan={1} colSpan={3}>

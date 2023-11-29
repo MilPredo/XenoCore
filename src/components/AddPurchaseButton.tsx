@@ -110,12 +110,12 @@ function AddPurchaseButton() {
             <ModalBody>
               <Heading size="sm">Select supplier</Heading>
 
-              <InputGroup gap={4}>
-                <FormControl mt={4}>
+              <Flex gap={4}>
+                <FormControl flex={1} mt={4}>
                   <FormLabel>Supplier Name</FormLabel>
                   <Input onChange={formik.handleChange} value={formik.values.first_name} />
                 </FormControl>
-                <FormControl mt={4}>
+                <FormControl flex={0} mt={4}>
                   <FormLabel>Actions</FormLabel>
                   <Flex gap={2}>
                     <Button leftIcon={<FiSearch />} variant="solid" colorScheme="cyan">
@@ -124,7 +124,7 @@ function AddPurchaseButton() {
                     <AddSupplierButton />
                   </Flex>
                 </FormControl>
-              </InputGroup>
+              </Flex>
               <Flex flex={1} flexDir="column" overflow="hidden" mt={6}>
                 <DynamicTable
                   count={1}

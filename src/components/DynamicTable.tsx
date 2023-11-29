@@ -1,15 +1,15 @@
 import { Box, Flex, Table, TableCellProps, TableColumnHeaderProps, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 import React, { useState } from "react";
 import Pagination from "./Pagination";
-type ColumnType = {
+export type ColumnType = {
   attributes?: TableColumnHeaderProps;
   content: any;
 };
-type CellType = {
+export type CellType = {
   attributes?: TableCellProps;
   content: any;
 };
-interface DynamicTableProps {
+export interface DynamicTableProps {
   columns: Array<ColumnType | string>;
   rows: Array<CellType | string>[];
   count: number;
