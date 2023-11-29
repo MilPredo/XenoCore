@@ -31,6 +31,7 @@ import AddCustomerButton from "./AddCustomerButton";
 import DynamicTable from "./DynamicTable";
 import { AutoComplete, AutoCompleteInput, AutoCompleteItem, AutoCompleteList } from "@choc-ui/chakra-autocomplete";
 import AddProductButton from "./AddProductButton";
+import AddSupplierButton from "./AddSupplierButton";
 interface RegisterFormValues {
   first_name: string;
   middle_name: string;
@@ -120,7 +121,7 @@ function AddPurchaseButton() {
                     <Button leftIcon={<FiSearch />} variant="solid" colorScheme="cyan">
                       Search
                     </Button>
-                    <AddProductButton />
+                    <AddSupplierButton />
                   </Flex>
                 </FormControl>
               </InputGroup>

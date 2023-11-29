@@ -143,12 +143,6 @@ function AddProductButton() {
                   </NumberInput>
                   <FormErrorMessage>{formik.errors.middle_name}</FormErrorMessage>
                 </FormControl>
-
-                <FormControl mt={4} isInvalid={!!formik.errors.last_name && formik.touched.last_name}>
-                  <FormLabel>Contact Number</FormLabel>
-                  <Input onChange={formik.handleChange} type="number" inputMode="tel" />
-                  <FormErrorMessage>{formik.errors.last_name}</FormErrorMessage>
-                </FormControl>
               </InputGroup>
 
               <FormLabel mt={4}>Description</FormLabel>
