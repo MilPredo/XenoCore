@@ -40,12 +40,19 @@ function Suppliers() {
             }}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
-                getSuppliers();
+                getSuppliers(1, search.supplier_name);
               }
             }}
           />
         </Flex>
-        <Button leftIcon={<FiSearch />} variant="solid" colorScheme="cyan">
+        <Button
+          onClick={() => {
+            getSuppliers(1, search.supplier_name);
+          }}
+          leftIcon={<FiSearch />}
+          variant="solid"
+          colorScheme="cyan"
+        >
           Search
         </Button>
         <AddSupplierButton onSubmitSuccess={getSuppliers} />
