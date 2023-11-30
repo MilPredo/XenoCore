@@ -18,38 +18,50 @@ import {
 import { useFormik } from "formik";
 import React, { useRef } from "react";
 import { FiUserPlus } from "react-icons/fi";
-interface RegisterFormValues {
-  first_name: string;
-  middle_name: string;
-  last_name: string;
+import { addSupplier } from "../api/supplier";
+interface SupplierFormValues {
+  supplier_name: string;
+  address: string;
   contact_number: string;
+  email: string;
+  notes: string;
 }
 
 function AddSupplierButton() {
-  const formik = useFormik<RegisterFormValues>({
+  const formik = useFormik<SupplierFormValues>({
     initialValues: {
-      first_name: "",
-      last_name: "",
-      middle_name: "",
+      supplier_name: "",
+      address: "",
       contact_number: "",
+      email: "",
+      notes: "",
     },
     validate: (values) => {
-      const errors: Partial<RegisterFormValues> = {};
+      const errors: Partial<SupplierFormValues> = {};
 
-      if (!values.first_name) {
-        errors.first_name = "First name is required";
+      if (!values.supplier_name) {
+        errors.supplier_name = "Supplier name is required";
       }
 
-      if (!values.middle_name) {
-        errors.middle_name = "Middle name is required";
+      if (!values.address) {
+        errors.address = "Address is required";
       }
 
-      if (!values.last_name) {
-        errors.last_name = "Last name is required";
+      if (!values.contact_number) {
+        errors.contact_number = "Contact number is required";
       }
       return errors;
     },
     onSubmit: (values, { resetForm }) => {
+      addSupplier(values.supplier_name, values.address, values.contact_number, values.email, values.notes).then(
+        (response) => {
+          if (response?.status === 200) {
+            resetForm();
+            onClose();
+            alert("Supplier Registered");
+          }
+        }
+      );
       // registerUser(
       //   values.username,
       //   values.password,
@@ -94,34 +106,39 @@ function AddSupplierButton() {
             <ModalCloseButton />
             <ModalBody>
               <InputGroup gap={4}>
-                <FormControl mt={4} isInvalid={!!formik.errors.first_name && formik.touched.first_name}>
+                <FormControl mt={4} isInvalid={!!formik.errors.supplier_name && formik.touched.supplier_name}>
                   <FormLabel>Supplier Name</FormLabel>
-                  <Input onChange={formik.handleChange} value={formik.values.first_name} />
-                  <FormErrorMessage>{formik.errors.first_name}</FormErrorMessage>
+                  <Input
+                    value={formik.values.supplier_name}
+                    onChange={formik.handleChange}
+                    id="supplier_name"
+                    name="supplier_name"
+                  />
+                  <FormErrorMessage>{formik.errors.supplier_name}</FormErrorMessage>
                 </FormControl>
 
-                <FormControl mt={4} isInvalid={!!formik.errors.middle_name && formik.touched.middle_name}>
+                <FormControl mt={4} isInvalid={!!formik.errors.address && formik.touched.address}>
                   <FormLabel>Address</FormLabel>
-                  <Input onChange={formik.handleChange} value={formik.values.middle_name} />
-                  <FormErrorMessage>{formik.errors.middle_name}</FormErrorMessage>
+                  <Input onChange={formik.handleChange} value={formik.values.address} id="address" name="address" />
+                  <FormErrorMessage>{formik.errors.address}</FormErrorMessage>
                 </FormControl>
 
-                <FormControl mt={4} isInvalid={!!formik.errors.last_name && formik.touched.last_name}>
+                <FormControl mt={4} isInvalid={!!formik.errors.contact_number && formik.touched.contact_number}>
                   <FormLabel>Contact Number</FormLabel>
                   <Input
                     placeholder="Contact Number"
                     onChange={formik.handleChange}
                     type="number"
                     inputMode="tel"
-                    id="last_name"
-                    name="last_name"
+                    id="contact_number"
+                    name="contact_number"
                   />
-                  <FormErrorMessage>{formik.errors.last_name}</FormErrorMessage>
+                  <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
                 </FormControl>
-                <FormControl mt={4} isInvalid={!!formik.errors.last_name && formik.touched.last_name}>
+                <FormControl mt={4} isInvalid={!!formik.errors.email && formik.touched.email}>
                   <FormLabel>Email</FormLabel>
-                  <Input onChange={formik.handleChange} type="email" inputMode="email" />
-                  <FormErrorMessage>{formik.errors.last_name}</FormErrorMessage>
+                  <Input onChange={formik.handleChange} type="email" inputMode="email" id="email" name="email" />
+                  <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
                 </FormControl>
               </InputGroup>
 
