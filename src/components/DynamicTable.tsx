@@ -1,4 +1,15 @@
-import { Box, Flex, Table, TableCellProps, TableColumnHeaderProps, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Table,
+  TableCellProps,
+  TableColumnHeaderProps,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+} from "@chakra-ui/react";
 import React, { useState } from "react";
 import Pagination from "./Pagination";
 export type ColumnType = {
@@ -13,6 +24,7 @@ export interface DynamicTableProps {
   columns: Array<ColumnType | string>;
   rows: Array<CellType | string>[];
   count: number;
+  onPageChange?: (page: number) => void;
 }
 const DynamicTable = (props: DynamicTableProps) => {
   // const [table, setTable] = useState({
@@ -47,7 +59,12 @@ const DynamicTable = (props: DynamicTableProps) => {
                     {value}
                   </Th>
                 ) : (
-                  <Th textAlign="center" py={3} {...value.attributes} key={index}>
+                  <Th
+                    textAlign="center"
+                    py={3}
+                    {...value.attributes}
+                    key={index}
+                  >
                     {value.content}
                   </Th>
                 )
@@ -79,6 +96,7 @@ const DynamicTable = (props: DynamicTableProps) => {
           maxPage={props.count / 16}
           onPageChange={(page) => {
             console.log(page);
+            if (props.onPageChange) props.onPageChange(page);
             //setPage(page);
           }}
         />

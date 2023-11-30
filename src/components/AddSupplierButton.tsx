@@ -27,7 +27,7 @@ interface SupplierFormValues {
   notes: string;
 }
 
-function AddSupplierButton() {
+function AddSupplierButton(props:{onSubmitSuccess: ()=>void}) {
   const formik = useFormik<SupplierFormValues>({
     initialValues: {
       supplier_name: "",
@@ -56,6 +56,7 @@ function AddSupplierButton() {
       addSupplier(values.supplier_name, values.address, values.contact_number, values.email, values.notes).then(
         (response) => {
           if (response?.status === 200) {
+            props.onSubmitSuccess()
             resetForm();
             onClose();
             alert("Supplier Registered");

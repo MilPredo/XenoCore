@@ -32,6 +32,7 @@ export class SupplierController {
   async getAllSuppliers(request: FastifyRequest, reply: FastifyReply) {
     try {
       const { page, supplier_name, address, contact_number, email } = request.query as any; // Query parameters for pagination
+      console.log(request.query)
       const result = await this.supplierService.getAllSuppliers(
         page,
         16,
@@ -46,8 +47,8 @@ export class SupplierController {
       });
     } catch (error) {
       // console.log("error");
-      // console.log((error as any).detail);
-      // console.log(error);
+      console.log((error as any).detail);
+      console.log(error);
       reply
         //.status((error as any).code === "23505" ? 409 : 500)
         .status(500)

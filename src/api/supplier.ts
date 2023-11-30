@@ -1,3 +1,5 @@
+import { SupplierData } from "../stores/supplierStore";
+
 export const addSupplier = async (
   supplier_name: string,
   address: string,
@@ -32,6 +34,30 @@ export const addSupplier = async (
     console.log(data.message);
     alert(data);
     return response;
+  } catch (error) {
+    console.error("Fetch error:", error);
+  }
+};
+
+export const getSupplier = async (page?: number, supplier_name?: string) => {
+  const queryParams = new URLSearchParams();
+  const baseUrl = "http://127.0.0.1:1338/supplier"
+  queryParams.append("page", `${page}`);
+  queryParams.append("supplier_name", `${supplier_name}`);
+  const apiUrl = `${baseUrl}?${queryParams.toString()}`;
+  try { 
+
+    let response = await fetch(apiUrl, {
+      method: "GET", 
+      credentials: "include",
+    });
+
+    let data: {
+      rows: SupplierData[];
+      count: number;
+    } = await response.json();
+    console.log("get supplier:", response.status);
+    return data;
   } catch (error) {
     console.error("Fetch error:", error);
   }

@@ -12,7 +12,7 @@ export class SupplierService {
     const result = await this.fastify.pg.query(
       `
         SELECT *
-        FROM suppliers
+        FROM supplier
         WHERE (LOWER(supplier_name) LIKE '%' || $1 || '%' OR $1 IS NULL)
         ORDER BY id DESC
         LIMIT $2 OFFSET $3;
@@ -24,7 +24,7 @@ export class SupplierService {
     // Fetch total count of suppliers
     const totalCountResult = await this.fastify.pg.query(
       `
-        SELECT COUNT(*) FROM suppliers
+        SELECT COUNT(*) FROM supplier
         WHERE (LOWER(supplier_name) LIKE '%' || $1 || '%' OR $1 IS NULL)
       `,
       [supplier_name]
