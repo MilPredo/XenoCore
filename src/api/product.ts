@@ -1,22 +1,22 @@
-import { SupplierData } from "../stores/supplierStore";
+import { ProductRow } from "../interface";
+import { SupplierData } from "../stores/supplierStore"; 
 
 export const addProduct = async (
   product_name: string,
   category: string,
-  default_cog?: number,
-  default_ppu?: number,
-  papers?: string,
-  initial_qty?: number,
-  reorder_level?: number,
-  current_qty?: number,
-  stock_status?: string,
-  description?: string
+  default_cog: number,
+  default_ppu: number,
+  papers: boolean,
+  initial_qty: number,
+  reorder_level: number,
+  current_qty: number,
+  stock_status: string,
+  description: string
 ) => {
   try {
     let headersList = {
       "Content-Type": "application/json",
     };
-
     let bodyContent = JSON.stringify({
       product_name,
       category,
@@ -27,7 +27,7 @@ export const addProduct = async (
       reorder_level,
       current_qty,
       stock_status,
-      description
+      description,
     });
 
     let response = await fetch("http://127.0.0.1:1338/product", {
@@ -46,18 +46,18 @@ export const addProduct = async (
   }
 };
 
-export interface ProductData {
-  product_name: string;
-  category: string;
-  default_cog: number;
-  default_ppu: number;
-  papers: string;
-  initial_qty: number;
-  reorder_level: number;
-  current_qty: number;
-  stock_status: string;
-  description: string;
-}
+// export interface ProductData {
+//   product_name: string;
+//   category: string;
+//   default_cog: number;
+//   default_ppu: number;
+//   papers: string;
+//   initial_qty: number;
+//   reorder_level: number;
+//   current_qty: number;
+//   stock_status: string;
+//   description: string;
+// }
 
 export const getProduct = async (page?: number, product_name?: string) => {
   const queryParams = new URLSearchParams();
@@ -72,7 +72,7 @@ export const getProduct = async (page?: number, product_name?: string) => {
     });
 
     let data: {
-      rows: ProductData[];
+      rows: ProductRow[];
       count: number;
     } = await response.json();
     console.log("get product:", response.status);

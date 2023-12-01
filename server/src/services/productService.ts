@@ -36,23 +36,57 @@ export class ProductService {
   /*
   id
   product_name
+  category
   default_cog
   default_ppu
-  category
   papers
   initial_qty
   reorder_level
   current_qty
   stock_status
+  description
   */
-  async addProduct(product_name: string, description: string, default_cog?: number, default_ppu?: number, ) {
-    await this.fastify.pg.query(
-      `
-        INSERT INTO product (product_name, default_cog, default_ppu, description)
-        VALUES ($1, $2, $3, $4)
-        RETURNING *
-      `,
-      [product_name, default_cog, default_ppu, description]
+  async addProduct(
+    product_name: string,
+    category: string,
+    default_cog?: number,
+    default_ppu?: number,
+    papers?: boolean,
+    initial_qty?: number,
+    reorder_level?: number,
+    current_qty?: number,
+    stock_status?: string,
+    description?: string
+  ) {
+    let newProduct = {
+      product_name,
+      category,
+      default_cog,
+      default_ppu,
+      papers,
+      initial_qty,
+      reorder_level,
+      current_qty,
+      stock_status,
+      description,
+    };
+    let denulled: { [key: string]: any } = {};
+    for (const [fieldName, fieldValue] of Object.entries(newProduct)) {
+      if (fieldValue) denulled[fieldName] = fieldValue;
+    }
+    let query = `
+    INSERT INTO product (${Object.keys(denulled).join(", ")})
+    VALUES (
+      ${Object.entries(denulled)
+        .map((_, idx) => `$${idx + 1}`)
+        .join(", ")}
+    )
+    RETURNING *
+  `;
+    console.log(query);
+    await this.fastify.pg.query(query
+      ,
+      Object.values(denulled)
     );
     //return { suppliers, totalCount };
   }
