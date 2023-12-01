@@ -6,16 +6,12 @@ export class ProductService {
     this.fastify = fastify;
   }
 
-  async getAllProducts(
-    page: number = 1,
-    pageSize: number = 16,
-    product_name: string
-  ) {
+  async getAllProducts(page: number = 1, pageSize: number = 16, product_name: string) {
     const offset = (page - 1) * pageSize;
     const result = await this.fastify.pg.query(
       `
         SELECT *
-        FROM suppliers
+        FROM product
         WHERE (LOWER(product_name) LIKE '%' || $1 || '%' OR $1 IS NULL)
         ORDER BY id DESC
         LIMIT $2 OFFSET $3;
@@ -27,8 +23,8 @@ export class ProductService {
     // Fetch total count of products
     const totalCountResult = await this.fastify.pg.query(
       `
-        SELECT COUNT(*) FROM products
-        WHERE (LOWER(username) LIKE '%' || $1 || '%' OR $1 IS NULL)
+        SELECT COUNT(*) FROM product
+        WHERE (LOWER(product_name) LIKE '%' || $1 || '%' OR $1 IS NULL)
       `,
       [product_name, pageSize, offset]
     );
@@ -37,14 +33,26 @@ export class ProductService {
     return { products, totalCount };
   }
 
-  async addProduct(product_name: string, price: number, description: string) {
+  /*
+  id
+  product_name
+  default_cog
+  default_ppu
+  category
+  papers
+  initial_qty
+  reorder_level
+  current_qty
+  stock_status
+  */
+  async addProduct(product_name: string, description: string, default_cog?: number, default_ppu?: number, ) {
     await this.fastify.pg.query(
       `
-        INSERT INTO suppliers (product_name, price, description)
-        VALUES ($1, $2, $3)
+        INSERT INTO product (product_name, default_cog, default_ppu, description)
+        VALUES ($1, $2, $3, $4)
         RETURNING *
       `,
-      [product_name, price, description]
+      [product_name, default_cog, default_ppu, description]
     );
     //return { suppliers, totalCount };
   }
