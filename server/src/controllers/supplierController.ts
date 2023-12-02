@@ -41,7 +41,7 @@ export class SupplierController {
         // contact_number,
         // email
       );
-      reply.status(200).send({
+      reply.status(200).header('Content-Type', 'application/json; charset=utf-8').send({
         rows: result.suppliers,
         count: result.totalCount,
       });

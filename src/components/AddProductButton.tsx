@@ -5,6 +5,7 @@ import {
   FormLabel,
   Input,
   InputGroup,
+  InputLeftAddon,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -17,45 +18,72 @@ import {
   NumberInput,
   NumberInputField,
   NumberInputStepper,
+  Select,
+  SelectField,
   Textarea,
+  useColorMode,
   useDisclosure,
 } from "@chakra-ui/react";
 import { AutoComplete, AutoCompleteInput, AutoCompleteItem, AutoCompleteList } from "@choc-ui/chakra-autocomplete";
 import { useFormik } from "formik";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { FiUserPlus } from "react-icons/fi";
-interface RegisterFormValues {
-  first_name: string;
-  middle_name: string;
-  last_name: string;
-  contact_number: string;
+import CurrencyInput from "react-currency-input-field";
+import { addProduct } from "../api/product";
+interface ProductFormValues {
+  category: string;
+  product_name: string;
+  default_cog?: number;
+  default_ppu?: number;
+  description?: string;
 }
 
-function AddProductButton() {
-  const formik = useFormik<RegisterFormValues>({
+/*
+  id: number;
+  product_name: string;
+  category: string;
+  default_cog: number;
+  default_ppu: number;
+  papers: boolean;
+  initial_qty: number;
+  reorder_level: number;
+  current_qty: number;
+  stock_status: string;
+  description: string;
+*/
+function AddProductButton(props: { onSubmitSuccess?: () => void }) {
+  const formik = useFormik<ProductFormValues>({
     initialValues: {
-      first_name: "",
-      last_name: "",
-      middle_name: "",
-      contact_number: "",
+      category: "",
+      product_name: "",
+      default_cog: undefined,
+      default_ppu: undefined,
+      description: undefined,
     },
     validate: (values) => {
-      const errors: Partial<RegisterFormValues> = {};
+      const errors: Partial<ProductFormValues> = {};
 
-      if (!values.first_name) {
-        errors.first_name = "First name is required";
+      if (!values.category) {
+        errors.category = "Category is required";
       }
 
-      if (!values.middle_name) {
-        errors.middle_name = "Middle name is required";
-      }
-
-      if (!values.last_name) {
-        errors.last_name = "Last name is required";
+      if (!values.product_name) {
+        errors.product_name = "Product name is required";
       }
       return errors;
     },
     onSubmit: (values, { resetForm }) => {
+      console.log("hallo");
+      addProduct(values.product_name, values.category, values.default_cog, values.default_ppu, values.description).then(
+        (response) => {
+          if (response?.status === 200) {
+            if (props.onSubmitSuccess) props.onSubmitSuccess();
+            resetForm();
+            onClose();
+            alert("Product Added");
+          }
+        }
+      );
       // registerUser(
       //   values.username,
       //   values.password,
@@ -90,7 +118,7 @@ function AddProductButton() {
 
   const format = (val: any) => `₱` + val;
   const parse = (val: any) => val.replace(/^\$/, "");
-
+  const { colorMode } = useColorMode();
   const [value, setValue] = React.useState("0.00");
   const products = [
     "UNITED LABORATORIES (UNILAB)",
@@ -99,6 +127,7 @@ function AddProductButton() {
     "MERCK PHILIPPINES",
     "SANOFI PHILIPPINES",
   ];
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   return (
     <>
       <Button onClick={onOpen} leftIcon={<FiUserPlus />} variant="solid" colorScheme="green">
@@ -112,12 +141,34 @@ function AddProductButton() {
             <ModalCloseButton />
             <ModalBody>
               <InputGroup gap={4}>
-                <FormControl mt={4} isInvalid={!!formik.errors.first_name && formik.touched.first_name}>
-                  <FormLabel>Product Name</FormLabel>
-                  <Input />
-                  <FormErrorMessage>{formik.errors.last_name}</FormErrorMessage>
+                <FormControl mt={4} isInvalid={!!formik.errors.category && formik.touched.category}>
+                  <FormLabel>Category</FormLabel>
+                  <Select
+                    id="category"
+                    name="category"
+                    placeholder="Select category"
+                    onChange={formik.handleChange}
+                    value={formik.values.category}
+                  >
+                    <option>A</option>
+                    <option>B</option>
+                    <option>C</option>
+                    <option>D</option>
+                    <option>E</option>
+                  </Select>
+                  <FormErrorMessage>{formik.errors.category}</FormErrorMessage>
                 </FormControl>
-                <FormControl mt={4} isInvalid={!!formik.errors.first_name && formik.touched.first_name}>
+                <FormControl mt={4} isInvalid={!!formik.errors.product_name && formik.touched.product_name}>
+                  <FormLabel>Product Name</FormLabel>
+                  <Input
+                    id="product_name"
+                    name="product_name"
+                    value={formik.values.product_name}
+                    onChange={formik.handleChange}
+                  />
+                  <FormErrorMessage>{formik.errors.product_name}</FormErrorMessage>
+                </FormControl>
+                {/* <FormControl mt={4} isInvalid={!!formik.errors.first_name && formik.touched.first_name}>
                   <FormLabel>Supplier</FormLabel>
                   <AutoComplete openOnFocus>
                     <AutoCompleteInput variant="filled" />
@@ -130,18 +181,50 @@ function AddProductButton() {
                     </AutoCompleteList>
                   </AutoComplete>
                   <FormErrorMessage>{formik.errors.last_name}</FormErrorMessage>
+                </FormControl> */}
+                <FormControl mt={4}>
+                  <FormLabel>Base Cost of Goods</FormLabel>
+                  <InputGroup>
+                    <InputLeftAddon children="₱" />
+                    <CurrencyInput
+                      id="default_cog"
+                      name="default_cog"
+                      decimalsLimit={2}
+                      placeholder="0.00"
+                      onValueChange={(value, name) => console.log(value, name)}
+                      style={{
+                        border: "1px solid",
+                        borderRadius: "0px 6px 6px 0px",
+                        paddingLeft: "0.5rem",
+                        fontSize: "1rem",
+                        width: "100%",
+                        backgroundColor: "transparent",
+                        borderColor: colorMode === "dark" ? "rgba(255, 255, 255, 0.16)" : "rgb(226, 232, 240)",
+                      }}
+                    />
+                  </InputGroup>
                 </FormControl>
-
-                <FormControl mt={4} isInvalid={!!formik.errors.middle_name && formik.touched.middle_name}>
-                  <FormLabel>Base Price</FormLabel>
-                  <NumberInput onChange={(valueString) => setValue(parse(valueString))} value={format(value)}>
-                    <NumberInputField />
-                    <NumberInputStepper>
-                      <NumberIncrementStepper />
-                      <NumberDecrementStepper />
-                    </NumberInputStepper>
-                  </NumberInput>
-                  <FormErrorMessage>{formik.errors.middle_name}</FormErrorMessage>
+                <FormControl mt={4}>
+                  <FormLabel>Base Price Per Unit</FormLabel>
+                  <InputGroup>
+                    <InputLeftAddon children="₱" />
+                    <CurrencyInput
+                      id="default_cog"
+                      name="default_cog"
+                      decimalsLimit={2}
+                      placeholder="0.00"
+                      onValueChange={(value, name) => console.log(value, name)}
+                      style={{
+                        border: "1px solid",
+                        borderRadius: "0px 6px 6px 0px",
+                        paddingLeft: "0.5rem",
+                        fontSize: "1rem",
+                        width: "100%",
+                        backgroundColor: "transparent",
+                        borderColor: colorMode === "dark" ? "rgba(255, 255, 255, 0.16)" : "rgb(226, 232, 240)",
+                      }}
+                    />
+                  </InputGroup>
                 </FormControl>
               </InputGroup>
 

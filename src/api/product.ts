@@ -1,17 +1,17 @@
 import { ProductRow } from "../interface";
-import { SupplierData } from "../stores/supplierStore"; 
+import { SupplierData } from "../stores/supplierStore";
 
 export const addProduct = async (
   product_name: string,
   category: string,
-  default_cog: number,
-  default_ppu: number,
-  papers: boolean,
-  initial_qty: number,
-  reorder_level: number,
-  current_qty: number,
-  stock_status: string,
-  description: string
+  default_cog?: number,
+  default_ppu?: number,
+  description?: string,
+  papers?: boolean,
+  initial_qty?: number,
+  reorder_level?: number,
+  current_qty?: number,
+  stock_status?: string
 ) => {
   try {
     let headersList = {
@@ -37,7 +37,7 @@ export const addProduct = async (
       credentials: "include",
     });
 
-    let data = await response.json();
+    let data:any = await response;
     console.log(data.message);
     alert(data);
     return response;

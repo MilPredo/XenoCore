@@ -1,5 +1,6 @@
 //Data shape from server when using get request
 export interface ProductRow {
+  id: number;
   product_name: string;
   category: string;
   default_cog: number;

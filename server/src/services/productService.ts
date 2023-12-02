@@ -12,7 +12,7 @@ export class ProductService {
       `
         SELECT *
         FROM product
-        WHERE (LOWER(product_name) LIKE '%' || $1 || '%' OR $1 IS NULL)
+        WHERE (LOWER(product_name) LIKE '%' ||  LOWER($1)  || '%' OR $1 IS NULL)
         ORDER BY id DESC
         LIMIT $2 OFFSET $3;
 `,
@@ -24,9 +24,9 @@ export class ProductService {
     const totalCountResult = await this.fastify.pg.query(
       `
         SELECT COUNT(*) FROM product
-        WHERE (LOWER(product_name) LIKE '%' || $1 || '%' OR $1 IS NULL)
+        WHERE (LOWER(product_name) LIKE '%' || LOWER($1) || '%' OR $1 IS NULL)
       `,
-      [product_name, pageSize, offset]
+      [product_name]
     );
     const totalCount = parseInt(totalCountResult.rows[0].count, 10);
 

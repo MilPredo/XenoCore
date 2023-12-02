@@ -36,6 +36,7 @@ export class ProductController {
         stock_status,
         description,
       } = request.body as ProdutRequestBody;
+      if (!(product_name||category)) throw "product name or category is required."
       const result = await this.productService.addProduct(
         product_name,
         category,
@@ -81,7 +82,7 @@ export class ProductController {
         // contact_number,
         // email
       );
-      reply.status(200).send({
+      reply.status(200).header('Content-Type', 'application/json; charset=utf-8').send({
         rows: result.products,
         count: result.totalCount,
       });
