@@ -73,7 +73,7 @@ function AddProductButton(props: { onSubmitSuccess?: () => void }) {
       return errors;
     },
     onSubmit: (values, { resetForm }) => {
-      console.log("hallo");
+      console.log("hallo", values);
       addProduct(values.product_name, values.category, values.default_cog, values.default_ppu, values.description).then(
         (response) => {
           if (response?.status === 200) {
@@ -84,33 +84,6 @@ function AddProductButton(props: { onSubmitSuccess?: () => void }) {
           }
         }
       );
-      // registerUser(
-      //   values.username,
-      //   values.password,
-      //   values.first_name,
-      //   values.middle_name,
-      //   values.last_name,
-      //   ""
-      // ).then((response) => {
-      //   onSubmit(response?.status === 200)
-      //   if (response?.status === 200) {
-      //     // (async () => {
-      //     //   let a = await getUsers(
-      //     //     page,
-      //     //     search.username,
-      //     //     search.first_name,
-      //     //     search.middle_name,
-      //     //     search.last_name
-      //     //   );
-      //     //   setUsers(a.rows);
-      //     //   setCount(a.count);
-      //     //   console.log(a);
-      //     // })();
-      //     resetForm();
-      //     onClose();
-      //   }
-      //   console.log(response);
-      // });
     },
   });
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -191,7 +164,8 @@ function AddProductButton(props: { onSubmitSuccess?: () => void }) {
                       name="default_cog"
                       decimalsLimit={2}
                       placeholder="0.00"
-                      onValueChange={(value, name) => console.log(value, name)}
+                      onChange={formik.handleChange}
+                      value={formik.values.default_cog}
                       style={{
                         border: "1px solid",
                         borderRadius: "0px 6px 6px 0px",
@@ -209,11 +183,13 @@ function AddProductButton(props: { onSubmitSuccess?: () => void }) {
                   <InputGroup>
                     <InputLeftAddon children="₱" />
                     <CurrencyInput
-                      id="default_cog"
-                      name="default_cog"
+                      id="default_ppu"
+                      name="default_ppu"
                       decimalsLimit={2}
                       placeholder="0.00"
-                      onValueChange={(value, name) => console.log(value, name)}
+                      // onValueChange={}
+                      onChange={formik.handleChange}
+                      value={formik.values.default_ppu}
                       style={{
                         border: "1px solid",
                         borderRadius: "0px 6px 6px 0px",
@@ -229,7 +205,13 @@ function AddProductButton(props: { onSubmitSuccess?: () => void }) {
               </InputGroup>
 
               <FormLabel mt={4}>Description</FormLabel>
-              <Textarea />
+              <Textarea
+              
+              id="description"
+              name="description"
+              onChange={formik.handleChange}
+              value={formik.values.description}
+              />
             </ModalBody>
             <ModalFooter>
               <Button type="submit" colorScheme="green" mr={3}>

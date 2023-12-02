@@ -13,19 +13,19 @@ export const useProductStore = create<ProductState>()((set) => ({
   count: 0,
   getProducts: async (page = 1, product_name = '') => {
     let data = await getProduct(page, product_name);
-    let rows: (string[] | undefined)[] = []
+    let rows: (any[] | undefined)[] = []
     if (!data) return
     for (let index = 0; index < data.rows.length; ++index) {
         const row = data.rows[index];
         rows.push([
             row.category,
             row.product_name,
-            row.default_cog.toString(),
-            row.default_ppu.toString(),
+            row.default_cog,
+            row.default_ppu,
             row.papers,
-            row.initial_qty.toString(),
-            row.reorder_level.toString(),
-            row.current_qty.toString(),
+            row.initial_qty,
+            row.reorder_level,
+            row.current_qty,
             row.stock_status,
             row.description
         ])

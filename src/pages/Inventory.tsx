@@ -18,7 +18,17 @@ import {
   Flex,
   Checkbox,
 } from "@chakra-ui/react";
-import { FiHome, FiTrendingUp, FiCompass, FiStar, FiSettings, FiMenu, FiList, FiX, FiSearch } from "react-icons/fi";
+import {
+  FiHome,
+  FiTrendingUp,
+  FiCompass,
+  FiStar,
+  FiSettings,
+  FiMenu,
+  FiList,
+  FiX,
+  FiSearch,
+} from "react-icons/fi";
 import { IconType } from "react-icons";
 import { useState, useEffect } from "react";
 import { useNavHeight } from "../stores/navHeight";
@@ -26,7 +36,10 @@ import getInventory from "../api/inventory";
 import DynamicTable from "../components/DynamicTable";
 import EditableCell from "../components/EditableCell";
 
-function calculateStockStatus(qtyInStock: number, reorderLevel: number): string {
+function calculateStockStatus(
+  qtyInStock: number,
+  reorderLevel: number
+): string {
   if (qtyInStock <= 0) {
     return "No Stock"; // If qtyInStock is less than or equal to 0, return "No Stock".
   } else if (qtyInStock > reorderLevel) {
@@ -205,7 +218,14 @@ function Inventory() {
       {/* <Box bg='secondary.500'>
       asd
     </Box> */}
-      <Flex p={2} bg="secondary.50" _dark={{ bg: "secondary.700" }} borderRadius="xl" m="4" gap={2}>
+      <Flex
+        p={2}
+        bg="secondary.50"
+        _dark={{ bg: "secondary.700" }}
+        borderRadius="xl"
+        m="4"
+        gap={2}
+      >
         <Flex gap={2} flex={1}>
           <Input
             variant="filled"
@@ -230,61 +250,52 @@ function Inventory() {
           columns={[
             "Category",
             "Product",
-            { content: "COG" },
+            "COG",
             "Papers",
-            { content: "Price per Unit" },
+            "Price per Unit",
             "Initial Quantity",
             "Re-Order Level",
             "Current In Stock Quantity",
             "Status",
-            {
-              content: "Total Inventory Cost",
-            },
-            {
-              content: "Total Inventory Value",
-            },
+            "Total Inventory Cost",
+            "Total Inventory Value",
           ]}
           rows={dummyInventory.map((value) => [
-            { content: <Tag>{value.category}</Tag> },
+            <Tag>{value.category}</Tag>,
             value.productName,
-            { content: <EditableCell defaultValue={value.cog} /> },
-            { content: <Checkbox defaultChecked={value.papers} /> },
-            { content: <EditableCell defaultValue={value.pricePerUnit} /> },
-            { content: <EditableCell defaultValue={value.initialQuantity} type="number" /> },
-            { content: <EditableCell defaultValue={value.reOrderLevel} type="number" /> }, //value.reOrderLevel + "",
+            <EditableCell defaultValue={value.cog} />,
+            <Checkbox defaultChecked={value.papers} />,
+            <EditableCell defaultValue={value.pricePerUnit} />,
+            <EditableCell defaultValue={value.initialQuantity} type="number" />,
+            <EditableCell defaultValue={value.reOrderLevel} type="number" />, //value.reOrderLevel + "",
             value.initialQuantity + "",
-            {
-              content: (
-                <Badge
-                  variant="solid"
-                  colorScheme={
-                    value.initialQuantity >= value.reOrderLevel
-                      ? "green"
-                      : value.initialQuantity <= 0
-                      ? "red"
-                      : "orange"
-                  }
-                >
-                  {value.initialQuantity >= value.reOrderLevel
-                    ? "In Stock"
-                    : value.initialQuantity <= 0
-                    ? "No Stock"
-                    : "Low Stock"}
-                </Badge>
-              ),
-            },
-            {
-              content: new Intl.NumberFormat("en-PH", {
-                style: "currency",
-                currency: "PHP",
-              }).format(value.cog * value.initialQuantity),
-            },
-            {
-              content: new Intl.NumberFormat("en-PH", {
-                style: "currency",
-                currency: "PHP",
-              }).format(value.pricePerUnit * value.initialQuantity),
-            },
+
+            <Badge
+              variant="solid"
+              colorScheme={
+                value.initialQuantity >= value.reOrderLevel
+                  ? "green"
+                  : value.initialQuantity <= 0
+                  ? "red"
+                  : "orange"
+              }
+            >
+              {value.initialQuantity >= value.reOrderLevel
+                ? "In Stock"
+                : value.initialQuantity <= 0
+                ? "No Stock"
+                : "Low Stock"}
+            </Badge>,
+            new Intl.NumberFormat("en-PH", {
+              style: "currency",
+              currency: "PHP",
+            }).format(value.cog * value.initialQuantity),
+            ,
+            new Intl.NumberFormat("en-PH", {
+              style: "currency",
+              currency: "PHP",
+            }).format(value.pricePerUnit * value.initialQuantity),
+            ,
           ])}
         />
       </Flex>

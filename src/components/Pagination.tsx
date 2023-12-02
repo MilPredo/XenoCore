@@ -11,8 +11,14 @@ interface PaginationProps {
   currentPage: number;
   maxPage: number;
   onPageChange?: (currentPage: number) => void;
+  resetPage?: (pageReset: () => void) => void;
 }
-function Pagination({ currentPage = 1, maxPage = 10, onPageChange }: PaginationProps) {
+function Pagination({
+  currentPage = 1,
+  maxPage = 10,
+  onPageChange,
+  resetPage,
+}: PaginationProps) {
   const [pagination, setPagination] = useState({
     currentPage: 1,
     maxPage: 100,
@@ -22,21 +28,34 @@ function Pagination({ currentPage = 1, maxPage = 10, onPageChange }: PaginationP
     return Math.min(Math.max(number, min), max);
   }
 
+  function handlePageReset() {
+    console.log("i got called!");
+    setPagination({ currentPage: 1, maxPage: pagination.maxPage });
+  }
   useEffect(() => {
-    if (onPageChange) onPageChange(pagination.currentPage)
+    if (resetPage) resetPage(handlePageReset);
+  }, []);
+  useEffect(() => {
+    if (onPageChange) onPageChange(pagination.currentPage);
   }, [pagination.currentPage]);
 
   useEffect(() => {
-    if (Number.isNaN(maxPage)){
+    if (Number.isNaN(maxPage)) {
       setPagination({ currentPage: 1, maxPage: 1 });
     } else {
       setPagination({ currentPage, maxPage: Math.ceil(maxPage) });
     }
   }, [maxPage, currentPage]);
-  
+
   return (
     <Flex justify="center" hidden={pagination.maxPage <= 1}>
-      <Flex gap={1} bg="secondary.700" _light={{bg:"secondary.50"}} p="2" borderRadius="lg">
+      <Flex
+        gap={1}
+        bg="secondary.700"
+        _light={{ bg: "secondary.50" }}
+        p="2"
+        borderRadius="lg"
+      >
         <Button
           hidden={pagination.maxPage <= 5}
           size="sm"

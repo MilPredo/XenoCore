@@ -2,7 +2,7 @@ import { FastifyRequest, FastifyReply, FastifyInstance } from "fastify";
 import { UserService } from "../services/userService";
 import { SupplierService } from "../services/supplierService";
 import { ProductService } from "../services/productService";
-interface ProdutRequestBody {
+interface ProductRequestBody {
   product_name: string;
   category: string;
   default_cog?: number;
@@ -35,7 +35,8 @@ export class ProductController {
         current_qty,
         stock_status,
         description,
-      } = request.body as ProdutRequestBody;
+      } = request.body as ProductRequestBody;
+      console.log(request.body)
       if (!(product_name||category)) throw "product name or category is required."
       const result = await this.productService.addProduct(
         product_name,

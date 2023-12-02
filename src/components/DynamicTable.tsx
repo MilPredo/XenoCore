@@ -21,8 +21,8 @@ export type CellType = {
   content: any;
 };
 export interface DynamicTableProps {
-  columns: Array<ColumnType | string>;
-  rows: Array<CellType | string>[];
+  columns: any[];
+  rows: any[][];
   count: number;
   onPageChange?: (page: number) => void;
 }
@@ -74,17 +74,11 @@ const DynamicTable = (props: DynamicTableProps) => {
           <Tbody textTransform="uppercase">
             {props.rows.map((row, index) => (
               <Tr key={index}>
-                {row.map((cell, index) =>
-                  typeof cell === "string" ? (
-                    <Td textAlign="center" key={index}>
-                      {cell}
-                    </Td>
-                  ) : (
-                    <Td textAlign="center" {...cell.attributes} key={index}>
-                      <Flex justify="center">{cell.content}</Flex>
-                    </Td>
-                  )
-                )}
+                {row.map((cell, index) => (
+                  <Td textAlign="center" key={index}>
+                    {cell}
+                  </Td>
+                ))}
               </Tr>
             ))}
           </Tbody>
