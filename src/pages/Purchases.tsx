@@ -213,8 +213,7 @@ function Purchases() {
       </Flex>
 
       <Flex flex={1} flexDir="column" m="6" overflow="hidden">
-        <DynamicTable
-          count={1}
+        <DynamicTable 
           columns={[
             "Supplier",
             "Product",

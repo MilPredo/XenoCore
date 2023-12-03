@@ -1,4 +1,4 @@
-import { ProductRow } from "../interface";
+import { CustomerRow, ProductRow } from "../interface";
 import { SupplierData } from "../stores/supplierStore";
 
 export const addCustomer = async (
@@ -49,11 +49,13 @@ export const addCustomer = async (
 //   description: string;
 // }
 
-export const getProduct = async (page?: number, product_name?: string) => {
+export const getCustomer = async (page?: number, first_name?: string, middle_name?: string, last_name?: string) => {
   const queryParams = new URLSearchParams();
   const baseUrl = "http://127.0.0.1:1338/customer";
   queryParams.append("page", `${page}`);
-  queryParams.append("product_name", `${product_name}`);
+  queryParams.append("first_name", `${first_name}`);
+  queryParams.append("middle_name", `${middle_name}`);
+  queryParams.append("last_name", `${last_name}`);
   const apiUrl = `${baseUrl}?${queryParams.toString()}`;
   try {
     let response = await fetch(apiUrl, {
@@ -62,7 +64,7 @@ export const getProduct = async (page?: number, product_name?: string) => {
     });
 
     let data: {
-      rows: ProductRow[];
+      rows: CustomerRow[];
       count: number;
     } = await response.json();
     console.log("get product:", response.status);

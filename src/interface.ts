@@ -13,6 +13,15 @@ export interface ProductRow {
   description: string;
 }
 
+export interface CustomerRow {
+  id: number;
+  first_name: string;
+  middle_name: string;
+  last_name: string;
+  contact_number: string;
+  notes: string;
+}
+
 //Data shape from client when using post request
 export interface ProductRequestNew {
   product_name: string;
