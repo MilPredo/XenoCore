@@ -17,7 +17,7 @@ export class CustomerService {
     const result = await this.fastify.pg.query(
       `
         SELECT *
-        FROM customers
+        FROM customer
         WHERE (LOWER(first_name) LIKE '%' || $1 || '%' OR $1 IS NULL)
         AND (LOWER(middle_name) LIKE '%' || $2 || '%' OR $2 IS NULL)
         AND (LOWER(last_name) LIKE '%' || $3 || '%' OR $3 IS NULL)
@@ -31,7 +31,7 @@ export class CustomerService {
     // Fetch total count of customers
     const totalCountResult = await this.fastify.pg.query(
       `
-        SELECT COUNT(*) FROM customers
+        SELECT COUNT(*) FROM customer
         WHERE (LOWER(first_name) LIKE '%' || $1 || '%' OR $1 IS NULL)
         AND (LOWER(middle_name) LIKE '%' || $2 || '%' OR $2 IS NULL)
         AND (LOWER(last_name) LIKE '%' || $3 || '%' OR $3 IS NULL)
@@ -47,19 +47,35 @@ export class CustomerService {
     first_name: string,
     middle_name: string,
     last_name: string,
-    address: string,
-    contact: string,
-    email: string,
-    notes: string
+    // address: string,
+    contact_number: string,
+    // email: string,
+    notes: string | undefined
   ) {
-    await this.fastify.pg.query(
-      `
-        INSERT INTO customers (first_name, middle_name, last_name, address, contact, email, notes)
-        VALUES ($1, $2, $3, $4, $5, $6, $7)
-        RETURNING *
-      `,
-      [first_name, middle_name, last_name, address, contact, email, notes]
-    );
+    let newCustomer = {
+      first_name,
+      middle_name,
+      last_name,
+      // address,
+      contact_number,
+      // email,
+      notes,
+    };
+    let denulled: { [key: string]: any } = {};
+    for (const [fieldName, fieldValue] of Object.entries(newCustomer)) {
+      if (fieldValue) denulled[fieldName] = fieldValue;
+    }
+    let query = `
+    INSERT INTO customer (${Object.keys(denulled).join(", ")})
+    VALUES (
+      ${Object.entries(denulled)
+        .map((_, idx) => `$${idx + 1}`)
+        .join(", ")}
+    )
+    RETURNING *
+  `;
+    console.log(query);
+    await this.fastify.pg.query(query, Object.values(denulled));
     //return { customers, totalCount };
   }
 }

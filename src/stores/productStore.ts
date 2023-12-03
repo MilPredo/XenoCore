@@ -20,8 +20,15 @@ export const useProductStore = create<ProductState>()((set) => ({
         rows.push([
             row.category,
             row.product_name,
-            row.default_cog,
-            row.default_ppu,
+            new Intl.NumberFormat("en-PH", {
+              style: "currency",
+              currency: "PHP",
+            }).format(row.default_cog)
+            ,
+            new Intl.NumberFormat("en-PH", {
+              style: "currency",
+              currency: "PHP",
+            }).format(row.default_ppu),
             // row.papers,
             // row.initial_qty,
             // row.reorder_level,

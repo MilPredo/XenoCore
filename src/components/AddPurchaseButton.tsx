@@ -29,7 +29,12 @@ import React, { useRef } from "react";
 import { FiPlus, FiSearch, FiUserPlus } from "react-icons/fi";
 import AddCustomerButton from "./AddCustomerButton";
 import DynamicTable from "./DynamicTable";
-import { AutoComplete, AutoCompleteInput, AutoCompleteItem, AutoCompleteList } from "@choc-ui/chakra-autocomplete";
+import {
+  AutoComplete,
+  AutoCompleteInput,
+  AutoCompleteItem,
+  AutoCompleteList,
+} from "@choc-ui/chakra-autocomplete";
 import AddProductButton from "./AddProductButton";
 import AddSupplierButton from "./AddSupplierButton";
 interface RegisterFormValues {
@@ -98,10 +103,21 @@ function AddPurchaseButton() {
   const products = ["bonamine", "neozef", "cetirizine", "bioflu", "ibroprufen"];
   return (
     <>
-      <Button onClick={onOpen} leftIcon={<FiPlus />} variant="solid" colorScheme="green">
+      <Button
+        onClick={onOpen}
+        leftIcon={<FiPlus />}
+        variant="solid"
+        colorScheme="green"
+      >
         Add New Purchase
       </Button>
-      <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose} isCentered size="6xl">
+      <Modal
+        initialFocusRef={initialRef}
+        isOpen={isOpen}
+        onClose={onClose}
+        isCentered
+        size="6xl"
+      >
         <form onSubmit={formik.handleSubmit}>
           <ModalOverlay />
           <ModalContent>
@@ -113,12 +129,19 @@ function AddPurchaseButton() {
               <Flex gap={4}>
                 <FormControl flex={1} mt={4}>
                   <FormLabel>Supplier Name</FormLabel>
-                  <Input onChange={formik.handleChange} value={formik.values.first_name} />
+                  <Input
+                    onChange={formik.handleChange}
+                    value={formik.values.first_name}
+                  />
                 </FormControl>
                 <FormControl flex={0} mt={4}>
                   <FormLabel>Actions</FormLabel>
                   <Flex gap={2}>
-                    <Button leftIcon={<FiSearch />} variant="solid" colorScheme="cyan">
+                    <Button
+                      leftIcon={<FiSearch />}
+                      variant="solid"
+                      colorScheme="cyan"
+                    >
                       Search
                     </Button>
                     <AddSupplierButton />
@@ -127,19 +150,15 @@ function AddPurchaseButton() {
               </Flex>
               <Flex flex={1} flexDir="column" overflow="hidden" mt={6}>
                 <DynamicTable
-                  count={1}
                   columns={["Supplier", "Contact Number", "Action"]}
                   rows={[
                     [
                       "UNITED LABORATORIES (UNILAB)",
                       "09171234567",
-                      {
-                        content: (
-                          <Button colorScheme="cyan" mr={3}>
-                            Select
-                          </Button>
-                        ),
-                      },
+
+                      <Button colorScheme="cyan" mr={3}>
+                        Select
+                      </Button>,
                     ],
                   ]}
                 />
@@ -151,13 +170,22 @@ function AddPurchaseButton() {
                 </Text>
               </Flex>
               <InputGroup gap={4}>
-                <FormControl mt={4} isInvalid={!!formik.errors.last_name && formik.touched.last_name}>
+                <FormControl
+                  mt={4}
+                  isInvalid={
+                    !!formik.errors.last_name && formik.touched.last_name
+                  }
+                >
                   <FormLabel>Select product</FormLabel>
                   <AutoComplete openOnFocus>
                     <AutoCompleteInput variant="filled" />
                     <AutoCompleteList>
                       {products.map((product, id) => (
-                        <AutoCompleteItem key={`option-${id}`} value={product} textTransform="capitalize">
+                        <AutoCompleteItem
+                          key={`option-${id}`}
+                          value={product}
+                          textTransform="capitalize"
+                        >
                           {product}
                         </AutoCompleteItem>
                       ))}

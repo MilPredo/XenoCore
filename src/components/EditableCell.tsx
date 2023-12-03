@@ -61,7 +61,8 @@ function EditableCell({
         setInputAmount(trueAmount + "");
       }
       if (type === "currency") {
-        setInputAmount(parseFloat(trueAmount.replace(/₱/, "")));
+        console.log('lol', trueAmount)
+        setInputAmount(parseFloat(trueAmount.replace(/[,₱]/g, "")));
       }
       if (type === "number") {
         setInputAmount(parseInt(trueAmount) + "");
@@ -78,6 +79,7 @@ function EditableCell({
   }, [trueAmount]);
 
   const doEdit = () => {
+    console.log('tru', trueAmount.replace(/[^\d.]/g,''))
     setInputAmount(type === "text" ? trueAmount : trueAmount.replace(/[^\d.]/g, ""));
     setIsEditing(true);
   };
@@ -108,7 +110,7 @@ function EditableCell({
     <Box>
       <Flex gap={2} ref={editElement} align="center">
         <Text hidden={isEditing}>{trueAmount}</Text>
-        <Input
+        <Input 
           ref={inputRef}
           size="xs"
           hidden={!isEditing}

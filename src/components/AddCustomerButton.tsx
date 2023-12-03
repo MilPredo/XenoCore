@@ -18,23 +18,26 @@ import {
 import { useFormik } from "formik";
 import React, { useRef } from "react";
 import { FiUserPlus } from "react-icons/fi";
-interface RegisterFormValues {
+import { addCustomer } from "../api/customer";
+interface CustomerFormValues {
   first_name: string;
   middle_name: string;
   last_name: string;
-  contact_number: string;
+  contact_number?: string;
+  description?: string;
 }
 
-function AddCustomerButton() {
-  const formik = useFormik<RegisterFormValues>({
+function AddCustomerButton(props: { onSubmitSuccess?: () => void }) {
+  const formik = useFormik<CustomerFormValues>({
     initialValues: {
       first_name: "",
       last_name: "",
       middle_name: "",
       contact_number: "",
+      description: "",
     },
     validate: (values) => {
-      const errors: Partial<RegisterFormValues> = {};
+      const errors: Partial<CustomerFormValues> = {};
 
       if (!values.first_name) {
         errors.first_name = "First name is required";
@@ -50,43 +53,42 @@ function AddCustomerButton() {
       return errors;
     },
     onSubmit: (values, { resetForm }) => {
-      // registerUser(
-      //   values.username,
-      //   values.password,
-      //   values.first_name,
-      //   values.middle_name,
-      //   values.last_name,
-      //   ""
-      // ).then((response) => {
-      //   onSubmit(response?.status === 200)
-      //   if (response?.status === 200) {
-      //     // (async () => {
-      //     //   let a = await getUsers(
-      //     //     page,
-      //     //     search.username,
-      //     //     search.first_name,
-      //     //     search.middle_name,
-      //     //     search.last_name
-      //     //   );
-      //     //   setUsers(a.rows);
-      //     //   setCount(a.count);
-      //     //   console.log(a);
-      //     // })();
-      //     resetForm();
-      //     onClose();
-      //   }
-      //   console.log(response);
-      // });
+      console.log("hallo", values);
+      addCustomer(
+        values.first_name,
+        values.middle_name,
+        values.last_name,
+        values.contact_number,
+        values.description
+      ).then((response) => {
+        if (response?.status === 200) {
+          if (props.onSubmitSuccess) props.onSubmitSuccess();
+          resetForm();
+          onClose();
+          alert("Customer Added");
+        }
+      });
     },
   });
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = useRef(null);
   return (
     <>
-      <Button onClick={onOpen} leftIcon={<FiUserPlus />} variant="solid" colorScheme="green">
+      <Button
+        onClick={onOpen}
+        leftIcon={<FiUserPlus />}
+        variant="solid"
+        colorScheme="green"
+      >
         Add New Customer
       </Button>
-      <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose} isCentered size="6xl">
+      <Modal
+        initialFocusRef={initialRef}
+        isOpen={isOpen}
+        onClose={onClose}
+        isCentered
+        size="6xl"
+      >
         <form onSubmit={formik.handleSubmit}>
           <ModalOverlay />
           <ModalContent>
@@ -94,7 +96,12 @@ function AddCustomerButton() {
             <ModalCloseButton />
             <ModalBody>
               <InputGroup gap={4}>
-                <FormControl mt={4} isInvalid={!!formik.errors.first_name && formik.touched.first_name}>
+                <FormControl
+                  mt={4}
+                  isInvalid={
+                    !!formik.errors.first_name && formik.touched.first_name
+                  }
+                >
                   <FormLabel>First Name</FormLabel>
                   <Input
                     placeholder="First Name"
@@ -103,10 +110,17 @@ function AddCustomerButton() {
                     id="first_name"
                     name="first_name"
                   />
-                  <FormErrorMessage>{formik.errors.first_name}</FormErrorMessage>
+                  <FormErrorMessage>
+                    {formik.errors.first_name}
+                  </FormErrorMessage>
                 </FormControl>
 
-                <FormControl mt={4} isInvalid={!!formik.errors.middle_name && formik.touched.middle_name}>
+                <FormControl
+                  mt={4}
+                  isInvalid={
+                    !!formik.errors.middle_name && formik.touched.middle_name
+                  }
+                >
                   <FormLabel>Middle Name</FormLabel>
                   <Input
                     placeholder="Middle Name"
@@ -115,10 +129,17 @@ function AddCustomerButton() {
                     id="middle_name"
                     name="middle_name"
                   />
-                  <FormErrorMessage>{formik.errors.middle_name}</FormErrorMessage>
+                  <FormErrorMessage>
+                    {formik.errors.middle_name}
+                  </FormErrorMessage>
                 </FormControl>
 
-                <FormControl mt={4} isInvalid={!!formik.errors.last_name && formik.touched.last_name}>
+                <FormControl
+                  mt={4}
+                  isInvalid={
+                    !!formik.errors.last_name && formik.touched.last_name
+                  }
+                >
                   <FormLabel>Last Name</FormLabel>
                   <Input
                     placeholder="Last Name"
@@ -129,22 +150,33 @@ function AddCustomerButton() {
                   />
                   <FormErrorMessage>{formik.errors.last_name}</FormErrorMessage>
                 </FormControl>
-                <FormControl mt={4} isInvalid={!!formik.errors.last_name && formik.touched.last_name}>
+                <FormControl
+                  mt={4}
+                  isInvalid={
+                    !!formik.errors.last_name && formik.touched.last_name
+                  }
+                >
                   <FormLabel>Contact Number</FormLabel>
                   <Input
                     placeholder="Contact Number"
                     onChange={formik.handleChange}
+                    value={formik.values.contact_number}
                     type="number"
                     inputMode="tel"
-                    id="last_name"
-                    name="last_name"
+                    id="contact_number"
+                    name="contact_number"
                   />
-                  <FormErrorMessage>{formik.errors.last_name}</FormErrorMessage>
+                  <FormErrorMessage opacity={'unset'}>{formik.errors.last_name}</FormErrorMessage>
                 </FormControl>
               </InputGroup>
 
               <FormLabel mt={4}>Additional Notes</FormLabel>
-              <Textarea />
+              <Textarea
+                onChange={formik.handleChange}
+                value={formik.values.description}
+                id="description"
+                name="description"
+              />
             </ModalBody>
             <ModalFooter>
               <Button type="submit" colorScheme="green" mr={3}>
