@@ -65,7 +65,7 @@ function UserCard({
                 textTransform="capitalize"
               >{`${first_name} ${middle_name} ${last_name}`}</Heading>
             </Flex>
-
+                {null}
             <Flex gap={2}>
               <Flex flexDir="row" align="center">
                 <Text

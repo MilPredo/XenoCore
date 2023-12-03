@@ -1,15 +1,4 @@
-import {
-  Box,
-  Flex,
-  Table,
-  TableCellProps,
-  TableColumnHeaderProps,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr,
-} from "@chakra-ui/react";
+import { Box, Flex, Table, TableCellProps, TableColumnHeaderProps, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 import React, { useState } from "react";
 import Pagination from "./Pagination";
 export type ColumnType = {
@@ -23,8 +12,8 @@ export type CellType = {
 export interface DynamicTableProps {
   columns: any[];
   rows: any[][];
-  count: number;
-  onPageChange?: (page: number) => void;
+  // count: number;
+  // onPageChange?: (page: number) => void;
 }
 const DynamicTable = (props: DynamicTableProps) => {
   // const [table, setTable] = useState({
@@ -53,22 +42,15 @@ const DynamicTable = (props: DynamicTableProps) => {
             zIndex="docked"
           >
             <Tr>
-              {props.columns.map((value, index) =>
-                typeof value === "string" ? (
-                  <Th textAlign="center" py={3} key={index}>
-                    {value}
-                  </Th>
-                ) : (
-                  <Th
-                    textAlign="center"
-                    py={3}
-                    {...value.attributes}
-                    key={index}
-                  >
-                    {value.content}
-                  </Th>
-                )
-              )}
+              {props.columns.map((value, index) => (
+                <Th textAlign="center" py={3} key={index}>
+                  {React.isValidElement(value) || typeof value === null
+                    ? value
+                    : typeof value === "string"
+                    ? value
+                    : "" + value}
+                </Th>
+              ))}
             </Tr>
           </Thead>
           <Tbody textTransform="uppercase">
@@ -84,7 +66,7 @@ const DynamicTable = (props: DynamicTableProps) => {
           </Tbody>
         </Table>
       </Box>
-      <Box mb="8">
+      {/* <Box mb="8">
         <Pagination
           currentPage={1}
           maxPage={props.count / 16}
@@ -94,7 +76,7 @@ const DynamicTable = (props: DynamicTableProps) => {
             //setPage(page);
           }}
         />
-      </Box>
+      </Box> */}
     </>
   );
 };

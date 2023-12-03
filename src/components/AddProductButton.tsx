@@ -33,8 +33,8 @@ import { addProduct } from "../api/product";
 interface ProductFormValues {
   category: string;
   product_name: string;
-  default_cog?: number;
-  default_ppu?: number;
+  default_cog?: string;
+  default_ppu?: string;
   description?: string;
 }
 
@@ -52,13 +52,14 @@ interface ProductFormValues {
   description: string;
 */
 function AddProductButton(props: { onSubmitSuccess?: () => void }) {
+  const [first, setfirst] = useState("");
   const formik = useFormik<ProductFormValues>({
     initialValues: {
       category: "",
       product_name: "",
-      default_cog: undefined,
-      default_ppu: undefined,
-      description: undefined,
+      default_cog: "",
+      default_ppu: "",
+      description: "",
     },
     validate: (values) => {
       const errors: Partial<ProductFormValues> = {};
@@ -74,16 +75,20 @@ function AddProductButton(props: { onSubmitSuccess?: () => void }) {
     },
     onSubmit: (values, { resetForm }) => {
       console.log("hallo", values);
-      addProduct(values.product_name, values.category, values.default_cog, values.default_ppu, values.description).then(
-        (response) => {
-          if (response?.status === 200) {
-            if (props.onSubmitSuccess) props.onSubmitSuccess();
-            resetForm();
-            onClose();
-            alert("Product Added");
-          }
+      addProduct(
+        values.product_name,
+        values.category,
+        parseFloat((values.default_cog ?? "").replace(/,/g, "")),
+        parseFloat((values.default_ppu ?? "").replace(/,/g, "")),
+        values.description
+      ).then((response) => {
+        if (response?.status === 200) {
+          if (props.onSubmitSuccess) props.onSubmitSuccess();
+          resetForm();
+          onClose();
+          alert("Product Added");
         }
-      );
+      });
     },
   });
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -164,7 +169,9 @@ function AddProductButton(props: { onSubmitSuccess?: () => void }) {
                       name="default_cog"
                       decimalsLimit={2}
                       placeholder="0.00"
-                      onChange={formik.handleChange}
+                      onValueChange={(value) => {
+                        formik.setFieldValue("default_cog", value ?? "");
+                      }}
                       value={formik.values.default_cog}
                       style={{
                         border: "1px solid",
@@ -187,8 +194,10 @@ function AddProductButton(props: { onSubmitSuccess?: () => void }) {
                       name="default_ppu"
                       decimalsLimit={2}
                       placeholder="0.00"
-                      // onValueChange={}
-                      onChange={formik.handleChange}
+                      onValueChange={(value) => {
+                        formik.setFieldValue("default_ppu", value ?? "");
+                      }}
+                      maxLength={255}
                       value={formik.values.default_ppu}
                       style={{
                         border: "1px solid",
@@ -206,11 +215,10 @@ function AddProductButton(props: { onSubmitSuccess?: () => void }) {
 
               <FormLabel mt={4}>Description</FormLabel>
               <Textarea
-              
-              id="description"
-              name="description"
-              onChange={formik.handleChange}
-              value={formik.values.description}
+                id="description"
+                name="description"
+                onChange={formik.handleChange}
+                value={formik.values.description}
               />
             </ModalBody>
             <ModalFooter>
