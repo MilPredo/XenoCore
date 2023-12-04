@@ -1,7 +1,7 @@
 import { Drawer, DrawerBody, DrawerContent, DrawerHeader, useDisclosure } from "@chakra-ui/react";
-import React, {useState} from "react";
+import React, { useState } from "react";
 
-function DrawerMobile() {  
+function DrawerMobile() {
   const [isOpen, setIsOpen] = useState(true);
 
   const onClose = () => setIsOpen(false);

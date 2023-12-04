@@ -17,6 +17,37 @@ import Products from "./pages/Products.tsx";
 import Suppliers from "./pages/Suppliers.tsx";
 import Customers from "./pages/Customers.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
+
+/*
+Pahabol ...
+Naalala ko, sabi ni Madam ...
+Na iba Agent price at MD price sa gen sheet na may Unit Price/cost, kaya padagdag ng dalawa pa columns ...
+
+Agent price
+MD price
+
+Actually...
+MD Price = Unit cost minus [(unit cost minus COG) × 10%] 
+
+Example:
+COG = 1,500
+Unit cost = 2,000
+Unit cost - CoG = 500
+500 x 0.10 = 50
+2,000 - 50 = 1,950 = MD Price
+
+And
+
+Agent Price = Unit cost minus [(unit cost minus COG) × 20%] 
+
+Example:
+COG = 1,500
+Unit cost = 2,000
+Unit cost - CoG = 500
+500 x 0.20 = 100
+2,000 - 100 = 1,900 = Agent Price
+
+*/
 const router = createBrowserRouter([
   {
     path: "/dashboard",

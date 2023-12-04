@@ -37,6 +37,8 @@ import {
 } from "@choc-ui/chakra-autocomplete";
 import AddProductButton from "./AddProductButton";
 import AddSupplierButton from "./AddSupplierButton";
+import AsyncSelect from 'react-select/async';
+import { getProduct } from "../api/product";
 interface RegisterFormValues {
   first_name: string;
   middle_name: string;
@@ -129,6 +131,11 @@ function AddPurchaseButton() {
               <Flex gap={4}>
                 <FormControl flex={1} mt={4}>
                   <FormLabel>Supplier Name</FormLabel>
+                  {/* <AsyncSelect cacheOptions loadOptions={(
+  supplier_name: string,
+) => {
+    getProduct(supplier_name);
+}} defaultOptions/> */}
                   <Input
                     onChange={formik.handleChange}
                     value={formik.values.first_name}

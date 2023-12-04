@@ -1,4 +1,18 @@
-import { Button, FormControl, FormErrorMessage, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
+import {
+  Button,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { useFormik } from "formik";
 import React, { useRef } from "react";
 import { FiUserPlus } from "react-icons/fi";
@@ -10,10 +24,8 @@ interface RegisterFormValues {
   middle_name: string;
   last_name: string;
 }
-interface AddUserButtonProps{
-
-}
-function AddUserButton({onSubmit}:{onSubmit:(val:boolean)=>void}) {
+interface AddUserButtonProps {}
+function AddUserButton({ onSubmit }: { onSubmit: (val: boolean) => void }) {
   const formik = useFormik<RegisterFormValues>({
     initialValues: {
       username: "",
@@ -46,34 +58,28 @@ function AddUserButton({onSubmit}:{onSubmit:(val:boolean)=>void}) {
       return errors;
     },
     onSubmit: (values, { resetForm }) => {
-      registerUser(
-        values.username,
-        values.password,
-        values.first_name,
-        values.middle_name,
-        values.last_name,
-        ""
-      ).then((response) => {
-        
-        onSubmit(response?.status === 200)
-        if (response?.status === 200) {
-          // (async () => {
-          //   let a = await getUsers(
-          //     page,
-          //     search.username,
-          //     search.first_name,
-          //     search.middle_name,
-          //     search.last_name
-          //   );
-          //   setUsers(a.rows);
-          //   setCount(a.count);
-          //   console.log(a);
-          // })();
-          resetForm();
-          onClose();
+      registerUser(values.username, values.password, values.first_name, values.middle_name, values.last_name, "").then(
+        (response) => {
+          onSubmit(response?.status === 200);
+          if (response?.status === 200) {
+            // (async () => {
+            //   let a = await getUsers(
+            //     page,
+            //     search.username,
+            //     search.first_name,
+            //     search.middle_name,
+            //     search.last_name
+            //   );
+            //   setUsers(a.rows);
+            //   setCount(a.count);
+            //   console.log(a);
+            // })();
+            resetForm();
+            onClose();
+          }
+          console.log(response);
         }
-        console.log(response);
-      });
+      );
     },
   });
 
@@ -82,29 +88,17 @@ function AddUserButton({onSubmit}:{onSubmit:(val:boolean)=>void}) {
 
   return (
     <>
-      <Button
-        onClick={onOpen}
-        leftIcon={<FiUserPlus />}
-        variant="solid"
-        colorScheme="green"
-      >
+      <Button onClick={onOpen} leftIcon={<FiUserPlus />} variant="solid" colorScheme="green">
         Create New User
       </Button>
-      <Modal
-        initialFocusRef={initialRef}
-        isOpen={isOpen}
-        onClose={onClose}
-        isCentered
-      >
+      <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose} isCentered>
         <form onSubmit={formik.handleSubmit}>
           <ModalOverlay />
           <ModalContent>
             <ModalHeader>Create new user</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-              <FormControl
-                isInvalid={!!formik.errors.username && formik.touched.username}
-              >
+              <FormControl isInvalid={!!formik.errors.username && formik.touched.username}>
                 <FormLabel>Username</FormLabel>
                 <Input
                   ref={initialRef}
@@ -117,10 +111,7 @@ function AddUserButton({onSubmit}:{onSubmit:(val:boolean)=>void}) {
                 <FormErrorMessage>{formik.errors.username}</FormErrorMessage>
               </FormControl>
 
-              <FormControl
-                mt={4}
-                isInvalid={!!formik.errors.password && formik.touched.password}
-              >
+              <FormControl mt={4} isInvalid={!!formik.errors.password && formik.touched.password}>
                 <FormLabel>Password</FormLabel>
                 <Input
                   type="password"
@@ -133,12 +124,7 @@ function AddUserButton({onSubmit}:{onSubmit:(val:boolean)=>void}) {
                 <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
               </FormControl>
 
-              <FormControl
-                mt={4}
-                isInvalid={
-                  !!formik.errors.first_name && formik.touched.first_name
-                }
-              >
+              <FormControl mt={4} isInvalid={!!formik.errors.first_name && formik.touched.first_name}>
                 <FormLabel>First Name</FormLabel>
                 <Input
                   placeholder="First Name"
@@ -150,12 +136,7 @@ function AddUserButton({onSubmit}:{onSubmit:(val:boolean)=>void}) {
                 <FormErrorMessage>{formik.errors.first_name}</FormErrorMessage>
               </FormControl>
 
-              <FormControl
-                mt={4}
-                isInvalid={
-                  !!formik.errors.middle_name && formik.touched.middle_name
-                }
-              >
+              <FormControl mt={4} isInvalid={!!formik.errors.middle_name && formik.touched.middle_name}>
                 <FormLabel>Middle Name</FormLabel>
                 <Input
                   placeholder="Middle Name"
@@ -167,12 +148,7 @@ function AddUserButton({onSubmit}:{onSubmit:(val:boolean)=>void}) {
                 <FormErrorMessage>{formik.errors.middle_name}</FormErrorMessage>
               </FormControl>
 
-              <FormControl
-                mt={4}
-                isInvalid={
-                  !!formik.errors.last_name && formik.touched.last_name
-                }
-              >
+              <FormControl mt={4} isInvalid={!!formik.errors.last_name && formik.touched.last_name}>
                 <FormLabel>Last Name</FormLabel>
                 <Input
                   placeholder="Last Name"
