@@ -147,6 +147,29 @@ function AddPurchaseButton() {
             <ModalHeader>Add new purchase</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
+              <Flex gap={4} mb='8'>
+                <FormControl flex={1} mt={4}>
+                  <FormLabel>Product Search</FormLabel>
+
+                  <Input
+                    onChange={formik.handleChange}
+                    value={formik.values.first_name}
+                  />
+                </FormControl>
+                <FormControl flex={0} mt={4}>
+                  <FormLabel>Actions</FormLabel>
+                  <Flex gap={2}>
+                    <Button
+                      leftIcon={<FiSearch />}
+                      variant="solid"
+                      colorScheme="cyan"
+                    >
+                      Search
+                    </Button>
+                    {/* <AddSupplierButton /> */}
+                  </Flex>
+                </FormControl>
+              </Flex>
               <Grid
                 templateRows="repeat(1, minmax(0, 1fr))"
                 templateColumns="repeat(2, minmax(0, 1fr))"
@@ -154,14 +177,17 @@ function AddPurchaseButton() {
                 flex={1}
                 gap={6}
               >
-                <GridItem
-                  bg="secondary.50"
-                  borderRadius="xl"
-                  rowSpan={1}
-                  colSpan={1}
-                  overflow="auto"
-                >
-                  <List minH="10em" spacing={1} p={1}>
+                <GridItem rowSpan={1} colSpan={1} overflow="auto">
+                  <Heading size="md" mb="4">
+                    Products
+                  </Heading>
+                  <List
+                    bg="secondary.50"
+                    borderRadius="xl"
+                    minH="10em"
+                    spacing={1}
+                    p={1}
+                  >
                     <ListItem
                       borderColor="rgba(127,127,127,127)"
                       borderWidth="thin"
@@ -199,14 +225,17 @@ function AddPurchaseButton() {
                     </ListItem>
                   </List>
                 </GridItem>
-                <GridItem
-                  bg="secondary.50"
-                  borderRadius="xl"
-                  rowSpan={1}
-                  colSpan={1}
-                  overflow="auto"
-                >
-                  <List minH="10em" spacing={1} p={1}>
+                <GridItem rowSpan={1} colSpan={1} overflow="auto">
+                  <Heading size="md" mb="4">
+                    Cart
+                  </Heading>
+                  <List
+                    bg="secondary.50"
+                    borderRadius="xl"
+                    minH="10em"
+                    spacing={1}
+                    p={1}
+                  >
                     <ListItem
                       borderColor="rgba(127,127,127,127)"
                       borderWidth="thin"
@@ -240,7 +269,48 @@ function AddPurchaseButton() {
                   </List>
                 </GridItem>
               </Grid>
-
+              <InputGroup gap={4}>
+                <FormControl
+                  mt={4}
+                  // isInvalid={
+                  //   !!formik.errors.last_name && formik.touched.last_name
+                  // }
+                >
+                  <FormLabel>Supplier</FormLabel>
+                  <AutoComplete openOnFocus>
+                    <AutoCompleteInput variant="filled" />
+                    <AutoCompleteList>
+                      {products.map((product, id) => (
+                        <AutoCompleteItem
+                          key={`option-${id}`}
+                          value={product}
+                          textTransform="capitalize"
+                        >
+                          {product}
+                        </AutoCompleteItem>
+                      ))}
+                    </AutoCompleteList>
+                  </AutoComplete>
+                  <FormErrorMessage>{formik.errors.last_name}</FormErrorMessage>
+                </FormControl>
+                <FormControl mt={4}>
+                  <FormLabel>Order Date</FormLabel>
+                  <Input type="date"></Input>
+                </FormControl>
+                <FormControl mt={4}>
+                  <FormLabel>Delivery Date</FormLabel>
+                  <Input type="date"></Input>
+                </FormControl>
+                <FormControl mt={4}>
+                  <FormLabel>Order Status</FormLabel>
+                  <Select defaultValue="Ordered" width="150px">
+                    <option value="Ordered">Ordered</option>
+                    <option value="Delivered">Delivered</option>
+                    <option value="Incomplete">Incomplete</option>
+                    <option value="Problematic">Problematic</option>
+                  </Select>
+                </FormControl>
+              </InputGroup>
               {/* <Heading size="sm">Select supplier</Heading>
 
               <Flex gap={4}>
