@@ -1,12 +1,18 @@
 import {
+  Box,
   Button,
   Flex,
   FormControl,
   FormErrorMessage,
   FormLabel,
+  Grid,
+  GridItem,
   Heading,
+  Icon,
   Input,
   InputGroup,
+  List,
+  ListItem,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -20,13 +26,21 @@ import {
   NumberInputField,
   NumberInputStepper,
   Select,
+  Spacer,
   Text,
   Textarea,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
-import React, { useRef } from "react";
-import { FiPlus, FiSearch, FiUserPlus } from "react-icons/fi";
+import React, { useRef, useState } from "react";
+import {
+  FiArrowRight,
+  FiPlus,
+  FiSearch,
+  FiShoppingCart,
+  FiUserPlus,
+  FiX,
+} from "react-icons/fi";
 import AddCustomerButton from "./AddCustomerButton";
 import DynamicTable from "./DynamicTable";
 import {
@@ -37,7 +51,7 @@ import {
 } from "@choc-ui/chakra-autocomplete";
 import AddProductButton from "./AddProductButton";
 import AddSupplierButton from "./AddSupplierButton";
-import AsyncSelect from 'react-select/async';
+import AsyncSelect from "react-select/async";
 import { getProduct } from "../api/product";
 interface RegisterFormValues {
   first_name: string;
@@ -103,6 +117,13 @@ function AddPurchaseButton() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = useRef(null);
   const products = ["bonamine", "neozef", "cetirizine", "bioflu", "ibroprufen"];
+
+  const [cart, setCart] = useState([
+    {
+      product_name: 1,
+      quantity: 2,
+    },
+  ]);
   return (
     <>
       <Button
@@ -126,16 +147,106 @@ function AddPurchaseButton() {
             <ModalHeader>Add new purchase</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-              <Heading size="sm">Select supplier</Heading>
+              <Grid
+                templateRows="repeat(1, minmax(0, 1fr))"
+                templateColumns="repeat(2, minmax(0, 1fr))"
+                maxH={200}
+                flex={1}
+                gap={6}
+              >
+                <GridItem
+                  bg="secondary.50"
+                  borderRadius="xl"
+                  rowSpan={1}
+                  colSpan={1}
+                  overflow="auto"
+                >
+                  <List minH="10em" spacing={1} p={1}>
+                    <ListItem
+                      borderColor="rgba(127,127,127,127)"
+                      borderWidth="thin"
+                      borderRadius="lg"
+                    >
+                      <Flex align="center" justify="space-evenly">
+                        <Heading
+                          px={2}
+                          py={1}
+                          m={1}
+                          size="sm"
+                          textTransform="uppercase"
+                          isTruncated
+                          textAlign="center"
+                          flex={1}
+                        >
+                          Bonamine
+                        </Heading>
+                        <Heading
+                          px={2}
+                          py={1}
+                          m={1}
+                          size="sm"
+                          textTransform="uppercase"
+                        >
+                          {new Intl.NumberFormat("en-PH", {
+                            style: "currency",
+                            currency: "PHP",
+                          }).format(20)}
+                        </Heading>
+                        <Button size="xs" colorScheme="green" m={2}>
+                          <Icon as={FiArrowRight} />
+                        </Button>
+                      </Flex>
+                    </ListItem>
+                  </List>
+                </GridItem>
+                <GridItem
+                  bg="secondary.50"
+                  borderRadius="xl"
+                  rowSpan={1}
+                  colSpan={1}
+                  overflow="auto"
+                >
+                  <List minH="10em" spacing={1} p={1}>
+                    <ListItem
+                      borderColor="rgba(127,127,127,127)"
+                      borderWidth="thin"
+                      borderRadius="lg"
+                    >
+                      <Flex align="center" justify="space-evenly">
+                        <Button size="xs" colorScheme="red" m={2}>
+                          <Icon as={FiX} />
+                        </Button>
+                        <Heading
+                          px={2}
+                          py={1}
+                          m={1}
+                          size="sm"
+                          textTransform="uppercase"
+                          isTruncated
+                          textAlign="center"
+                          flex={1}
+                        >
+                          Cetirizine
+                        </Heading>
+                        <NumberInput defaultValue={20} min={1} max={2000}>
+                          <NumberInputField />
+                          <NumberInputStepper>
+                            <NumberIncrementStepper />
+                            <NumberDecrementStepper />
+                          </NumberInputStepper>
+                        </NumberInput>
+                      </Flex>
+                    </ListItem>
+                  </List>
+                </GridItem>
+              </Grid>
+
+              {/* <Heading size="sm">Select supplier</Heading>
 
               <Flex gap={4}>
                 <FormControl flex={1} mt={4}>
                   <FormLabel>Supplier Name</FormLabel>
-                  {/* <AsyncSelect cacheOptions loadOptions={(
-  supplier_name: string,
-) => {
-    getProduct(supplier_name);
-}} defaultOptions/> */}
+ 
                   <Input
                     onChange={formik.handleChange}
                     value={formik.values.first_name}
@@ -227,7 +338,7 @@ function AddPurchaseButton() {
                     <option value="Problematic">Problematic</option>
                   </Select>
                 </FormControl>
-              </InputGroup>
+              </InputGroup> */}
             </ModalBody>
             <ModalFooter>
               <Button type="submit" colorScheme="green" mr={3}>

@@ -13,6 +13,8 @@ export interface ProductRow {
   description: string;
 }
 
+
+
 export interface CustomerRow {
   id: number;
   first_name: string;
