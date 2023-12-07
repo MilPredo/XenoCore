@@ -113,7 +113,7 @@ function AddSalesButton({ onSubmit }: { onSubmit?: (val: boolean) => void }) {
       <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose} isCentered size="6xl">
         <form onSubmit={formik.handleSubmit}>
           <ModalOverlay />
-          <ModalContent _dark={{bg:'dominant.800'}}>
+          <ModalContent _dark={{ bg: "dominant.800" }}>
             <ModalHeader>Add new sale</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
@@ -160,7 +160,7 @@ function AddSalesButton({ onSubmit }: { onSubmit?: (val: boolean) => void }) {
                 </FormControl>
               </Flex>
               <Flex flex={1} flexDir="column" overflow="hidden" mt={6}>
-                <DynamicTable 
+                <DynamicTable
                   columns={["First Name", "Middle Name", "Last Name", "Contact Number", "Action"]}
                   rows={[
                     [
@@ -168,13 +168,10 @@ function AddSalesButton({ onSubmit }: { onSubmit?: (val: boolean) => void }) {
                       "Carlos",
                       "Santos",
                       "09171234567",
-                      {
-                        content: (
-                          <Button colorScheme="cyan" mr={3}>
-                            Select
-                          </Button>
-                        ),
-                      },
+
+                      <Button colorScheme="cyan" mr={3}>
+                        Select
+                      </Button>,
                     ],
                   ]}
                 />
@@ -186,11 +183,11 @@ function AddSalesButton({ onSubmit }: { onSubmit?: (val: boolean) => void }) {
                 </Text>
               </Flex>
               <Flex gap={2} m={2}>
-                <Flex flex={1} bg='purple' >
-a
+                <Flex flex={1} bg="purple">
+                  a
                 </Flex>
-                <Flex flex={1} bg='yellow' >
-a
+                <Flex flex={1} bg="yellow">
+                  a
                 </Flex>
               </Flex>
               <InputGroup gap={4}>
