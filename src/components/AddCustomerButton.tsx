@@ -91,7 +91,7 @@ function AddCustomerButton(props: { onSubmitSuccess?: () => void }) {
       >
         <form onSubmit={formik.handleSubmit}>
           <ModalOverlay />
-          <ModalContent>
+          <ModalContent _dark={{bg:'dominant.800'}}>
             <ModalHeader>Add new customer</ModalHeader>
             <ModalCloseButton />
             <ModalBody>

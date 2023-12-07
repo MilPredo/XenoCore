@@ -32,27 +32,19 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
-import React, { useRef, useState } from "react";
-import {
-  FiArrowRight,
-  FiPlus,
-  FiSearch,
-  FiShoppingCart,
-  FiUserPlus,
-  FiX,
-} from "react-icons/fi";
+import React, { useEffect, useRef, useState } from "react";
+import { FiArrowRight, FiPlus, FiSearch, FiShoppingCart, FiUserPlus, FiX } from "react-icons/fi";
 import AddCustomerButton from "./AddCustomerButton";
 import DynamicTable from "./DynamicTable";
-import {
-  AutoComplete,
-  AutoCompleteInput,
-  AutoCompleteItem,
-  AutoCompleteList,
-} from "@choc-ui/chakra-autocomplete";
+import { AutoComplete, AutoCompleteInput, AutoCompleteItem, AutoCompleteList } from "@choc-ui/chakra-autocomplete";
 import AddProductButton from "./AddProductButton";
 import AddSupplierButton from "./AddSupplierButton";
 import AsyncSelect from "react-select/async";
 import { getProduct } from "../api/product";
+import QuantityInput from "./QuantityInput";
+import CartItem, { CartItemData } from "./CartItem";
+import Cart from "./Cart";
+import ProductList from "./ProductList";
 interface RegisterFormValues {
   first_name: string;
   middle_name: string;
@@ -117,156 +109,47 @@ function AddPurchaseButton() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = useRef(null);
   const products = ["bonamine", "neozef", "cetirizine", "bioflu", "ibroprufen"];
+  const getCurrentDate = (): string => {
+    const today = new Date();
+    const year = today.getFullYear();
+    let month = today.getMonth() + 1; // Month is zero-based
+    let day = today.getDate();
 
-  const [cart, setCart] = useState([
-    {
-      product_name: 1,
-      quantity: 2,
-    },
-  ]);
+    // Pad single-digit month or day with a leading zero
+    const formattedMonth = month < 10 ? `0${month}` : month;
+    const formattedDay = day < 10 ? `0${day}` : day;
+
+    return `${year}-${formattedMonth}-${formattedDay}`;
+  };
+  const [cart, setCart] = useState<CartItemData[]>([]);
+  useEffect(() => {
+    console.log("cart", cart);
+  }, [cart]);
+
   return (
     <>
-      <Button
-        onClick={onOpen}
-        leftIcon={<FiPlus />}
-        variant="solid"
-        colorScheme="green"
-      >
+      <Button onClick={onOpen} leftIcon={<FiPlus />} variant="solid" colorScheme="green">
         Add New Purchase
       </Button>
-      <Modal
-        initialFocusRef={initialRef}
-        isOpen={isOpen}
-        onClose={onClose}
-        isCentered
-        size="6xl"
-      >
+      <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose} isCentered size="6xl">
         <form onSubmit={formik.handleSubmit}>
           <ModalOverlay />
-          <ModalContent>
+          <ModalContent _dark={{ bg: "dominant.800" }}>
             <ModalHeader>Add new purchase</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-              <Flex gap={4} mb='8'>
-                <FormControl flex={1} mt={4}>
-                  <FormLabel>Product Search</FormLabel>
-
-                  <Input
-                    onChange={formik.handleChange}
-                    value={formik.values.first_name}
-                  />
-                </FormControl>
-                <FormControl flex={0} mt={4}>
-                  <FormLabel>Actions</FormLabel>
-                  <Flex gap={2}>
-                    <Button
-                      leftIcon={<FiSearch />}
-                      variant="solid"
-                      colorScheme="cyan"
-                    >
-                      Search
-                    </Button>
-                    {/* <AddSupplierButton /> */}
-                  </Flex>
-                </FormControl>
-              </Flex>
               <Grid
                 templateRows="repeat(1, minmax(0, 1fr))"
                 templateColumns="repeat(2, minmax(0, 1fr))"
-                maxH={200}
+                maxH={500}
                 flex={1}
                 gap={6}
               >
                 <GridItem rowSpan={1} colSpan={1} overflow="auto">
-                  <Heading size="md" mb="4">
-                    Products
-                  </Heading>
-                  <List
-                    bg="secondary.50"
-                    borderRadius="xl"
-                    minH="10em"
-                    spacing={1}
-                    p={1}
-                  >
-                    <ListItem
-                      borderColor="rgba(127,127,127,127)"
-                      borderWidth="thin"
-                      borderRadius="lg"
-                    >
-                      <Flex align="center" justify="space-evenly">
-                        <Heading
-                          px={2}
-                          py={1}
-                          m={1}
-                          size="sm"
-                          textTransform="uppercase"
-                          isTruncated
-                          textAlign="center"
-                          flex={1}
-                        >
-                          Bonamine
-                        </Heading>
-                        <Heading
-                          px={2}
-                          py={1}
-                          m={1}
-                          size="sm"
-                          textTransform="uppercase"
-                        >
-                          {new Intl.NumberFormat("en-PH", {
-                            style: "currency",
-                            currency: "PHP",
-                          }).format(20)}
-                        </Heading>
-                        <Button size="xs" colorScheme="green" m={2}>
-                          <Icon as={FiArrowRight} />
-                        </Button>
-                      </Flex>
-                    </ListItem>
-                  </List>
+                  <ProductList onChange={setCart} cartItems={cart} />
                 </GridItem>
-                <GridItem rowSpan={1} colSpan={1} overflow="auto">
-                  <Heading size="md" mb="4">
-                    Cart
-                  </Heading>
-                  <List
-                    bg="secondary.50"
-                    borderRadius="xl"
-                    minH="10em"
-                    spacing={1}
-                    p={1}
-                  >
-                    <ListItem
-                      borderColor="rgba(127,127,127,127)"
-                      borderWidth="thin"
-                      borderRadius="lg"
-                    >
-                      <Flex align="center" justify="space-evenly">
-                        <Button size="xs" colorScheme="red" m={2}>
-                          <Icon as={FiX} />
-                        </Button>
-                        <Heading
-                          px={2}
-                          py={1}
-                          m={1}
-                          size="sm"
-                          textTransform="uppercase"
-                          isTruncated
-                          textAlign="center"
-                          flex={1}
-                        >
-                          Cetirizine
-                        </Heading>
-                        <NumberInput defaultValue={20} min={1} max={2000}>
-                          <NumberInputField />
-                          <NumberInputStepper>
-                            <NumberIncrementStepper />
-                            <NumberDecrementStepper />
-                          </NumberInputStepper>
-                        </NumberInput>
-                      </Flex>
-                    </ListItem>
-                  </List>
+                <GridItem rowSpan={1} colSpan={1}>
+                  <Cart onChange={setCart} cartItems={cart} />
                 </GridItem>
               </Grid>
               <InputGroup gap={4}>
@@ -281,11 +164,7 @@ function AddPurchaseButton() {
                     <AutoCompleteInput variant="filled" />
                     <AutoCompleteList>
                       {products.map((product, id) => (
-                        <AutoCompleteItem
-                          key={`option-${id}`}
-                          value={product}
-                          textTransform="capitalize"
-                        >
+                        <AutoCompleteItem key={`option-${id}`} value={product} textTransform="capitalize">
                           {product}
                         </AutoCompleteItem>
                       ))}
@@ -295,7 +174,7 @@ function AddPurchaseButton() {
                 </FormControl>
                 <FormControl mt={4}>
                   <FormLabel>Order Date</FormLabel>
-                  <Input type="date"></Input>
+                  <Input defaultValue={getCurrentDate()} type="date"></Input>
                 </FormControl>
                 <FormControl mt={4}>
                   <FormLabel>Delivery Date</FormLabel>

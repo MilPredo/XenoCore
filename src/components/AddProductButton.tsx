@@ -114,7 +114,7 @@ function AddProductButton(props: { onSubmitSuccess?: () => void }) {
       <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose} isCentered size="6xl">
         <form onSubmit={formik.handleSubmit}>
           <ModalOverlay />
-          <ModalContent>
+          <ModalContent _dark={{bg:'dominant.800'}}>
             <ModalHeader>Add new product</ModalHeader>
             <ModalCloseButton />
             <ModalBody>

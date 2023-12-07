@@ -94,7 +94,7 @@ function AddUserButton({ onSubmit }: { onSubmit: (val: boolean) => void }) {
       <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose} isCentered>
         <form onSubmit={formik.handleSubmit}>
           <ModalOverlay />
-          <ModalContent>
+          <ModalContent _dark={{bg:'dominant.800'}}>
             <ModalHeader>Create new user</ModalHeader>
             <ModalCloseButton />
             <ModalBody>

@@ -105,129 +105,26 @@ function Profile() {
         </Flex>
 
         <DynamicTable
-          count={1}
           columns={["Module", "Create", "Read", "Update", "Delete"]}
           rows={[
             [
               "User Management",
-              {
-                content: <Checkbox defaultChecked={profile?.access["user_management_access"]?.canCreate ?? false} />,
-              },
-              {
-                content: <Checkbox defaultChecked={profile?.access["user_management_access"]?.canRead ?? false} />,
-              },
-              {
-                content: <Checkbox defaultChecked={profile?.access["user_management_access"]?.canUpdate ?? false} />,
-              },
-              {
-                content: <Checkbox defaultChecked={profile?.access["user_management_access"]?.canDelete ?? false} />,
-              },
+
+              <Checkbox defaultChecked={profile?.access["user_management_access"]?.canCreate ?? false} />,
+
+              <Checkbox defaultChecked={profile?.access["user_management_access"]?.canRead ?? false} />,
+
+              <Checkbox defaultChecked={profile?.access["user_management_access"]?.canUpdate ?? false} />,
+
+              <Checkbox defaultChecked={profile?.access["user_management_access"]?.canDelete ?? false} />,
             ],
-            [
-              "Products",
-              {
-                content: <Checkbox />,
-              },
-              {
-                content: <Checkbox />,
-              },
-              {
-                content: <Checkbox />,
-              },
-              {
-                content: <Checkbox />,
-              },
-            ],
-            [
-              "Suppliers",
-              {
-                content: <Checkbox />,
-              },
-              {
-                content: <Checkbox />,
-              },
-              {
-                content: <Checkbox />,
-              },
-              {
-                content: <Checkbox />,
-              },
-            ],
-            [
-              "Sales",
-              {
-                content: <Checkbox />,
-              },
-              {
-                content: <Checkbox />,
-              },
-              {
-                content: <Checkbox />,
-              },
-              {
-                content: <Checkbox />,
-              },
-            ],
-            [
-              "Purchases",
-              {
-                content: <Checkbox />,
-              },
-              {
-                content: <Checkbox />,
-              },
-              {
-                content: <Checkbox />,
-              },
-              {
-                content: <Checkbox />,
-              },
-            ],
-            [
-              "Customers",
-              {
-                content: <Checkbox />,
-              },
-              {
-                content: <Checkbox />,
-              },
-              {
-                content: <Checkbox />,
-              },
-              {
-                content: <Checkbox />,
-              },
-            ],
-            [
-              "Inventory",
-              {
-                content: <Checkbox />,
-              },
-              {
-                content: <Checkbox />,
-              },
-              {
-                content: <Checkbox />,
-              },
-              {
-                content: <Checkbox />,
-              },
-            ],
-            [
-              "Reports",
-              {
-                content: <Checkbox />,
-              },
-              {
-                content: <Checkbox />,
-              },
-              {
-                content: <Checkbox />,
-              },
-              {
-                content: <Checkbox />,
-              },
-            ],
+            ["Products", <Checkbox />, <Checkbox />, <Checkbox />, <Checkbox />],
+            ["Suppliers", <Checkbox />, <Checkbox />, <Checkbox />, <Checkbox />],
+            ["Sales", <Checkbox />, <Checkbox />, <Checkbox />, <Checkbox />],
+            ["Purchases", <Checkbox />, <Checkbox />, <Checkbox />, <Checkbox />],
+            ["Customers", <Checkbox />, <Checkbox />, <Checkbox />, <Checkbox />],
+            ["Inventory", <Checkbox />, <Checkbox />, <Checkbox />, <Checkbox />],
+            ["Reports", <Checkbox />, <Checkbox />, <Checkbox />, <Checkbox />],
           ]}
         />
       </Flex>

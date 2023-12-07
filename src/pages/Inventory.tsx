@@ -31,7 +31,7 @@ import {
 } from "react-icons/fi";
 import { IconType } from "react-icons";
 import { useState, useEffect } from "react";
-import { useNavHeight } from "../stores/navHeight";
+// import { useNavHeight } from "../stores/navHeight";
 import getInventory from "../api/inventory";
 import DynamicTable from "../components/DynamicTable";
 import EditableCell from "../components/EditableCell";
@@ -205,7 +205,7 @@ function Inventory() {
       reOrderLevel: 10,
     },
   ];
-  const { navBarHeight } = useNavHeight();
+  // const { navBarHeight } = useNavHeight();
   useEffect(() => {
     (async () => {
       let a = await getInventory(1);
@@ -245,8 +245,7 @@ function Inventory() {
       </Flex>
 
       <Flex flex={1} flexDir="column" m="6" overflow="hidden">
-        <DynamicTable
-          count={1}
+        <DynamicTable 
           columns={[
             "Category",
             "Product",
