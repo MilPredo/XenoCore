@@ -4,6 +4,8 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
+  Grid,
+  GridItem,
   Heading,
   Input,
   InputGroup,
@@ -24,11 +26,14 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FiPlus, FiSearch } from "react-icons/fi";
 import { AutoComplete, AutoCompleteInput, AutoCompleteItem, AutoCompleteList } from "@choc-ui/chakra-autocomplete";
 import AddCustomerButton from "./AddCustomerButton";
 import DynamicTable from "./DynamicTable";
+import ProductList from "./ProductList";
+import Cart from "./Cart";
+import { CartItemData } from "./CartItem";
 
 interface RegisterFormValues {
   username: string;
@@ -104,7 +109,22 @@ function AddSalesButton({ onSubmit }: { onSubmit?: (val: boolean) => void }) {
   //https://github.com/anubra266/choc-autocomplete
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = useRef(null);
+  const getCurrentDate = (): string => {
+    const today = new Date();
+    const year = today.getFullYear();
+    let month = today.getMonth() + 1; // Month is zero-based
+    let day = today.getDate();
 
+    // Pad single-digit month or day with a leading zero
+    const formattedMonth = month < 10 ? `0${month}` : month;
+    const formattedDay = day < 10 ? `0${day}` : day;
+
+    return `${year}-${formattedMonth}-${formattedDay}`;
+  };
+  const [cart, setCart] = useState<CartItemData[]>([]);
+  useEffect(() => {
+    console.log("cart", cart);
+  }, [cart]);
   return (
     <>
       <Button onClick={onOpen} leftIcon={<FiPlus />} variant="solid" colorScheme="green">
@@ -159,62 +179,21 @@ function AddSalesButton({ onSubmit }: { onSubmit?: (val: boolean) => void }) {
                   </Flex>
                 </FormControl>
               </Flex>
-              <Flex flex={1} flexDir="column" overflow="hidden" mt={6}>
-                <DynamicTable
-                  columns={["First Name", "Middle Name", "Last Name", "Contact Number", "Action"]}
-                  rows={[
-                    [
-                      "Juan",
-                      "Carlos",
-                      "Santos",
-                      "09171234567",
-
-                      <Button colorScheme="cyan" mr={3}>
-                        Select
-                      </Button>,
-                    ],
-                  ]}
-                />
-              </Flex>
-              <Flex>
-                <FormLabel>Currently Selected Customer:</FormLabel>
-                <Text fontWeight="bold" textTransform="uppercase">
-                  Juan Carlos Santos
-                </Text>
-              </Flex>
-              <Flex gap={2} m={2}>
-                <Flex flex={1} bg="purple">
-                  a
-                </Flex>
-                <Flex flex={1} bg="yellow">
-                  a
-                </Flex>
-              </Flex>
+              <Grid
+                templateRows="repeat(1, minmax(0, 1fr))"
+                templateColumns="repeat(2, minmax(0, 1fr))"
+                maxH={500}
+                flex={1}
+                gap={6}
+              >
+                <GridItem rowSpan={1} colSpan={1} overflow="auto">
+                  <ProductList onChange={setCart} cartItems={cart} />
+                </GridItem>
+                <GridItem rowSpan={1} colSpan={1}>
+                  <Cart onChange={setCart} cartItems={cart} />
+                </GridItem>
+              </Grid>
               <InputGroup gap={4}>
-                <FormControl mt={4} isInvalid={!!formik.errors.last_name && formik.touched.last_name}>
-                  <FormLabel>Select product</FormLabel>
-                  <AutoComplete openOnFocus>
-                    <AutoCompleteInput variant="filled" />
-                    <AutoCompleteList>
-                      {products.map((product, id) => (
-                        <AutoCompleteItem key={`option-${id}`} value={product} textTransform="capitalize">
-                          {product}
-                        </AutoCompleteItem>
-                      ))}
-                    </AutoCompleteList>
-                  </AutoComplete>
-                  <FormErrorMessage>{formik.errors.last_name}</FormErrorMessage>
-                </FormControl>
-                <FormControl mt={4}>
-                  <FormLabel>Quantity</FormLabel>
-                  <NumberInput defaultValue={1} min={1} max={20}>
-                    <NumberInputField />
-                    <NumberInputStepper>
-                      <NumberIncrementStepper />
-                      <NumberDecrementStepper />
-                    </NumberInputStepper>
-                  </NumberInput>
-                </FormControl>
                 <FormControl mt={4}>
                   <FormLabel>Payment Method</FormLabel>
                   <Select placeholder="...">

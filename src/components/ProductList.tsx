@@ -1,19 +1,34 @@
-import { Box, Button, Flex, Heading, Input, List, ListItem } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  Input,
+  List,
+  ListItem,
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import CartItem, { CartItemData } from "./CartItem";
 import ProductItem, { ProductItemData } from "./ProductItem";
 import { FiSearch } from "react-icons/fi";
 import { getProduct } from "../api/product";
+import Pagination from "./Pagination";
 
-function ProductList(props: { cartItems: CartItemData[]; onChange?: (cartItems: CartItemData[]) => void }) {
+function ProductList(props: {
+  cartItems: CartItemData[];
+  onChange?: (cartItems: CartItemData[]) => void;
+  mode?: "cog" | "ppu";
+}) {
   const [productItems, setProductItems] = useState<ProductItemData[]>([]);
-
+  const [page, setPage] = useState(1);
+  const [count, setCount] = useState(0);
   const [doSearch, setDoSearch] = useState(false);
   const [search, setSearch] = useState("");
   useEffect(() => {
     (async () => {
-      const result = await getProduct(1, search);
+      const result = await getProduct(page, search);
       console.log(result?.rows);
+      setCount(result?.count ?? 0);
       let productList = result?.rows.map((product) => {
         let newProduct: ProductItemData = {
           default_cog: product.default_cog,
@@ -25,7 +40,7 @@ function ProductList(props: { cartItems: CartItemData[]; onChange?: (cartItems: 
       });
       setProductItems(productList ?? []);
     })();
-  }, [doSearch]);
+  }, [doSearch, page]);
 
   const isInCart = (itemId: number) => {
     const found = props.cartItems.find((product) => product.id === itemId);
@@ -36,6 +51,7 @@ function ProductList(props: { cartItems: CartItemData[]; onChange?: (cartItems: 
     let newCart = [...props.cartItems];
     let productFound = productItems.find((product) => product.id === itemId);
     if (productFound) {
+      console.log("product", productFound);
       newCart.push(productFound);
       if (props.onChange) props.onChange(newCart);
     }
@@ -76,6 +92,7 @@ function ProductList(props: { cartItems: CartItemData[]; onChange?: (cartItems: 
                 <ListItem key={val.id}>
                   <ProductItem
                     id={val.id}
+                    mode={props.mode}
                     product_name={val.product_name}
                     default_ppu={val.default_ppu}
                     default_cog={val.default_cog}
@@ -86,6 +103,17 @@ function ProductList(props: { cartItems: CartItemData[]; onChange?: (cartItems: 
             })
             .filter(Boolean)}
         </List>
+      </Box>
+
+      <Box my="2">
+        <Pagination
+          currentPage={1}
+          maxPage={count / 16}
+          onPageChange={(page) => {
+            console.log(page);
+            setPage(page);
+          }}
+        />
       </Box>
     </Flex>
   );

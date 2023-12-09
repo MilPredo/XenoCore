@@ -2,7 +2,11 @@ import { Box, Flex, Heading, List, ListItem } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import CartItem, { CartItemData } from "./CartItem";
 
-function Cart(props: { cartItems: CartItemData[]; onChange?: (cartItems: CartItemData[]) => void }) {
+function Cart(props: {
+  cartItems: CartItemData[];
+  onChange?: (cartItems: CartItemData[]) => void;
+  mode?: "cog" | "ppu";
+}) {
   const updateCartItemQuantity = (itemId: number, quantity: string) => {
     let newCart = [...props.cartItems];
     let found = newCart.find((product) => product.id === itemId);
@@ -32,8 +36,14 @@ function Cart(props: { cartItems: CartItemData[]; onChange?: (cartItems: CartIte
       <Heading size="md" mb="4">
         Cart
       </Heading>
-      <Box bg="secondary.50" _dark={{bg: "transparent", borderWidth:'1px'}} borderRadius="xl" flex={1} overflow="auto">
-        <List  spacing={1} p={1}>
+      <Box
+        bg="secondary.50"
+        _dark={{ bg: "transparent", borderWidth: "1px" }}
+        borderRadius="xl"
+        flex={1}
+        overflow="auto"
+      >
+        <List spacing={1} p={1}>
           {props.cartItems
             .map((val) => {
               return (
@@ -42,7 +52,9 @@ function Cart(props: { cartItems: CartItemData[]; onChange?: (cartItems: CartIte
                     id={val.id}
                     product_name={val.product_name}
                     default_ppu={val.default_ppu}
+                    default_cog={val.default_cog}
                     onRemoveButtonPressed={removeItem}
+                    mode={props.mode}
                     onChange={(quantity) => {
                       updateCartItemQuantity(val.id, quantity);
                     }}

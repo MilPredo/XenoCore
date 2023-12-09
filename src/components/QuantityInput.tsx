@@ -92,10 +92,15 @@ function QuantityInput({ max = 100, onChange = (val: string) => {} }) {
           value={quantity}
           onChange={(e) => handleInputChange(e.target.value)}
           onBlur={handleValidate}
-          onFocus={() => setIsFocus(true)}
+          onFocus={(e) => {
+            e.target.select()
+            setIsFocus(true)
+          }}
           onKeyDown={(event) => {
             if (event.key === "Enter") {
+              console.log("hello")
               handleValidate();
+              (event.target as HTMLInputElement).blur()
             }
           }}
         />

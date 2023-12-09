@@ -8,6 +8,7 @@ export interface ProductItemData {
   product_name: string;
   default_cog: number;
   default_ppu: number;
+  mode?: "cog" | "ppu";
 }
 
 interface ProductItemProps extends ProductItemData {
@@ -24,27 +25,54 @@ function ProductItem(props: ProductItemProps) {
       _dark={{ bg: "secondary.700" }}
     >
       <Tooltip label={props.product_name}>
-        <Heading flex={1} px={2} py={1} m={1} size="sm" textTransform="uppercase" isTruncated>
+        <Heading
+          flex={1}
+          px={2}
+          py={1}
+          m={1}
+          size="sm"
+          textTransform="uppercase"
+          isTruncated
+        >
           {props.product_name}
         </Heading>
       </Tooltip>
-      <Heading flex={0} px={2} py={1} m={1} size="sm" textTransform="uppercase">
-        COG:{" "}
-        {new Intl.NumberFormat("en-PH", {
-          style: "currency",
-          currency: "PHP",
-        }).format(props.default_cog)}
-      </Heading>
-      <Heading flex={0} px={2} py={1} m={1} size="sm" textTransform="uppercase">
-        Price:{" "}
-        {new Intl.NumberFormat("en-PH", {
-          style: "currency",
-          currency: "PHP",
-        }).format(props.default_ppu)}
-      </Heading>
+      {props.mode === "cog" ? (
+        <Heading
+          flex={0}
+          px={2}
+          py={1}
+          m={1}
+          size="sm"
+          textTransform="uppercase"
+        >
+          COG:{" "}
+          {new Intl.NumberFormat("en-PH", {
+            style: "currency",
+            currency: "PHP",
+          }).format(props.default_cog)}
+        </Heading>
+      ) : (
+        <Heading
+          flex={0}
+          px={2}
+          py={1}
+          m={1}
+          size="sm"
+          textTransform="uppercase"
+        >
+          Price:{" "}
+          {new Intl.NumberFormat("en-PH", {
+            style: "currency",
+            currency: "PHP",
+          }).format(props.default_ppu)}
+        </Heading>
+      )}
+
       <Button
         onClick={() => {
-          if (props.onAddToCartButtonPressed) props.onAddToCartButtonPressed(props.id);
+          if (props.onAddToCartButtonPressed)
+            props.onAddToCartButtonPressed(props.id);
         }}
         size="xs"
         colorScheme="green"

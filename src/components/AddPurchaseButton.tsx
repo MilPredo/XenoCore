@@ -33,10 +33,22 @@ import {
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import React, { useEffect, useRef, useState } from "react";
-import { FiArrowRight, FiPlus, FiSearch, FiShoppingCart, FiUserPlus, FiX } from "react-icons/fi";
+import {
+  FiArrowRight,
+  FiPlus,
+  FiSearch,
+  FiShoppingCart,
+  FiUserPlus,
+  FiX,
+} from "react-icons/fi";
 import AddCustomerButton from "./AddCustomerButton";
 import DynamicTable from "./DynamicTable";
-import { AutoComplete, AutoCompleteInput, AutoCompleteItem, AutoCompleteList } from "@choc-ui/chakra-autocomplete";
+import {
+  AutoComplete,
+  AutoCompleteInput,
+  AutoCompleteItem,
+  AutoCompleteList,
+} from "@choc-ui/chakra-autocomplete";
 import AddProductButton from "./AddProductButton";
 import AddSupplierButton from "./AddSupplierButton";
 import AsyncSelect from "react-select/async";
@@ -128,12 +140,23 @@ function AddPurchaseButton() {
 
   return (
     <>
-      <Button onClick={onOpen} leftIcon={<FiPlus />} variant="solid" colorScheme="green">
+      <Button
+        onClick={onOpen}
+        leftIcon={<FiPlus />}
+        variant="solid"
+        colorScheme="green"
+      >
         Add New Purchase
       </Button>
-      <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose} isCentered size="6xl">
+      <Modal
+        initialFocusRef={initialRef}
+        isOpen={isOpen}
+        onClose={onClose}
+        isCentered
+        size="6xl"
+      >
         <form onSubmit={formik.handleSubmit}>
-          <ModalOverlay />
+          <ModalOverlay backdropFilter="auto" backdropBlur="2px" />
           <ModalContent _dark={{ bg: "dominant.800" }}>
             <ModalHeader>Add new purchase</ModalHeader>
             <ModalCloseButton />
@@ -146,10 +169,10 @@ function AddPurchaseButton() {
                 gap={6}
               >
                 <GridItem rowSpan={1} colSpan={1} overflow="auto">
-                  <ProductList onChange={setCart} cartItems={cart} />
+                  <ProductList mode="cog" onChange={setCart} cartItems={cart} />
                 </GridItem>
                 <GridItem rowSpan={1} colSpan={1}>
-                  <Cart onChange={setCart} cartItems={cart} />
+                  <Cart mode="cog" onChange={setCart} cartItems={cart} />
                 </GridItem>
               </Grid>
               <InputGroup gap={4}>
@@ -164,7 +187,11 @@ function AddPurchaseButton() {
                     <AutoCompleteInput variant="filled" />
                     <AutoCompleteList>
                       {products.map((product, id) => (
-                        <AutoCompleteItem key={`option-${id}`} value={product} textTransform="capitalize">
+                        <AutoCompleteItem
+                          key={`option-${id}`}
+                          value={product}
+                          textTransform="capitalize"
+                        >
                           {product}
                         </AutoCompleteItem>
                       ))}
