@@ -6,27 +6,31 @@ export class ProductService {
     this.fastify = fastify;
   }
 
-  async getAllProducts(page: number = 1, pageSize: number = 16, product_name: string) {
+  async getAllProducts(page: number = 1, pageSize: number = 16, product_name: string, id:number | null | string) {
     const offset = (page - 1) * pageSize;
+    if ( id === "" ) id = null
     const result = await this.fastify.pg.query(
       `
         SELECT *
         FROM product
         WHERE (LOWER(product_name) LIKE '%' ||  LOWER($1)  || '%' OR $1 IS NULL)
+        AND (id = $2 OR $2 IS NULL)
         ORDER BY id DESC
-        LIMIT $2 OFFSET $3;
+        LIMIT $3 OFFSET $4;
 `,
-      [product_name, pageSize, offset]
+      [product_name, id, pageSize, offset]
     );
     const products = result.rows;
 
+    console.log('id',id)
     // Fetch total count of products
     const totalCountResult = await this.fastify.pg.query(
       `
         SELECT COUNT(*) FROM product
         WHERE (LOWER(product_name) LIKE '%' || LOWER($1) || '%' OR $1 IS NULL)
+        AND (id = $2 OR $2 IS NULL)
       `,
-      [product_name]
+      [product_name, id]
     );
     const totalCount = parseInt(totalCountResult.rows[0].count, 10);
 

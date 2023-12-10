@@ -5,20 +5,21 @@ import { getProduct } from "../api/product";
 export interface ProductState {
   rows: any[][];
   count: number;
-  getProducts: (page?: number, product_name?: string) => void;
+  getProducts: (page?: number, product_name?: string, id?: string) => void;
 }
 
 export const useProductStore = create<ProductState>()((set) => ({
   rows: [],
   count: 0,
-  getProducts: async (page = 1, product_name = '') => {
-    let data = await getProduct(page, product_name);
+  getProducts: async (page = 1, product_name = '', id?:string) => {
+    let data = await getProduct(page, product_name, id);
     let rows: any[][] = []
     if (!data) return
     for (let index = 0; index < data.rows.length; ++index) {
         const row = data.rows[index];
         rows.push([
             row.category,
+            row.id,
             row.product_name,
             new Intl.NumberFormat("en-PH", {
               style: "currency",

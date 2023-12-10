@@ -180,6 +180,7 @@ function AddSalesButton({ onSubmit }: { onSubmit?: (val: boolean) => void }) {
                 </FormControl>
               </Flex>
               <Grid
+                mt={8}
                 templateRows="repeat(1, minmax(0, 1fr))"
                 templateColumns="repeat(2, minmax(0, 1fr))"
                 maxH={500}

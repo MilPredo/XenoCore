@@ -12,15 +12,28 @@ function Products() {
   const [doSearch, setDoSearch] = useState(false);
   const [search, setSearch] = useState<{
     product_name: string;
-  }>({ product_name: "" });
+
+    id: string;
+  }>({ product_name: "", id: "" });
   useEffect(() => {
-    setSearch({ product_name: search.product_name.trim() });
-    getProducts(page, search.product_name.trim());
+    console.log("id:", search.id.trim())
+    setSearch({
+      product_name: search.product_name.trim(),
+      id: search.id.trim(),
+    });
+    getProducts(page, search.product_name.trim(), search.id.trim());
     console.log(rows);
   }, [page, doSearch]);
   return (
     <Flex flex={1} flexDir="column" overflow="hidden">
-      <Flex p={2} bg="secondary.50" _dark={{ bg: "secondary.700" }} borderRadius="xl" m="4" gap={2}>
+      <Flex
+        p={2}
+        bg="secondary.50"
+        _dark={{ bg: "secondary.700" }}
+        borderRadius="xl"
+        m="4"
+        gap={2}
+      >
         <Flex gap={2} flex={1}>
           <Input
             variant="filled"
@@ -31,7 +44,28 @@ function Products() {
               _hover: { _placeholder: { color: "white", opacity: 0.5 } },
               _focus: { _placeholder: { color: "white", opacity: 0.5 } },
             }}
-            placeholder="Search"
+            placeholder="Search Item ID"
+            value={search.id}
+            onChange={(e) => {
+              
+              setSearch({ ...search, id: e.target.value });
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                setDoSearch(!doSearch);
+              }
+            }}
+          />
+          <Input
+            variant="filled"
+            _light={{
+              bg: "white",
+            }}
+            _dark={{
+              _hover: { _placeholder: { color: "white", opacity: 0.5 } },
+              _focus: { _placeholder: { color: "white", opacity: 0.5 } },
+            }}
+            placeholder="Search Product Name"
             value={search.product_name}
             onChange={(e) => {
               setSearch({ ...search, product_name: e.target.value });
@@ -59,6 +93,7 @@ function Products() {
         <DynamicTable
           columns={[
             "Category",
+            "Item ID",
             "Product",
             "Default COG",
             "Default PPU",

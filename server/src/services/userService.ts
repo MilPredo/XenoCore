@@ -27,25 +27,25 @@ export class UserService {
       `
         SELECT id, username, first_name, middle_name, last_name, occupation
         FROM users
-        WHERE (LOWER(username) LIKE '%' || $1 || '%' OR $1 IS NULL)
-          AND (LOWER(first_name) LIKE '%' || $2 || '%' OR $2 IS NULL)
-          AND (LOWER(middle_name) LIKE '%' || $3 || '%' OR $3 IS NULL)
-          AND (LOWER(last_name) LIKE '%' || $4 || '%' OR $4 IS NULL)
+        WHERE (LOWER(username) LIKE '%' || LOWER($1) || '%' OR $1 IS NULL)
+          AND (LOWER(first_name) LIKE '%' || LOWER($2) || '%' OR $2 IS NULL)
+          AND (LOWER(middle_name) LIKE '%' || LOWER($3) || '%' OR $3 IS NULL)
+          AND (LOWER(last_name) LIKE '%' || LOWER($4) || '%' OR $4 IS NULL)
         ORDER BY id DESC
         LIMIT $5 OFFSET $6;
 `,
       [username, first_name, middle_name, last_name, pageSize, offset]
     );
     const users = result.rows;
-
+      
     // Fetch total count of users
     const totalCountResult = await this.fastify.pg.query(
       `
         SELECT COUNT(*) FROM users
-        WHERE (LOWER(username) LIKE '%' || $1 || '%' OR $1 IS NULL)
-          AND (LOWER(first_name) LIKE '%' || $2 || '%' OR $2 IS NULL)
-          AND (LOWER(middle_name) LIKE '%' || $3 || '%' OR $3 IS NULL)
-          AND (LOWER(last_name) LIKE '%' || $4 || '%' OR $4 IS NULL);
+        WHERE (LOWER(username) LIKE '%' || LOWER($1) || '%' OR $1 IS NULL)
+          AND (LOWER(first_name) LIKE '%' || LOWER($2) || '%' OR $2 IS NULL)
+          AND (LOWER(middle_name) LIKE '%' || LOWER($3) || '%' OR $3 IS NULL)
+          AND (LOWER(last_name) LIKE '%' || LOWER($4) || '%' OR $4 IS NULL)
       `,
       [username, first_name, middle_name, last_name]
     );

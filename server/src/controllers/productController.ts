@@ -64,6 +64,7 @@ export class ProductController {
       const {
         page,
         product_name,
+        id,
         category,
         default_cog,
         default_ppu,
@@ -75,10 +76,12 @@ export class ProductController {
         description,
       } = request.query as any; // Query parameters for pagination
       console.log(request.query);
+      console.log("id", id)
       const result = await this.productService.getAllProducts(
         page,
         16,
-        product_name
+        product_name,
+        id
         // address,
         // contact_number,
         // email

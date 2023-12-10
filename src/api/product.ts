@@ -37,7 +37,7 @@ export const addProduct = async (
       credentials: "include",
     });
 
-    let data:any = await response;
+    let data: any = await response;
     console.log(data.message);
     alert(data);
     return response;
@@ -59,11 +59,18 @@ export const addProduct = async (
 //   description: string;
 // }
 
-export const getProduct = async (page?: number, product_name?: string) => {
+export const getProduct = async (
+  page?: number,
+  product_name?: string,
+  id?: string
+) => {
   const queryParams = new URLSearchParams();
+
   const baseUrl = "http://127.0.0.1:1338/product";
   queryParams.append("page", `${page}`);
   queryParams.append("product_name", `${product_name}`);
+  console.log("product api ", id);
+  queryParams.append("id", `${id}`);
   const apiUrl = `${baseUrl}?${queryParams.toString()}`;
   try {
     let response = await fetch(apiUrl, {

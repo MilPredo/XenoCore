@@ -23,10 +23,10 @@ function ProductList(props: {
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
   const [doSearch, setDoSearch] = useState(false);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState({ product_name: "", id: "" });
   useEffect(() => {
     (async () => {
-      const result = await getProduct(page, search);
+      const result = await getProduct(page, search.product_name, search.id);
       console.log(result?.rows);
       setCount(result?.count ?? 0);
       let productList = result?.rows.map((product) => {
@@ -62,10 +62,23 @@ function ProductList(props: {
         <Heading size="md">Products</Heading>
         <Input
           onChange={(e) => {
-            setSearch(e.target.value);
+            setSearch({ ...search, id: e.target.value });
           }}
-          value={search}
-          placeholder="Search Product"
+          value={search.id}
+          placeholder="Search Product ID"
+          size="sm"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              setDoSearch(!doSearch);
+            }
+          }}
+        />
+        <Input
+          onChange={(e) => {
+            setSearch({ ...search, product_name: e.target.value });
+          }}
+          value={search.product_name}
+          placeholder="Search Product Name"
           size="sm"
           onKeyDown={(e) => {
             if (e.key === "Enter") {
@@ -82,6 +95,7 @@ function ProductList(props: {
         _dark={{ bg: "transparent", borderWidth: "1px" }}
         borderRadius="xl"
         flex={1}
+        minH={200}
         overflow="auto"
       >
         <List spacing={1} p={1}>
