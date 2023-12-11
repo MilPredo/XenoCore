@@ -34,30 +34,25 @@ export class PurchaseService {
   }
 
   /*
-  id
-  product_name
-  category
-  default_cog
-  default_ppu
-  papers
-  initial_qty
-  reorder_level
-  current_qty
-  stock_status
-  description
+      product_id: string;
+      quantity: string;
+      cog?: number;
+      transaction_date?: Date
+      delivery_date?: Date
+      delivery_status?: string
+      notes?: string;
+      user_id: number;
   */
   async addPurchases(items: {
     items: {
-      product_name: string;
-      category: string;
-      default_cog?: number;
-      default_ppu?: number;
-      papers?: boolean;
-      initial_qty?: number;
-      reorder_level?: number;
-      current_qty?: number;
-      stock_status?: string;
-      description?: string;
+      product_id: string;
+      quantity: string;
+      cog?: number;
+      transaction_date?: Date
+      delivery_date?: Date
+      delivery_status?: string
+      notes?: string;
+      user_id: number;
     }[];
   }) {
   //   let newProduct = {
