@@ -217,107 +217,14 @@ function AddPurchaseButton() {
                   </Select>
                 </FormControl>
               </InputGroup>
-              {/* <Heading size="sm">Select supplier</Heading>
-
-              <Flex gap={4}>
-                <FormControl flex={1} mt={4}>
-                  <FormLabel>Supplier Name</FormLabel>
- 
-                  <Input
-                    onChange={formik.handleChange}
-                    value={formik.values.first_name}
-                  />
-                </FormControl>
-                <FormControl flex={0} mt={4}>
-                  <FormLabel>Actions</FormLabel>
-                  <Flex gap={2}>
-                    <Button
-                      leftIcon={<FiSearch />}
-                      variant="solid"
-                      colorScheme="cyan"
-                    >
-                      Search
-                    </Button>
-                    <AddSupplierButton />
-                  </Flex>
-                </FormControl>
-              </Flex>
-              <Flex flex={1} flexDir="column" overflow="hidden" mt={6}>
-                <DynamicTable
-                  columns={["Supplier", "Contact Number", "Action"]}
-                  rows={[
-                    [
-                      "UNITED LABORATORIES (UNILAB)",
-                      "09171234567",
-
-                      <Button colorScheme="cyan" mr={3}>
-                        Select
-                      </Button>,
-                    ],
-                  ]}
-                />
-              </Flex>
-              <Flex>
-                <FormLabel>Currently Selected Supplier:</FormLabel>
-                <Text fontWeight="bold" textTransform="uppercase">
-                  UNITED LABORATORIES (UNILAB)
-                </Text>
-              </Flex>
-              <InputGroup gap={4}>
-                <FormControl
-                  mt={4}
-                  isInvalid={
-                    !!formik.errors.last_name && formik.touched.last_name
-                  }
-                >
-                  <FormLabel>Select product</FormLabel>
-                  <AutoComplete openOnFocus>
-                    <AutoCompleteInput variant="filled" />
-                    <AutoCompleteList>
-                      {products.map((product, id) => (
-                        <AutoCompleteItem
-                          key={`option-${id}`}
-                          value={product}
-                          textTransform="capitalize"
-                        >
-                          {product}
-                        </AutoCompleteItem>
-                      ))}
-                    </AutoCompleteList>
-                  </AutoComplete>
-                  <FormErrorMessage>{formik.errors.last_name}</FormErrorMessage>
-                </FormControl>
-                <FormControl mt={4}>
-                  <FormLabel>Quantity</FormLabel>
-                  <NumberInput defaultValue={1} min={1} max={20}>
-                    <NumberInputField />
-                    <NumberInputStepper>
-                      <NumberIncrementStepper />
-                      <NumberDecrementStepper />
-                    </NumberInputStepper>
-                  </NumberInput>
-                </FormControl>
-                <FormControl mt={4}>
-                  <FormLabel>Order Date</FormLabel>
-                  <Input type="date"></Input>
-                </FormControl>
-                <FormControl mt={4}>
-                  <FormLabel>Delivery Date</FormLabel>
-                  <Input type="date"></Input>
-                </FormControl>
-                <FormControl mt={4}>
-                  <FormLabel>Order Status</FormLabel>
-                  <Select defaultValue="Ordered" width="150px">
-                    <option value="Ordered">Ordered</option>
-                    <option value="Delivered">Delivered</option>
-                    <option value="Incomplete">Incomplete</option>
-                    <option value="Problematic">Problematic</option>
-                  </Select>
-                </FormControl>
-              </InputGroup> */}
             </ModalBody>
             <ModalFooter>
-              <Button type="submit" colorScheme="green" mr={3}>
+              <Button
+                isDisabled={cart.length<1} 
+                type="submit"
+                colorScheme="green"
+                mr={3}
+              >
                 Purchase
               </Button>
               <Button onClick={onClose}>Close</Button>

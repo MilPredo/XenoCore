@@ -28,7 +28,12 @@ import {
 import { useFormik } from "formik";
 import React, { useEffect, useRef, useState } from "react";
 import { FiPlus, FiSearch } from "react-icons/fi";
-import { AutoComplete, AutoCompleteInput, AutoCompleteItem, AutoCompleteList } from "@choc-ui/chakra-autocomplete";
+import {
+  AutoComplete,
+  AutoCompleteInput,
+  AutoCompleteItem,
+  AutoCompleteList,
+} from "@choc-ui/chakra-autocomplete";
 import AddCustomerButton from "./AddCustomerButton";
 import DynamicTable from "./DynamicTable";
 import ProductList from "./ProductList";
@@ -127,10 +132,21 @@ function AddSalesButton({ onSubmit }: { onSubmit?: (val: boolean) => void }) {
   }, [cart]);
   return (
     <>
-      <Button onClick={onOpen} leftIcon={<FiPlus />} variant="solid" colorScheme="green">
+      <Button
+        onClick={onOpen}
+        leftIcon={<FiPlus />}
+        variant="solid"
+        colorScheme="green"
+      >
         Add New Sale
       </Button>
-      <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose} isCentered size="6xl">
+      <Modal
+        initialFocusRef={initialRef}
+        isOpen={isOpen}
+        onClose={onClose}
+        isCentered
+        size="6xl"
+      >
         <form onSubmit={formik.handleSubmit}>
           <ModalOverlay />
           <ModalContent _dark={{ bg: "dominant.800" }}>
@@ -172,7 +188,11 @@ function AddSalesButton({ onSubmit }: { onSubmit?: (val: boolean) => void }) {
                 <FormControl mt={4}>
                   <FormLabel>Actions</FormLabel>
                   <Flex gap={2}>
-                    <Button leftIcon={<FiSearch />} variant="solid" colorScheme="cyan">
+                    <Button
+                      leftIcon={<FiSearch />}
+                      variant="solid"
+                      colorScheme="cyan"
+                    >
                       Search
                     </Button>
                     <AddCustomerButton />
@@ -224,7 +244,12 @@ function AddSalesButton({ onSubmit }: { onSubmit?: (val: boolean) => void }) {
               </InputGroup>
             </ModalBody>
             <ModalFooter>
-              <Button type="submit" colorScheme="green" mr={3}>
+              <Button
+                isDisabled={cart.length < 1}
+                type="submit"
+                colorScheme="green"
+                mr={3}
+              >
                 Sell
               </Button>
               <Button onClick={onClose}>Close</Button>
