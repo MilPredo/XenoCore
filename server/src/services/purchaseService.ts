@@ -20,26 +20,15 @@ export class PurchaseService {
     page: number = 1,
     pageSize: number = 16,
     product_name: string,
-    order_by:
-      | "product_name"
-      | "product_id"
-      | "transaction_date"
-      | "delivery_date" = "product_name",
+    order_by: "product_name" | "product_id" | "transaction_date" | "delivery_date" = "product_name",
     order_direction: "asc" | "desc" | "ASC" | "DESC" = "DESC"
   ) {
-    const validColumns = [
-      "product_name",
-      "product_id",
-      "transaction_date",
-      "delivery_date",
-    ];
+    const validColumns = ["product_name", "product_id", "transaction_date", "delivery_date"];
 
     order_by = validColumns.includes(order_by) ? order_by : "product_id";
 
     const validDirections = ["asc", "desc", "ASC", "DESC"];
-    order_direction = validDirections.includes(order_direction)
-      ? order_direction
-      : "DESC";
+    order_direction = validDirections.includes(order_direction) ? order_direction : "DESC";
     const offset = (page - 1) * pageSize;
 
     /*
@@ -82,7 +71,7 @@ export class PurchaseService {
       notes?: string;
       user_id: number;
   */
-  async addPurchases(items: {
+  async addPurchases(
     items: {
       product_id: string;
       quantity: string;
@@ -92,8 +81,54 @@ export class PurchaseService {
       delivery_status?: string;
       notes?: string;
       user_id: number;
-    }[];
-  }) {
+      supplier_id?: number;
+    }[]
+  ) {
+    // items.map((purchase_order) => {
+    //   let output = [
+    //     purchase_order.product_id,
+    //     purchase_order.quantity,
+    //     purchase_order.cog,
+    //     purchase_order.transaction_date,
+    //     purchase_order.delivery_date,
+    //     purchase_order.delivery_status,
+    //     purchase_order.notes,
+    //     purchase_order.user_id,
+    //   ].join();
+    //   return output;
+    // });
+
+    let query = `
+      INSERT INTO purchases (product_id, quantity, cog, transaction_date, delivery_date, delivery_status, notes, user_id, supplier_id)
+      VALUES ${items
+        .map((_, idx) => {
+          let string_row = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+            .map((_, idx2) => {
+              return `$${idx * 9 + (idx2 + 1)}`;
+            })
+            .join();
+          string_row = `(${string_row})`;
+          return string_row;
+        })
+        .join()}
+    `;
+    let inputs = items.map((row) => {
+      let output: any = [
+        row.product_id,
+        row.quantity,
+        row.cog,
+        row.transaction_date,
+        row.delivery_date,
+        row.delivery_status,
+        row.notes,
+        row.user_id,
+        row.supplier_id,
+      ];
+      return output;
+    });
+    console.log(query, [].concat(...inputs));
+
+    await this.fastify.pg.query(query, [].concat(...inputs));
     //   let newProduct = {
     //     product_name,
     //     category,

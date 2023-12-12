@@ -12,6 +12,7 @@ import userRoutes from "./routes/user";
 import supplierRoutes from "./routes/supplier";
 import productRoutes from "./routes/product";
 import customerRoutes from "./routes/customer";
+import purchasesRoutes from "./routes/purchases";
 
 const app = Fastify({ logger: true });
 const port = 1338;
@@ -49,6 +50,7 @@ app.register(userRoutes);
 app.register(supplierRoutes);
 app.register(productRoutes);
 app.register(customerRoutes);
+app.register(purchasesRoutes);
 app.register(fastifyCors, {
   // Set your desired CORS options here
   origin: ["http://127.0.0.1:5173", "http://localhost:5173"], // Replace with your front-end origin
