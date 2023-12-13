@@ -37,7 +37,7 @@ export const addProduct = async (
       credentials: "include",
     });
 
-    let data: any = await response;
+    let data: any = response;
     console.log(data.message);
     alert(data);
     return response;

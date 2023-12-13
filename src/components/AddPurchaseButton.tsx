@@ -57,6 +57,7 @@ import QuantityInput from "./QuantityInput";
 import CartItem, { CartItemData } from "./CartItem";
 import Cart from "./Cart";
 import ProductList from "./ProductList";
+import { addPurchases } from "../api/purchase";
 interface RegisterFormValues {
   first_name: string;
   middle_name: string;
@@ -89,6 +90,8 @@ function AddPurchaseButton() {
       return errors;
     },
     onSubmit: (values, { resetForm }) => {
+      
+    addPurchases([{}])
       // registerUser(
       //   values.username,
       //   values.password,
@@ -137,7 +140,6 @@ function AddPurchaseButton() {
   useEffect(() => {
     console.log("cart", cart);
   }, [cart]);
-
   return (
     <>
       <Button
