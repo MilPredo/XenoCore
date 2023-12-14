@@ -1,12 +1,4 @@
-import {
-  Box,
-  Flex,
-  Heading,
-  List,
-  ListItem,
-  Spacer,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Flex, Heading, List, ListItem, Spacer, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import CartItem, { CartItemData } from "./CartItem";
 
@@ -15,7 +7,7 @@ function Cart(props: {
   onChange?: (cartItems: CartItemData[]) => void;
   mode?: "cog" | "ppu";
 }) {
-  const updateCartItemQuantity = (itemId: number, quantity: string) => {
+  const updateCartItemQuantity = (itemId: number, quantity: number) => {
     let newCart = [...props.cartItems];
     let found = newCart.find((product) => product.id === itemId);
     if (found) {
@@ -43,9 +35,7 @@ function Cart(props: {
   const [totalQuantity, setTotalQuantity] = useState<number>(0);
   const calculateCartTotalPrice = () => {
     let total = props.cartItems.reduce((total, item) => {
-      const itemTotal =
-        (props.mode === "cog" ? item.default_cog ?? 0 : item.default_ppu ?? 0) *
-        parseInt(item.quantity ?? "1");
+      const itemTotal = (props.mode === "cog" ? item.default_cog ?? 0 : item.default_ppu ?? 0) * (item.quantity ?? 1);
       return total + itemTotal;
     }, 0);
     console.log("adwadsaw", total);
@@ -54,10 +44,7 @@ function Cart(props: {
 
   const calculateCartTotalQuantity = () => {
     let total = props.cartItems.reduce((total, item) => {
-      return (
-        total +
-        (typeof item.quantity === "undefined" ? 1 : parseInt(item.quantity))
-      );
+      return total + (typeof item.quantity === "undefined" ? 1 : item.quantity);
     }, 0);
     setTotalQuantity(total);
   };

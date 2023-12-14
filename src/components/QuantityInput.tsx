@@ -2,7 +2,7 @@ import { Box, Button, ButtonGroup, Flex, Input } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { FiCheck, FiMinus, FiPlus, FiX } from "react-icons/fi";
 
-function QuantityInput({ max = 100, onChange = (val: string) => {} }) {
+function QuantityInput({ max = 100, onChange = (val: number) => {} }) {
   const [quantity, setQuantity] = useState("1");
   const [previous, setPreviousQuantity] = useState("1");
   const [isInvalid, setIsInvalid] = useState(false);
@@ -18,7 +18,7 @@ function QuantityInput({ max = 100, onChange = (val: string) => {} }) {
     } else {
       setIsInvalid(false);
     }
-    onChange(quantity);
+    onChange(parseInt(quantity));
   }, [quantity]);
 
   useEffect(() => {
@@ -93,14 +93,14 @@ function QuantityInput({ max = 100, onChange = (val: string) => {} }) {
           onChange={(e) => handleInputChange(e.target.value)}
           onBlur={handleValidate}
           onFocus={(e) => {
-            e.target.select()
-            setIsFocus(true)
+            e.target.select();
+            setIsFocus(true);
           }}
           onKeyDown={(event) => {
             if (event.key === "Enter") {
-              console.log("hello")
+              console.log("hello");
               handleValidate();
-              (event.target as HTMLInputElement).blur()
+              (event.target as HTMLInputElement).blur();
             }
           }}
         />

@@ -1,6 +1,6 @@
-interface AddPurchaseData {
-  product_id: string;
-  quantity: string;
+export interface AddPurchaseData {
+  product_id: number;
+  quantity: number;
   cog?: number;
   transaction_date?: Date;
   delivery_date?: Date;

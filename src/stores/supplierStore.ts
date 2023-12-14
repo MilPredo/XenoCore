@@ -8,6 +8,7 @@ export interface SupplierState {
 }
 
 export interface SupplierData {
+  id: number;
   supplier_name: string;
   address: string;
   contact_number: string;
