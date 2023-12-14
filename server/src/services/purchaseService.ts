@@ -20,39 +20,42 @@ export class PurchaseService {
     page: number = 1,
     pageSize: number = 16,
     product_name: string,
-    order_by: "product_name" | "product_id" | "transaction_date" | "delivery_date" = "product_name",
+    order_by: "id" | "product_name" | "product_id" | "transaction_date" | "delivery_date" = "product_name",
     order_direction: "asc" | "desc" | "ASC" | "DESC" = "DESC"
   ) {
-    const validColumns = ["product_name", "product_id", "transaction_date", "delivery_date"];
+    const validColumns = ["id", "product_name", "product_id", "transaction_date", "delivery_date"];
 
-    order_by = validColumns.includes(order_by) ? order_by : "product_id";
+    order_by = validColumns.includes(order_by) ? order_by : "id";
 
     const validDirections = ["asc", "desc", "ASC", "DESC"];
     order_direction = validDirections.includes(order_direction) ? order_direction : "DESC";
     const offset = (page - 1) * pageSize;
 
-    /*
-
-    */
-    const result = await this.fastify.pg.query(
-      `
-      SELECT purchases.*, product.product_name, supplier.supplier_name
-      FROM purchases
-      LEFT JOIN product ON purchases.product_id = product.id
-      LEFT JOIN supplier ON purchases.supplier_id = product.id
-      WHERE LOWER(product.product_name) LIKE '%' || LOWER($1)  || '%' OR $1 IS NULL)
-      ORDER BY $2 $3
-      LIMIT $4 OFFSET $5;
-      `,
-      [product_name, order_by, order_direction, pageSize, offset]
-    );
+    const query = `
+    SELECT purchases.*, product.product_name, supplier.supplier_name, users.username
+    FROM purchases
+    LEFT JOIN product ON purchases.product_id = product.id
+    LEFT JOIN supplier ON purchases.supplier_id = supplier.id
+    LEFT JOIN users ON purchases.user_id= users.id
+    WHERE (LOWER(product.product_name) LIKE '%' || LOWER($1)  || '%' OR $1 IS NULL)
+    ORDER BY id ${order_direction} LIMIT $2 OFFSET $3;
+    `;
+    console.log(query);
+    const result = await this.fastify.pg.query(query, [product_name, pageSize, offset]);
     const products = result.rows;
 
     // Fetch total count of products
     const totalCountResult = await this.fastify.pg.query(
       `
-        SELECT COUNT(*) FROM purchases
-        WHERE (LOWER(product_name) LIKE '%' || LOWER($1) || '%' OR $1 IS NULL)
+      SELECT COUNT(*)
+      FROM (
+          SELECT purchases.*, product.product_name, supplier.supplier_name, users.username
+          FROM purchases
+          LEFT JOIN product ON purchases.product_id = product.id
+          LEFT JOIN supplier ON purchases.supplier_id = supplier.id
+          LEFT JOIN users ON purchases.user_id= users.id
+          WHERE (LOWER(product.product_name) LIKE '%' || LOWER($1) || '%' OR $1 IS NULL)
+      ) AS subquery;
       `,
       [product_name]
     );

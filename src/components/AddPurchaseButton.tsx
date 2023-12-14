@@ -29,6 +29,7 @@ import {
   Spacer,
   Text,
   Textarea,
+  useColorMode,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
@@ -124,7 +125,7 @@ function AddPurchaseButton(props: { onSubmitSuccess?: () => void }) {
       // items: [],
       user_id: 1,
       transaction_date: getCurrentDate(),
-      delivery_status: 'Ordered'
+      delivery_status: "Ordered",
     },
     validate: (values) => {
       const errors: Partial<PurchaseFormValues> = {};
@@ -203,6 +204,7 @@ function AddPurchaseButton(props: { onSubmitSuccess?: () => void }) {
   //     callback(filterColors(inputValue));
   //   }, 1000);
   // };
+  const { colorMode } = useColorMode();
   return (
     <>
       <Button onClick={onOpen} leftIcon={<FiPlus />} variant="solid" colorScheme="green">
@@ -248,7 +250,50 @@ function AddPurchaseButton(props: { onSubmitSuccess?: () => void }) {
                 >
                   <FormLabel>Supplier</FormLabel>
                   <AsyncSelect
-                  isClearable
+                    styles={{
+                      control: (baseStyles) => ({
+                        ...baseStyles,
+                        backgroundColor: "transparent",
+                      }),
+                      menuList: (baseStyles) => ({
+                        ...baseStyles,
+                        backgroundColor: colorMode === "dark" ? "#3C3C5D" : baseStyles.backgroundColor,
+                      }),
+                      singleValue: (baseStyles) => ({
+                        ...baseStyles,
+                        color: colorMode === "dark" ? "white" : baseStyles.color,
+                      }),
+                      clearIndicator: (baseStyles) => ({
+                        ...baseStyles,
+                        color: colorMode === "dark" ? "white" : baseStyles.color,
+                      }),
+                      dropdownIndicator: (baseStyles) => ({
+                        ...baseStyles,
+                        color: colorMode === "dark" ? "white" : baseStyles.color,
+                      }),
+                      option: (baseStyles, state) => ({
+                        ...baseStyles,
+                        backgroundColor:
+                          colorMode === "dark"
+                            ? state.isFocused
+                              ? "#50507C"
+                              : state.isSelected
+                              ? "#64649B"
+                              : baseStyles.backgroundColor
+                            : baseStyles.backgroundColor,
+                        color: colorMode === "dark" ? "white" : baseStyles.color,
+                      }),
+
+                      input: (baseStyles) => ({
+                        ...baseStyles,
+                        color: colorMode === "dark" ? "white" : baseStyles.color,
+                      }),
+                      // valueContainer: (baseStyles, state) => ({
+                      //   ...baseStyles,
+                      //   backgroundColor: 'green',
+                      // }),
+                    }}
+                    isClearable
                     id="supplier_id"
                     name="supplier_id"
                     value={formik.values.supplier_id}

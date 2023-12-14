@@ -43,13 +43,13 @@ export default async function purchasesRoutes(fastify: FastifyInstance) {
     }
   );
 
-  // fastify.get(
-  //   "/user/:id",
-  //   {
-  //     preHandler: checkAccess(fastify, ["canRead"], "user_management_access"),
-  //   },
-  //   async (request, reply) => {
-  //     await userController.getUserById(request, reply);
-  //   }
-  // );
+  fastify.get(
+    "/purchases",
+    // {
+    //   preHandler: checkAccess(fastify, ["canRead"], "user_management_access"),
+    // },
+    async (request, reply) => {
+      await purchasesController.getAllPurchases(request, reply);
+    }
+  );
 }

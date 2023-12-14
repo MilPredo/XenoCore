@@ -35,47 +35,40 @@ export class PurchaseController {
     }
   }
 
-  // async getAllPurchases(request: FastifyRequest, reply: FastifyReply) {
-  //   try {
-  //     const {
-  //       page,
-  //       product_name,
-  //       id,
-  //       category,
-  //       default_cog,
-  //       default_ppu,
-  //       papers,
-  //       initial_qty,
-  //       reorder_level,
-  //       current_qty,
-  //       stock_status,
-  //       description,
-  //     } = request.query as any; // Query parameters for pagination
-  //     console.log(request.query);
-  //     console.log("id", id)
-  //     const result = await this.purchaseService.getAllPurchases(
-  //       page,
-  //       16,
-  //       product_name,
-  //       id
-  //       // address,
-  //       // contact_number,
-  //       // email
-  //     );
-  //     reply.status(200).header('Content-Type', 'application/json; charset=utf-8').send({
-  //       rows: result.products,
-  //       count: result.totalCount,
-  //     });
-  //   } catch (error) {
-  //     // console.log("error");
-  //     console.log((error as any).detail);
-  //     console.log(error);
-  //     reply
-  //       //.status((error as any).code === "23505" ? 409 : 500)
-  //       .status(500)
-  //       .send({ message: (error as { detail: string }).detail });
-  //   }
-  // }
+  async getAllPurchases(request: FastifyRequest, reply: FastifyReply) {
+    try {
+      const { page, pageSize, product_name, order_by, order_direction } = request.query as {
+        page?: number;
+        pageSize?: number;
+        product_name?: string;
+        order_by?: "product_name" | "product_id" | "transaction_date" | "delivery_date";
+        order_direction?: "asc" | "desc" | "ASC" | "DESC";
+      }; // Query parameters for pagination
+      console.log(request.query);
+      const result = await this.purchaseService.getAllPurchases(
+        page,
+        pageSize,
+        product_name ?? "",
+        order_by,
+        order_direction
+        // address,
+        // contact_number,
+        // email
+      );
+      reply.status(200).header("Content-Type", "application/json; charset=utf-8").send({
+        rows: result.products,
+        count: result.totalCount,
+      });
+    } catch (error) {
+      // console.log("error");
+      console.log((error as any).detail);
+      console.log(error);
+      reply
+        //.status((error as any).code === "23505" ? 409 : 500)
+        .status(500)
+        .send({ message: (error as { detail: string }).detail });
+    }
+  }
 
   // async getUserById(request: FastifyRequest, reply: FastifyReply) {
   //   try {

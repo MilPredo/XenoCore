@@ -10,6 +10,22 @@ export interface AddPurchaseData {
   supplier_id?: number;
 }
 
+export interface GetPurchaseData {
+  id: number,
+  product_id: number,
+  quantity: number,
+  cog: number,
+  transaction_date: string,
+  delivery_date?: string | null,
+  delivery_status: string,
+  notes?: string | null,
+  user_id: number | null,
+  supplier_id?: number,
+  product_name: string,
+  supplier_name?: string
+  username?: string
+}
+
 export const addPurchases = async (items: AddPurchaseData[]) => {
   try {
     let headersList = {
@@ -33,3 +49,35 @@ export const addPurchases = async (items: AddPurchaseData[]) => {
     console.error("Fetch error:", error);
   }
 };
+
+
+export const getPurchases = async (
+  page?: number,
+  product_name?: string,
+  id?: string
+) => {
+  const queryParams = new URLSearchParams();
+
+  const baseUrl = "http://127.0.0.1:1338/purchases";
+  queryParams.append("page", `${page}`);
+  queryParams.append("product_name", `${product_name}`);
+  console.log("product api ", id);
+  queryParams.append("id", `${id}`);
+  const apiUrl = `${baseUrl}?${queryParams.toString()}`;
+  try {
+    let response = await fetch(apiUrl, {
+      method: "GET",
+      credentials: "include",
+    });
+
+    let data: {
+      rows: GetPurchaseData[];
+      count: number;
+    } = await response.json();
+    console.log("get purchases:", response.status);
+    return data;
+  } catch (error) {
+    console.error("Fetch error:", error);
+  }
+};
+
