@@ -39,6 +39,7 @@ import DynamicTable from "./DynamicTable";
 import ProductList from "./ProductList";
 import Cart from "./Cart";
 import { CartItemData } from "./CartItem";
+import CustomerSelector from "./CustomerSelector";
 
 interface RegisterFormValues {
   username: string;
@@ -154,8 +155,8 @@ function AddSalesButton({ onSubmit }: { onSubmit?: (val: boolean) => void }) {
             <ModalCloseButton />
             <ModalBody>
               <Heading size="sm">Select customer</Heading>
-
-              <Flex gap={4}>
+              <CustomerSelector/>
+              {/* <Flex gap={4}>
                 <FormControl mt={4}>
                   <FormLabel>First Name</FormLabel>
                   <Input
@@ -198,7 +199,7 @@ function AddSalesButton({ onSubmit }: { onSubmit?: (val: boolean) => void }) {
                     <AddCustomerButton />
                   </Flex>
                 </FormControl>
-              </Flex>
+              </Flex> */}
               <Grid
                 mt={8}
                 templateRows="repeat(1, minmax(0, 1fr))"
