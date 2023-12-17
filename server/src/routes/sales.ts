@@ -5,6 +5,7 @@ import checkAccess from "../middleware/userAccess";
 import { UserController } from "../controllers/userController";
 import { SupplierController } from "../controllers/supplierController";
 import { ProductController } from "../controllers/productController";
+import { SalesController } from "../controllers/salesController";
 
 interface UserRequestBody {
   username: string;
@@ -33,7 +34,7 @@ export default async function salesRoutes(fastify: FastifyInstance) {
   );
 
   fastify.post(
-    "/product",
+    "/sales",
     // {
     //   preHandler: checkAccess(fastify, ["canRead"], "user_management_access"),
     // },

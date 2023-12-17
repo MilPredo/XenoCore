@@ -1,10 +1,26 @@
 import { Box, Button, Flex, Input } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import DynamicTable from "../components/DynamicTable";
 import { FiPlus, FiSearch } from "react-icons/fi";
 import AddSalesButton from "../components/AddSalesButton";
+import { useSaleStore } from "../stores/saleStore";
+import Pagination from "../components/Pagination";
 
 function Sales() {
+  const { rows, count, getSales } = useSaleStore();
+  const [page, setPage] = useState(1);
+  const [doSearch, setDoSearch] = useState(false);
+  const [search, setSearch] = useState<{
+    product_name: string;
+  }>({ product_name: "" });
+  useEffect(() => {
+    setSearch({
+      product_name: search.product_name.trim(),
+    });
+    getSales(page, search.product_name.trim());
+    console.log(rows);
+    console.log(count);
+  }, [page, doSearch]);
   return (
     <Flex flex={1} flexDir="column" overflow="hidden">
       <Flex
@@ -16,7 +32,7 @@ function Sales() {
         gap={2}
       >
         <Flex gap={2} flex={1}>
-          <Input
+        <Input
             variant="filled"
             _light={{
               bg: "white",
@@ -25,60 +41,57 @@ function Sales() {
               _hover: { _placeholder: { color: "white", opacity: 0.5 } },
               _focus: { _placeholder: { color: "white", opacity: 0.5 } },
             }}
-            placeholder="Search"
+            placeholder="Search Product Name"
+            value={search.product_name}
+            onChange={(e) => {
+              setSearch({ ...search, product_name: e.target.value });
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                setDoSearch(!doSearch);
+              }
+            }}
           />
         </Flex>
-        <Button leftIcon={<FiSearch />} variant="solid" colorScheme="cyan">
+        <Button
+          onClick={() => {
+            setDoSearch(!doSearch);
+          }}
+          leftIcon={<FiSearch />}
+          variant="solid"
+          colorScheme="cyan"
+        >
           Search
         </Button>
         <AddSalesButton />
       </Flex>
 
       <Flex flex={1} flexDir="column" m="6" overflow="hidden">
-        <DynamicTable 
+        <DynamicTable
           columns={[
-            "Product",
             "Customer",
+            "Product",
             "Quantity",
             "Sale Price",
+            "Total Price",
             "Payment Method",
             "Remittance Status",
             "Date of transaction",
             "User",
             "User Type",
           ]}
-          rows={[
-            [
-              "Paracetamol",
-              "Santos, Juan Carlos",
-              "3",
-              new Intl.NumberFormat("en-PH", {
-                style: "currency",
-                currency: "PHP",
-              }).format(10.99),
-              "Cash (Full Payment)",
-              "Remitted",
-              "2023-11-01",
-              "Dela Cruz, Maria Elena",
-              "Doctor",
-            ],
-
-            [
-              "Ibuprofen",
-              "Lazaro, Maria Cristina",
-              "2",
-              new Intl.NumberFormat("en-PH", {
-                style: "currency",
-                currency: "PHP",
-              }).format(12.49),
-              "Cheque (Partial Payment/Dated)",
-              "Un-Remitted",
-              "2023-11-02",
-              "Reyes, Emilio Andres",
-              "Agent",
-            ],
-          ]}
+          rows={rows}
         />
+        <Box mb="8">
+          <Pagination
+            currentPage={1}
+            maxPage={count / 16}
+            onPageChange={(page) => {
+              console.log(page);
+              setPage(page);
+            }}
+          />
+        </Box>
       </Flex>
     </Flex>
   );

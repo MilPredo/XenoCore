@@ -3,16 +3,17 @@ import { UserService } from "../services/userService";
 import { SupplierService } from "../services/supplierService";
 import { ProductService } from "../services/productService";
 import { PurchaseService } from "../services/purchaseService";
+import { SalesService } from "../services/saleService";
 interface SalesRequestBody {
+  customer_id: string;
   product_id: string;
   quantity: string;
-  cog?: number;
+  ppu: number;
   transaction_date?: Date;
-  delivery_date?: Date;
-  delivery_status?: string;
-  notes?: string;
+  payment_method: number;
+  remittance_status: number;
   user_id: number;
-  supplier_id?: number;
+  user_type: string;
 }
 
 export class SalesController {
@@ -45,7 +46,7 @@ export class SalesController {
         order_direction?: "asc" | "desc" | "ASC" | "DESC";
       }; // Query parameters for pagination
       console.log(request.query);
-      const result = await this.salesService.getAllPurchases(
+      const result = await this.salesService.getAllSales(
         page,
         pageSize,
         product_name ?? "",
