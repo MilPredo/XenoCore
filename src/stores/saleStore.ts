@@ -32,11 +32,21 @@ export const useSaleStore = create<SaleState>()((set) => ({
           style: "currency",
           currency: "PHP",
         }).format(row.ppu * row.quantity),
-        row.payment_method,
-        row.remittance_status,
-        row.transaction_date ? new Date(row.transaction_date).toLocaleDateString() : "",
+        [
+          "Cash (Full Payment)",
+          "Cash (Partial Payment)",
+          "E-Wallet",
+          "Cheque (Full Payment/PDC)",
+          "Cheque (Full Payment/Dated)",
+          "Cheque (Partial Payment/PDC)",
+          "Cheque (Partial Payment/Dated)",
+        ][row.payment_method - 1],
+        ["Remitted", "Un-Remitted"][row.remittance_status - 1],
+        row.transaction_date
+          ? new Date(row.transaction_date).toLocaleDateString()
+          : "",
         row.username,
-        row.user_type,
+        ["Agent", "Doctor"][row.user_type - 1],
         // row.papers,
         // row.initial_qty,
         // row.reorder_level,
@@ -44,7 +54,7 @@ export const useSaleStore = create<SaleState>()((set) => ({
         // row.stock_status,
       ]);
     }
-    console.log("hallo",rows)
+    console.log("hallo", rows);
     set({ ...data, rows });
   },
 }));

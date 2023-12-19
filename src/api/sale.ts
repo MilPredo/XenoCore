@@ -22,21 +22,21 @@ user_type
 */
 
 export interface GetSaleData {
-  id: number,
-  customer_id: number,
-  product_id: number,
-  user_id: number,
-  quantity: number,
-  ppu: number,
-  transaction_date: Date,
-  payment_method: number,
-  remittance_status: number,
-  user_type: string,
-  customer_first_name: string,
-  customer_middle_name: string,
-  customer_last_name: string,
-  product_name: string
-  username: string
+  id: number;
+  customer_id: number;
+  product_id: number;
+  user_id: number;
+  quantity: number;
+  ppu: number;
+  transaction_date: Date;
+  payment_method: number;
+  remittance_status: number;
+  user_type: number;
+  customer_first_name: string;
+  customer_middle_name: string;
+  customer_last_name: string;
+  product_name: string;
+  username: string;
 }
 
 export const addSales = async (items: AddSaleData[]) => {
@@ -45,8 +45,8 @@ export const addSales = async (items: AddSaleData[]) => {
       "Content-Type": "application/json",
     };
     let bodyContent = JSON.stringify(items);
-
-    let response = await fetch("http://127.0.0.1:1338/purchases", {
+    console.log('sale',bodyContent)
+    let response = await fetch("http://127.0.0.1:1338/sales", {
       method: "POST",
       body: bodyContent,
       headers: headersList,
@@ -54,15 +54,14 @@ export const addSales = async (items: AddSaleData[]) => {
     });
 
     let data: any = response;
-    console.log("purchase order successful!", response.status)
+    console.log("sale order successful!", response.status);
     console.log(data.message);
-    alert(data);
+    // alert(data);
     return response;
   } catch (error) {
     console.error("Fetch error:", error);
   }
 };
-
 
 export const getSales = async (
   page?: number,
@@ -93,4 +92,3 @@ export const getSales = async (
     console.error("Fetch error:", error);
   }
 };
-

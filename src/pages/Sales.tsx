@@ -63,7 +63,7 @@ function Sales() {
         >
           Search
         </Button>
-        <AddSalesButton />
+        <AddSalesButton onSubmitSuccess={() => setDoSearch(!doSearch)} />
       </Flex>
 
       <Flex flex={1} flexDir="column" m="6" overflow="hidden">

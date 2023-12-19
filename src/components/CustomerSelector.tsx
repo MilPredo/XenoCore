@@ -6,6 +6,7 @@ import {
   Input,
   List,
   ListItem,
+  Text,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import CartItem, { CartItemData } from "./CartItem";
@@ -16,6 +17,7 @@ import Pagination from "./Pagination";
 import DynamicTable from "./DynamicTable";
 import { getCustomer } from "../api/customer";
 import { CustomerRow } from "../interface";
+import AddCustomerButton from "./AddCustomerButton";
 
 function Customer(props: {
   id: number;
@@ -81,7 +83,16 @@ function Customer(props: {
 }
 
 function CustomerSelector(props: {
-  onChange?: (cartItems: CartItemData[]) => void;
+  onChange?: (
+    customer:
+      | {
+          id: number;
+          first_name: string;
+          middle_name: string;
+          last_name: string;
+        }
+      | undefined
+  ) => void;
 }) {
   const [customers, setCustomers] = useState<
     {
@@ -91,12 +102,15 @@ function CustomerSelector(props: {
       last_name: string;
     }[]
   >([]);
-  const [selected, setSelected] = useState<{
-    id: number;
-    first_name: string;
-    middle_name: string;
-    last_name: string;
-  }>();
+  const [selected, setSelected] = useState<
+    | {
+        id: number;
+        first_name: string;
+        middle_name: string;
+        last_name: string;
+      }
+    | undefined
+  >();
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
   const [doSearch, setDoSearch] = useState(false);
@@ -133,6 +147,10 @@ function CustomerSelector(props: {
       setCustomers(customerlist ?? []);
     })();
   }, [doSearch, page]);
+
+  useEffect(() => {
+    if (props.onChange) props.onChange(selected);
+  }, [selected]);
 
   return (
     <Flex flexDir="column" height="100%" overflow="hidden">
@@ -206,6 +224,11 @@ function CustomerSelector(props: {
             <FiSearch />
           </Button>
           <Flex>
+
+          <Text flex={1} fontSize='sm'>New customer?</Text>
+          <AddCustomerButton/>
+          </Flex>
+          <Flex>
             <Heading size="sm">Selected: </Heading>
             <Heading
               flex="1"
@@ -239,9 +262,9 @@ function CustomerSelector(props: {
                     setSelected({ ...val });
                   }}
                   size="sm"
-                  colorScheme={selected?.id === val.id?"green":"cyan"}
+                  colorScheme={selected?.id === val.id ? "green" : "cyan"}
                 >
-                  {selected?.id === val.id?"Selected":"Select"}
+                  {selected?.id === val.id ? "Selected" : "Select"}
                 </Button>,
               ];
             })}
