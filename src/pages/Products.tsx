@@ -6,6 +6,8 @@ import AddProductButton from "../components/AddProductButton";
 import { useProductStore } from "../stores/productStore";
 import Pagination from "../components/Pagination";
 
+
+//ppu-((cog - ppu)*0.1)
 function Products() {
   const { rows, count, getProducts } = useProductStore();
   const [page, setPage] = useState(1);
@@ -97,6 +99,8 @@ function Products() {
             "Product",
             "Default COG",
             "Default PPU",
+            "MD Price",
+            "Agent Price",
             // "Papers",
             // "Initial Qty",
             // "Re-Order Level",
