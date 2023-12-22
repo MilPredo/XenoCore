@@ -27,11 +27,23 @@ export const useSaleStore = create<SaleState>()((set) => ({
         new Intl.NumberFormat("en-PH", {
           style: "currency",
           currency: "PHP",
-        }).format(row.ppu),
+        }).format(
+          row.user_type === 1
+            ? row.ppu - (row.ppu - row.cog) * 0.2
+            : row.user_type === 2
+            ? row.ppu - (row.ppu - row.cog) * 0.1
+            : row.ppu
+        ), //(row.ppu - (row.default_ppu - row.default_cog) * 0.1)
         new Intl.NumberFormat("en-PH", {
           style: "currency",
           currency: "PHP",
-        }).format(row.ppu * row.quantity),
+        }).format(
+          (row.user_type === 1
+            ? row.ppu - (row.ppu - row.cog) * 0.2
+            : row.user_type === 2
+            ? row.ppu - (row.ppu - row.cog) * 0.1
+            : row.ppu) * row.quantity
+        ),
         [
           "Cash (Full Payment)",
           "Cash (Partial Payment)",
@@ -46,7 +58,7 @@ export const useSaleStore = create<SaleState>()((set) => ({
           ? new Date(row.transaction_date).toLocaleDateString()
           : "",
         row.username,
-        ["Agent", "Doctor"][row.user_type - 1],
+        ["None", "Agent", "Doctor"][row.user_type],
         // row.papers,
         // row.initial_qty,
         // row.reorder_level,

@@ -4,6 +4,7 @@ export interface AddSaleData {
   user_id: number;
   quantity: number;
   ppu: number;
+  cog: number;
   transaction_date?: Date;
   payment_method: number;
   remittance_status: number;
@@ -28,6 +29,7 @@ export interface GetSaleData {
   user_id: number;
   quantity: number;
   ppu: number;
+  cog: number;
   transaction_date: Date;
   payment_method: number;
   remittance_status: number;

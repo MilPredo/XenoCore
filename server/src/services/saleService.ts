@@ -21,15 +21,28 @@ export class SalesService {
     page: number = 1,
     pageSize: number = 16,
     product_name: string,
-    order_by: "id" | "product_name" | "product_id" | "transaction_date" | "delivery_date" = "product_name",
+    order_by:
+      | "id"
+      | "product_name"
+      | "product_id"
+      | "transaction_date"
+      | "delivery_date" = "product_name",
     order_direction: "asc" | "desc" | "ASC" | "DESC" = "DESC"
   ) {
-    const validColumns = ["id", "product_name", "product_id", "transaction_date", "delivery_date"];
+    const validColumns = [
+      "id",
+      "product_name",
+      "product_id",
+      "transaction_date",
+      "delivery_date",
+    ];
 
     order_by = validColumns.includes(order_by) ? order_by : "id";
 
     const validDirections = ["asc", "desc", "ASC", "DESC"];
-    order_direction = validDirections.includes(order_direction) ? order_direction : "DESC";
+    order_direction = validDirections.includes(order_direction)
+      ? order_direction
+      : "DESC";
     const offset = (page - 1) * pageSize;
 
     const query = `
@@ -48,7 +61,11 @@ export class SalesService {
     ORDER BY id ${order_direction} LIMIT $2 OFFSET $3;
     `;
     console.log(query);
-    const result = await this.fastify.pg.query(query, [product_name, pageSize, offset]);
+    const result = await this.fastify.pg.query(query, [
+      product_name,
+      pageSize,
+      offset,
+    ]);
     const products = result.rows;
 
     // Fetch total count of sales
@@ -93,6 +110,7 @@ export class SalesService {
       product_id: string;
       quantity: string;
       ppu: number;
+      cog: number;
       transaction_date?: Date;
       payment_method: number;
       remittance_status: number;
@@ -116,18 +134,19 @@ export class SalesService {
 
     let query = `
       INSERT INTO sales (
-        customer_id, product_id, user_id, quantity, ppu, transaction_date, payment_method, remittance_status, user_type)
+        customer_id, product_id, user_id, quantity, ppu, cog, transaction_date, payment_method, remittance_status, user_type)
         VALUES ${items
-        .map((_, idx) => {
-          let string_row = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-            .map((_, idx2) => {
-              return `$${idx * 9 + (idx2 + 1)}`;
-            })
-            .join();
-          string_row = `(${string_row})`;
-          return string_row;
-        })
-        .join()}
+          .map((_, idx) => {
+            let string_row = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+              .map((_, idx2) => {
+                return `$${idx * 10 + (idx2 + 1)}`;
+              })
+              .join();
+              
+            string_row = `(${string_row})`;
+            return string_row;
+          })
+          .join()}
     `;
     let inputs = items.map((row) => {
       /*
@@ -147,6 +166,7 @@ export class SalesService {
         row.user_id,
         row.quantity,
         row.ppu,
+        row.cog,
         row.transaction_date,
         row.payment_method,
         row.remittance_status,

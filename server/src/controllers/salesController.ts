@@ -9,6 +9,7 @@ interface SalesRequestBody {
   product_id: string;
   quantity: string;
   ppu: number;
+  cog: number;
   transaction_date?: Date;
   payment_method: number;
   remittance_status: number;

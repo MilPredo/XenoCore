@@ -6,6 +6,7 @@ function Cart(props: {
   cartItems: CartItemData[];
   onChange?: (cartItems: CartItemData[]) => void;
   mode?: "cog" | "ppu";
+  selected_user_type?: number
 }) {
   const updateCartItemQuantity = (itemId: number, quantity: number) => {
     let newCart = [...props.cartItems];
@@ -35,7 +36,19 @@ function Cart(props: {
   const [totalQuantity, setTotalQuantity] = useState<number>(0);
   const calculateCartTotalPrice = () => {
     let total = props.cartItems.reduce((total, item) => {
-      const itemTotal = (props.mode === "cog" ? item.default_cog ?? 0 : item.default_ppu ?? 0) * (item.quantity ?? 1);
+      const cog = item.default_cog
+      const ppu = item.default_ppu
+      let finalPPU = ppu;
+      if (typeof props.selected_user_type !== "undefined" && cog && ppu){
+        finalPPU = props.selected_user_type === 1
+            ? ppu - (ppu - cog) * 0.2
+            : props.selected_user_type === 2
+            ? ppu - (ppu - cog) * 0.1
+            : ppu
+      }
+      const itemValue = (props.mode === "cog" ? item.default_cog ?? 0 : finalPPU ?? 0)
+      
+      const itemTotal = itemValue * (item.quantity ?? 1);
       return total + itemTotal;
     }, 0);
     console.log("adwadsaw", total);
@@ -52,7 +65,7 @@ function Cart(props: {
   useEffect(() => {
     calculateCartTotalPrice();
     calculateCartTotalQuantity();
-  }, [props.cartItems]);
+  }, [props.cartItems, props.selected_user_type]);
 
   return (
     <Flex flexDir="column" height="100%">
@@ -75,7 +88,11 @@ function Cart(props: {
                   <CartItem
                     id={val.id}
                     product_name={val.product_name}
-                    default_ppu={val.default_ppu}
+                    default_ppu={props.selected_user_type === 1
+                      ? (val.default_ppu??0) - ((val.default_ppu??0) - (val.default_cog??0)) * 0.2
+                      : props.selected_user_type === 2
+                      ? (val.default_ppu??0) - ((val.default_ppu??0) - (val.default_cog??0)) * 0.1
+                      : (val.default_ppu??0)}
                     default_cog={val.default_cog}
                     onRemoveButtonPressed={removeItem}
                     mode={props.mode}
@@ -101,7 +118,11 @@ function Cart(props: {
         >
           <Flex my="1" align="center" gap={2}>
             <Text as="span" fontSize="lg" fontWeight="medium">
-              Total Price:
+              Total Price {props.selected_user_type === 1
+            ? "(Agent Discount)"
+            : props.selected_user_type === 2
+            ? "(MD Discount)"
+            : ""}:
             </Text>
             <Text
               as="span"

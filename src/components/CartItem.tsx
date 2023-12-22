@@ -14,19 +14,20 @@ import { FiX } from "react-icons/fi";
 export interface CartItemData {
   id: number;
   product_name: string;
-  quantity?: string;
+  quantity?: number;
   default_ppu?: number;
   default_cog?: number;
   mode?: "cog" | "ppu";
+  user_type?: number;
 }
 
 interface CartItemProps extends CartItemData {
-  onChange?: (quantity: string) => void;
+  onChange?: (quantity: number) => void;
   onRemoveButtonPressed?: (id: number) => void;
 }
 
 function CartItem(props: CartItemProps) {
-  const [quantity, setQuantity] = useState(props.quantity ?? "1");
+  const [quantity, setQuantity] = useState(props.quantity ?? 1);
   useEffect(() => {
     if (props.onChange) props.onChange(quantity); 
   }, [quantity]);
@@ -84,8 +85,8 @@ function CartItem(props: CartItemProps) {
             currency: "PHP",
           }).format(
             props.mode === "cog"
-              ? (props.default_cog ?? 0) * Number.parseInt(quantity)
-              : (props.default_ppu ?? 0) * Number.parseInt(quantity)
+              ? (props.default_cog ?? 0) * quantity
+              : (props.default_ppu ?? 0) * quantity
           )}
         </Heading>
       </Flex>

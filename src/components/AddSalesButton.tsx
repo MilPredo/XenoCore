@@ -101,7 +101,7 @@ function AddSalesButton(props: { onSubmitSuccess?: () => void }) {
   const handleSubmit = () => {
     setErrors({ ...errors, paymentMethod: !paymentMethod });
     setErrors({ ...errors, remittanceStatus: !remittanceStatus });
-    setErrors({ ...errors, soldAs: !soldAs });
+    setErrors({ ...errors, soldAs: typeof soldAs === "undefined" ? true : false });
   };
   const { user } = useAuthStore();
   useEffect(() => {
@@ -121,6 +121,7 @@ function AddSalesButton(props: { onSubmitSuccess?: () => void }) {
             user_id: user.id ?? 1,
             quantity: item.quantity ?? 0,
             ppu: item.default_ppu ?? 0,
+            cog: item.default_cog ?? 0,
             transaction_date: new Date(),
             payment_method: paymentMethod,
             remittance_status: remittanceStatus,
@@ -232,7 +233,7 @@ function AddSalesButton(props: { onSubmitSuccess?: () => void }) {
                 <ProductList onChange={setCart} cartItems={cart} />
               </GridItem>
               <GridItem rowSpan={1} colSpan={1}>
-                <Cart onChange={setCart} cartItems={cart} />
+                <Cart onChange={setCart} cartItems={cart} selected_user_type={soldAs}/>
               </GridItem>
             </Grid>
             <InputGroup gap={4}>
@@ -273,6 +274,7 @@ function AddSalesButton(props: { onSubmitSuccess?: () => void }) {
                     setSoldAs(parseInt(e.target.value));
                   }}
                 >
+                  <option value={0}>None</option>
                   <option value={1}>Agent</option>
                   <option value={2}>Doctor</option>
                 </Select>
