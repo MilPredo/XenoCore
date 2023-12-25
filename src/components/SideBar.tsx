@@ -9,6 +9,7 @@ import {
   Center,
   Badge,
   Image,
+  useColorMode,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import {
@@ -39,10 +40,11 @@ function SideBar() {
     { name: "Users", to: "users", icon: FiUsers },
     { name: "Reports", to: "report", icon: FiPieChart },
   ]);
+  const {colorMode} =useColorMode()
   const { user } = useAuthStore();
   return (
     <Flex flexDir="column" maxW="240px">
-      <Center mx="2" py="4" borderRadius={"xl"}>
+      <Center m="2" py="4" borderRadius={"xl"} _dark={{bg:"secondary.700"}}>
         {/* <Heading
           textAlign="center"
           fontFamily="MostlyMono"
@@ -53,10 +55,11 @@ function SideBar() {
           Inventory System
         </Heading> */}
         <Image
-          src="/InSys4.png"
-          alt="InSys Logo"
-          _dark={{ filter: "invert(1)"}}
+          src={colorMode==="dark"?"/oncotine_dark.png":"/oncotine.png"}
+          alt="oncotine Logo"
+          _dark={{ filter: "drop-shadow(0px 0px 4px rgba(255, 255, 255, 0.25))"}}
         />
+        {/* <img src="/oncotine_stroke.png" style={{filter}}/> */}
       </Center>
       <Flex gap="2" flexDir={"column"} flex={1} overflow="auto" m="2">
         {/* <StackItem mt="2">
