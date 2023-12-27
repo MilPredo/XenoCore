@@ -52,6 +52,7 @@ interface RegisterFormValues {
 }
 
 function AddSalesButton(props: { onSubmitSuccess?: () => void }) {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const products = ["bonamine", "neozef", "cetirizine", "bioflu", "ibroprufen"];
   //https://github.com/anubra266/choc-autocomplete
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -101,56 +102,63 @@ function AddSalesButton(props: { onSubmitSuccess?: () => void }) {
   const handleSubmit = () => {
     setErrors({ ...errors, paymentMethod: !paymentMethod });
     setErrors({ ...errors, remittanceStatus: !remittanceStatus });
-    setErrors({ ...errors, soldAs: typeof soldAs === "undefined" ? true : false });
+    setErrors({
+      ...errors,
+      soldAs: typeof soldAs === "undefined" ? true : false,
+    });
+    setIsSubmitting(true);
+    // setErrors({ ...errors, isSubmitting: true });
   };
   const { user } = useAuthStore();
   useEffect(() => {
-    if (errors.paymentMethod || errors.remittanceStatus || errors.soldAs)
+    if (errors.paymentMethod || errors.remittanceStatus || errors.soldAs) {
+      setIsSubmitting(false);
       return;
-      
-        // if (values.items.length === 0) {
-        //   console.log("cart is empty");
-        //   return;
-        // }
+    }
+
+    // if (values.items.length === 0) {
+    //   console.log("cart is empty");
+    //   return;
+    // }
+    //@ts-ignore
+    const finalCart: AddSaleData[] = cart.map((item) => {
+      console.log(item, paymentMethod, remittanceStatus, soldAs);
+      return {
+        customer_id: customer?.id,
+        product_id: item.id,
+        user_id: user.id ?? 1,
+        quantity: item.quantity ?? 0,
+        ppu: item.default_ppu ?? 0,
+        cog: item.default_cog ?? 0,
+        transaction_date: new Date(),
+        payment_method: paymentMethod,
+        remittance_status: remittanceStatus,
+        user_type: soldAs,
+        //TODO: FIX THIS TYPE!!!!!
         //@ts-ignore
-        const finalCart:AddSaleData[] = cart.map((item) => {
-          console.log(item, paymentMethod, remittanceStatus, soldAs);
-          return {
-            customer_id: customer?.id,
-            product_id: item.id,
-            user_id: user.id ?? 1,
-            quantity: item.quantity ?? 0,
-            ppu: item.default_ppu ?? 0,
-            cog: item.default_cog ?? 0,
-            transaction_date: new Date(),
-            payment_method: paymentMethod,
-            remittance_status: remittanceStatus,
-            user_type: soldAs,
-            //TODO: FIX THIS TYPE!!!!!
-            //@ts-ignore
-            // delivery_date: values.delivery_date ? new Date(values.delivery_date as string) : undefined,
-            // delivery_status: values.delivery_status,
-          };
+        // delivery_date: values.delivery_date ? new Date(values.delivery_date as string) : undefined,
+        // delivery_status: values.delivery_status,
+      };
+    });
+    console.log("final cart", finalCart);
+    addSales(finalCart).then((response) => {
+      if (response?.status === 200) {
+        if (props.onSubmitSuccess) props.onSubmitSuccess();
+        // resetForm();
+        setCart([]);
+        setPaymentMethod(undefined);
+        setRemittanceStatus(undefined);
+        setSoldAs(undefined);
+        setErrors({
+          paymentMethod: false,
+          remittanceStatus: false,
+          soldAs: false,
         });
-        console.log("final cart", finalCart);
-        addSales(finalCart).then((response) => {
-          if (response?.status === 200) {
-            if (props.onSubmitSuccess) props.onSubmitSuccess();
-            // resetForm();
-            setCart([]);
-            setPaymentMethod(undefined)
-            setRemittanceStatus(undefined)
-            setSoldAs(undefined)
-            setErrors({
-              paymentMethod: false,
-              remittanceStatus: false,
-              soldAs: false,
-            })
-            onClose();
-            alert("Sale Added!");
-          }
-        });
-      
+        setIsSubmitting(false);
+        onClose();
+        alert("Sale Added!");
+      }
+    });
   }, [errors]);
   return (
     <>
@@ -233,7 +241,11 @@ function AddSalesButton(props: { onSubmitSuccess?: () => void }) {
                 <ProductList onChange={setCart} cartItems={cart} />
               </GridItem>
               <GridItem rowSpan={1} colSpan={1}>
-                <Cart onChange={setCart} cartItems={cart} selected_user_type={soldAs}/>
+                <Cart
+                  onChange={setCart}
+                  cartItems={cart}
+                  selected_user_type={soldAs}
+                />
               </GridItem>
             </Grid>
             <InputGroup gap={4}>
@@ -283,10 +295,11 @@ function AddSalesButton(props: { onSubmitSuccess?: () => void }) {
           </ModalBody>
           <ModalFooter>
             <Button
+              isLoading={isSubmitting}
               isDisabled={cart.length < 1 || !customer}
               // type="submit"
-              onClick={()=>{
-                handleSubmit()
+              onClick={() => {
+                handleSubmit();
               }}
               colorScheme="green"
               mr={3}

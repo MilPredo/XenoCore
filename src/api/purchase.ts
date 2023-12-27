@@ -43,7 +43,7 @@ export const addPurchases = async (items: AddPurchaseData[]) => {
     let data: any = response;
     console.log("purchase order successful!", response.status)
     console.log(data.message);
-    alert(data);
+    //alert(data);
     return response;
   } catch (error) {
     console.error("Fetch error:", error);

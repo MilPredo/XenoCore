@@ -39,7 +39,7 @@ export const addProduct = async (
 
     let data: any = response;
     console.log(data.message);
-    alert(data);
+    //alert(data);
     return response;
   } catch (error) {
     console.error("Fetch error:", error);

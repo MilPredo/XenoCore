@@ -32,7 +32,7 @@ export const addSupplier = async (
 
     let data = await response.json();
     console.log(data.message);
-    alert(data);
+    //alert(data);
     return response;
   } catch (error) {
     console.error("Fetch error:", error);

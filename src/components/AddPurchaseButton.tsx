@@ -34,10 +34,22 @@ import {
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import React, { useEffect, useRef, useState } from "react";
-import { FiArrowRight, FiPlus, FiSearch, FiShoppingCart, FiUserPlus, FiX } from "react-icons/fi";
+import {
+  FiArrowRight,
+  FiPlus,
+  FiSearch,
+  FiShoppingCart,
+  FiUserPlus,
+  FiX,
+} from "react-icons/fi";
 import AddCustomerButton from "./AddCustomerButton";
 import DynamicTable from "./DynamicTable";
-import { AutoComplete, AutoCompleteInput, AutoCompleteItem, AutoCompleteList } from "@choc-ui/chakra-autocomplete";
+import {
+  AutoComplete,
+  AutoCompleteInput,
+  AutoCompleteItem,
+  AutoCompleteList,
+} from "@choc-ui/chakra-autocomplete";
 import AddProductButton from "./AddProductButton";
 import AddSupplierButton from "./AddSupplierButton";
 import AsyncSelect from "react-select/async";
@@ -89,6 +101,7 @@ interface PurchaseFormItems {
 }
 
 function AddPurchaseButton(props: { onSubmitSuccess?: () => void }) {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [cart, setCart] = useState<CartItemData[]>([]);
   const { user } = useAuthStore();
   interface Option {
@@ -96,7 +109,10 @@ function AddPurchaseButton(props: { onSubmitSuccess?: () => void }) {
     label: string;
   }
   const [supplierOptions, setSupplierOptions] = useState<Option[]>([]);
-  const loadOptions = async (inputValue: string, callback: (options: Option[]) => void) => {
+  const loadOptions = async (
+    inputValue: string,
+    callback: (options: Option[]) => void
+  ) => {
     // Perform an async request to fetch options based on inputValue
     const data = await getSupplier(1, inputValue);
 
@@ -149,6 +165,7 @@ function AddPurchaseButton(props: { onSubmitSuccess?: () => void }) {
       //   console.log("cart is empty");
       //   return;
       // }
+      setIsSubmitting(true)
       const finalCart: AddPurchaseData[] = cart.map((item) => {
         console.log(item, values);
         return {
@@ -159,13 +176,18 @@ function AddPurchaseButton(props: { onSubmitSuccess?: () => void }) {
           //TODO: FIX THIS TYPE!!!!!
           //@ts-ignore
           supplier_id: values.supplier_id?.value ?? undefined,
-          delivery_date: values.delivery_date ? new Date(values.delivery_date as string) : undefined,
+          delivery_date: values.delivery_date
+            ? new Date(values.delivery_date as string)
+            : undefined,
           delivery_status: values.delivery_status,
-          transaction_date: values.transaction_date ? new Date(values.transaction_date as string) : new Date(),
+          transaction_date: values.transaction_date
+            ? new Date(values.transaction_date as string)
+            : new Date(),
         };
       });
       console.log("final cart", finalCart);
       addPurchases(finalCart).then((response) => {
+        setIsSubmitting(false);
         if (response?.status === 200) {
           if (props.onSubmitSuccess) props.onSubmitSuccess();
           resetForm();
@@ -207,7 +229,12 @@ function AddPurchaseButton(props: { onSubmitSuccess?: () => void }) {
   const { colorMode } = useColorMode();
   return (
     <>
-      <Button onClick={onOpen} leftIcon={<FiPlus />} variant="solid" colorScheme="green">
+      <Button
+        onClick={onOpen}
+        leftIcon={<FiPlus />}
+        variant="solid"
+        colorScheme="green"
+      >
         Add New Purchase
       </Button>
       <Modal
@@ -257,19 +284,25 @@ function AddPurchaseButton(props: { onSubmitSuccess?: () => void }) {
                       }),
                       menuList: (baseStyles) => ({
                         ...baseStyles,
-                        backgroundColor: colorMode === "dark" ? "#3C3C5D" : baseStyles.backgroundColor,
+                        backgroundColor:
+                          colorMode === "dark"
+                            ? "#3C3C5D"
+                            : baseStyles.backgroundColor,
                       }),
                       singleValue: (baseStyles) => ({
                         ...baseStyles,
-                        color: colorMode === "dark" ? "white" : baseStyles.color,
+                        color:
+                          colorMode === "dark" ? "white" : baseStyles.color,
                       }),
                       clearIndicator: (baseStyles) => ({
                         ...baseStyles,
-                        color: colorMode === "dark" ? "white" : baseStyles.color,
+                        color:
+                          colorMode === "dark" ? "white" : baseStyles.color,
                       }),
                       dropdownIndicator: (baseStyles) => ({
                         ...baseStyles,
-                        color: colorMode === "dark" ? "white" : baseStyles.color,
+                        color:
+                          colorMode === "dark" ? "white" : baseStyles.color,
                       }),
                       option: (baseStyles, state) => ({
                         ...baseStyles,
@@ -281,12 +314,14 @@ function AddPurchaseButton(props: { onSubmitSuccess?: () => void }) {
                               ? "#64649B"
                               : baseStyles.backgroundColor
                             : baseStyles.backgroundColor,
-                        color: colorMode === "dark" ? "white" : baseStyles.color,
+                        color:
+                          colorMode === "dark" ? "white" : baseStyles.color,
                       }),
 
                       input: (baseStyles) => ({
                         ...baseStyles,
-                        color: colorMode === "dark" ? "white" : baseStyles.color,
+                        color:
+                          colorMode === "dark" ? "white" : baseStyles.color,
                       }),
                       // valueContainer: (baseStyles, state) => ({
                       //   ...baseStyles,
@@ -297,7 +332,9 @@ function AddPurchaseButton(props: { onSubmitSuccess?: () => void }) {
                     id="supplier_id"
                     name="supplier_id"
                     value={formik.values.supplier_id}
-                    onChange={(supplier_id) => formik.setFieldValue("supplier_id", supplier_id)}
+                    onChange={(supplier_id) =>
+                      formik.setFieldValue("supplier_id", supplier_id)
+                    }
                     // inputValue={formik.values.supplier_name?.toString()}
                     // onInputChange={(val) => {
                     //   setSupplierInput(val);
@@ -333,32 +370,52 @@ function AddPurchaseButton(props: { onSubmitSuccess?: () => void }) {
                   </AutoComplete> */}
                   {/* <FormErrorMessage>{formik.errors.last_name}</FormErrorMessage> */}
                 </FormControl>
-                <FormControl mt={4} isInvalid={!!formik.errors.transaction_date && formik.touched.transaction_date}>
+                <FormControl
+                  mt={4}
+                  isInvalid={
+                    !!formik.errors.transaction_date &&
+                    formik.touched.transaction_date
+                  }
+                >
                   <FormLabel>Order Date</FormLabel>
                   <Input
                     id="transaction_date"
                     name="transaction_date"
                     //@ts-ignore
                     value={formik.values.transaction_date}
-                    onChange={(e) => formik.setFieldValue("transaction_date", e.target.value)}
+                    onChange={(e) =>
+                      formik.setFieldValue("transaction_date", e.target.value)
+                    }
                     defaultValue={getCurrentDate()}
                     type="date"
                   ></Input>
 
-                  <FormErrorMessage>{formik.errors.transaction_date}</FormErrorMessage>
+                  <FormErrorMessage>
+                    {formik.errors.transaction_date}
+                  </FormErrorMessage>
                 </FormControl>
-                <FormControl mt={4} isInvalid={!!formik.errors.delivery_date && formik.touched.delivery_date}>
+                <FormControl
+                  mt={4}
+                  isInvalid={
+                    !!formik.errors.delivery_date &&
+                    formik.touched.delivery_date
+                  }
+                >
                   <FormLabel>Delivery Date</FormLabel>
                   <Input
                     id="delivery_date"
                     name="delivery_date"
                     //@ts-ignore
                     value={formik.values.delivery_date}
-                    onChange={(e) => formik.setFieldValue("delivery_date", e.target.value)}
+                    onChange={(e) =>
+                      formik.setFieldValue("delivery_date", e.target.value)
+                    }
                     type="date"
                   ></Input>
 
-                  <FormErrorMessage>{formik.errors.delivery_date}</FormErrorMessage>
+                  <FormErrorMessage>
+                    {formik.errors.delivery_date}
+                  </FormErrorMessage>
                 </FormControl>
                 <FormControl mt={4}>
                   <FormLabel>Order Status</FormLabel>
@@ -380,7 +437,18 @@ function AddPurchaseButton(props: { onSubmitSuccess?: () => void }) {
               </InputGroup>
             </ModalBody>
             <ModalFooter>
-              <Button isDisabled={cart.length < 1} type="submit" colorScheme="green" mr={3}>
+              <Button
+                isLoading={isSubmitting}
+                isDisabled={cart.length < 1}
+                // onClick={() => {
+                //   if (isSubmitting) return;
+                //   setIsSubmitting(true);
+                //   //handleSubmit()
+                // }}
+                type="submit"
+                colorScheme="green"
+                mr={3}
+              >
                 Purchase
               </Button>
               <Button

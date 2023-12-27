@@ -29,7 +29,7 @@ export const addCustomer = async (
 
     let data: any = await response;
     console.log(data.message);
-    alert(data);
+   //alert(data);
     return response;
   } catch (error) {
     console.error("Fetch error:", error);
