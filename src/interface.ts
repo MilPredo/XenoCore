@@ -13,6 +13,19 @@ export interface ProductRow {
   description: string;
 }
 
+export interface InventoryRow {
+  id: number;
+  product_name: string;
+  default_cog: number;
+  default_ppu: number;
+  category: string;
+  papers: boolean;
+  reorder_level: number;
+  total_purchase_quantity: number;
+  total_sale_quantity: number;
+  inventory_balance: number;
+}
+
 
 
 export interface CustomerRow {
