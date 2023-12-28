@@ -35,6 +35,7 @@ interface ProductFormValues {
   product_name: string;
   default_cog?: string;
   default_ppu?: string;
+  reorder_level?: number;
   description?: string;
 }
 
@@ -59,6 +60,7 @@ function AddProductButton(props: { onSubmitSuccess?: () => void }) {
       product_name: "",
       default_cog: "",
       default_ppu: "",
+      reorder_level: 0,
       description: "",
     },
     validate: (values) => {
@@ -71,6 +73,14 @@ function AddProductButton(props: { onSubmitSuccess?: () => void }) {
       if (!values.product_name) {
         errors.product_name = "Product name is required";
       }
+
+      if (!values.default_cog) {
+        errors.product_name = "Cost of goods is required";
+      }
+
+      if (!values.default_ppu) {
+        errors.product_name = "Price per unit is required";
+      }
       return errors;
     },
     onSubmit: (values, { resetForm }) => {
@@ -80,7 +90,8 @@ function AddProductButton(props: { onSubmitSuccess?: () => void }) {
         values.category,
         parseFloat((values.default_cog ?? "").replace(/,/g, "")),
         parseFloat((values.default_ppu ?? "").replace(/,/g, "")),
-        values.description
+        values.description,
+        values.reorder_level
       ).then((response) => {
         if (response?.status === 200) {
           if (props.onSubmitSuccess) props.onSubmitSuccess();
@@ -146,6 +157,19 @@ function AddProductButton(props: { onSubmitSuccess?: () => void }) {
                   />
                   <FormErrorMessage>{formik.errors.product_name}</FormErrorMessage>
                 </FormControl>
+                <FormControl mt={4} isInvalid={!!formik.errors.reorder_level && formik.touched.reorder_level}>
+                  <FormLabel>Reorder Level</FormLabel>
+                  <Input
+                  placeholder="0"
+                    id="reorder_level"
+                    name="reorder_level"
+                    type="number"
+                    inputMode="numeric"
+                    value={formik.values.reorder_level}
+                    onChange={formik.handleChange}
+                  />
+                  <FormErrorMessage>{formik.errors.reorder_level}</FormErrorMessage>
+                </FormControl>
                 {/* <FormControl mt={4} isInvalid={!!formik.errors.first_name && formik.touched.first_name}>
                   <FormLabel>Supplier</FormLabel>
                   <AutoComplete openOnFocus>
@@ -160,8 +184,8 @@ function AddProductButton(props: { onSubmitSuccess?: () => void }) {
                   </AutoComplete>
                   <FormErrorMessage>{formik.errors.last_name}</FormErrorMessage>
                 </FormControl> */}
-                <FormControl mt={4}>
-                  <FormLabel>Base Cost of Goods</FormLabel>
+                <FormControl mt={4} isInvalid={!!formik.errors.category && formik.touched.category}>
+                  <FormLabel>Cost of Goods</FormLabel>
                   <InputGroup>
                     <InputLeftAddon children="₱" />
                     <CurrencyInput
@@ -186,7 +210,7 @@ function AddProductButton(props: { onSubmitSuccess?: () => void }) {
                   </InputGroup>
                 </FormControl>
                 <FormControl mt={4}>
-                  <FormLabel>Base Price Per Unit</FormLabel>
+                  <FormLabel>Price Per Unit</FormLabel>
                   <InputGroup>
                     <InputLeftAddon children="₱" />
                     <CurrencyInput

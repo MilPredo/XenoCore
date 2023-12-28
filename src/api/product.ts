@@ -7,9 +7,9 @@ export const addProduct = async (
   default_cog?: number,
   default_ppu?: number,
   description?: string,
+  reorder_level?: number,
   papers?: boolean,
   initial_qty?: number,
-  reorder_level?: number,
   current_qty?: number,
   stock_status?: string
 ) => {
