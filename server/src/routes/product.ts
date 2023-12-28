@@ -42,6 +42,16 @@ export default async function productRoutes(fastify: FastifyInstance) {
     }
   );
 
+  fastify.patch(
+    "/product",
+    // {
+    //   preHandler: checkAccess(fastify, ["canRead"], "user_management_access"),
+    // },
+    async (request, reply) => {
+      await productController.updateProduct(request, reply)
+    }
+  );
+
   // fastify.get(
   //   "/user/:id",
   //   {

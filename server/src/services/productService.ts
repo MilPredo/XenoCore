@@ -96,8 +96,9 @@ export class ProductService {
   }
 
   async updateProduct(
-    product_name: string,
-    category: string,
+    id: number,
+    product_name?: string,
+    category?: string,
     default_cog?: number,
     default_ppu?: number,
     papers?: boolean,
@@ -107,7 +108,7 @@ export class ProductService {
     stock_status?: string,
     description?: string
   ) {
-    let newProduct = {
+    let updateProduct = {
       product_name,
       category,
       default_cog,
@@ -119,24 +120,28 @@ export class ProductService {
       stock_status,
       description,
     };
-    let denulled: { [key: string]: any } = {};
-    for (const [fieldName, fieldValue] of Object.entries(newProduct)) {
-      if (fieldValue) denulled[fieldName] = fieldValue;
-    }
-    let query = `
-    INSERT INTO product (${Object.keys(denulled).join(", ")})
-    VALUES (
-      ${Object.entries(denulled)
-        .map((_, idx) => `$${idx + 1}`)
-        .join(", ")}
-    )
-    RETURNING *
-  `;
-    console.log(query);
-    await this.fastify.pg.query(query
-      ,
-      Object.values(denulled)
+  
+    // Remove null or undefined values from the updateProduct object
+    let denulled = Object.fromEntries(
+      Object.entries(updateProduct).filter(([_, v]) => v !== null && v !== undefined)
     );
+  
+    // Generate the SET clause dynamically
+    let setClause = Object.keys(denulled)
+      .map((key, idx) => `${key} = $${idx + 2}`)
+      .join(", ");
+  
+    // Construct the UPDATE query
+    let query = `
+      UPDATE product
+      SET ${setClause}
+      WHERE id = $1
+      RETURNING *
+    `;
+    console.log(query,[id, ...Object.values(denulled)]);
+  
+    // Execute the UPDATE query
+    await this.fastify.pg.query(query, [id, ...Object.values(denulled)]);
     //return { suppliers, totalCount };
   }
 }

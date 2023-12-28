@@ -9,7 +9,7 @@ function EditableCell({
 }: {
   defaultValue: string | number | undefined;
   type?: "currency" | "text" | "number";
-  onSave?: (val: string) => void;
+  onSave?: (val: number | string) => boolean;
 }) {
   const [isEditing, setIsEditing] = useState(false);
   const [inputAmount, setInputAmount] = useState(defaultValue);
@@ -27,6 +27,8 @@ function EditableCell({
   };
   const handleInputSave = () => {
     if (type === "currency") {
+      //parseFloat(inputAmount ? inputAmount : "0.00")
+
       let formattedVal = new Intl.NumberFormat("en-PH", {
         style: "currency",
         currency: "PHP",
@@ -37,16 +39,19 @@ function EditableCell({
           ? inputAmount
           : 0.0
       );
+      if (onSave && isEditing) onSave(inputAmount);
       setTrueAmount(formattedVal);
     }
 
     if (type === "text") {
+      if (onSave && isEditing) onSave(inputAmount + "");
       setTrueAmount(inputAmount + "");
     }
 
     if (type === "number") {
       if (typeof inputAmount === "string") {
         let val = parseInt(inputAmount);
+        if (onSave && isEditing) onSave(Number.isNaN(val) ? "0" : val + "");
         setTrueAmount(Number.isNaN(val) ? "0" : val + "");
       } else {
         setTrueAmount(inputAmount.toString());
@@ -61,7 +66,7 @@ function EditableCell({
         setInputAmount(trueAmount + "");
       }
       if (type === "currency") {
-        console.log('lol', trueAmount)
+        console.log("lol", trueAmount);
         setInputAmount(parseFloat(trueAmount.replace(/[,₱]/g, "")));
       }
       if (type === "number") {
@@ -79,7 +84,7 @@ function EditableCell({
   }, [trueAmount]);
 
   const doEdit = () => {
-    console.log('tru', trueAmount.replace(/[^\d.]/g,''))
+    console.log("tru", trueAmount.replace(/[^\d.]/g, ""));
     setInputAmount(type === "text" ? trueAmount : trueAmount.replace(/[^\d.]/g, ""));
     setIsEditing(true);
   };
@@ -90,27 +95,27 @@ function EditableCell({
 
   useOutsideClick({
     ref: editElement,
-    handler: handleInputSave,
+    handler: cancelEdit,
   });
 
   useEffect(() => {
     handleInputSave();
   }, []);
 
-  useEffect(() => {
-    if (!onSave) return;
-    if (!(type === "text")) {
-      onSave(trueAmount.replace(/₱/, ""));
-    } else {
-      onSave(trueAmount);
-    }
-  }, [trueAmount]);
+  // useEffect(() => {
+  //   if (!onSave) return;
+  //   if (!(type === "text")) {
+  //     onSave(parseFloat(trueAmount.replace(/₱/, "")));
+  //   } else {
+  //     onSave(parseFloat(trueAmount));
+  //   }
+  // }, [trueAmount]);
 
   return (
-    <Box>
+    <Box alignItems='center'>
       <Flex gap={2} ref={editElement} align="center">
         <Text hidden={isEditing}>{trueAmount}</Text>
-        <Input 
+        <Input
           ref={inputRef}
           size="xs"
           hidden={!isEditing}

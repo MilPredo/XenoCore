@@ -26,6 +26,7 @@ import DynamicTable from "../components/DynamicTable";
 import EditableCell from "../components/EditableCell";
 import { useInventoryStore } from "../stores/inventoryStore";
 import Pagination from "../components/Pagination";
+import { updateProduct } from "../api/product";
 
 function calculateStockStatus(qtyInStock: number, reorderLevel: number): string {
   if (qtyInStock <= 0) {
@@ -277,10 +278,28 @@ function Inventory() {
               row.id,
               row.product_name,
               <Checkbox readOnly defaultChecked={row.papers} />,
-              new Intl.NumberFormat("en-PH", {
-                style: "currency",
-                currency: "PHP",
-              }).format(row.default_cog),
+              <EditableCell
+                defaultValue={row.default_cog}
+                onSave={(val) => {
+                  console.log("ahahha",val)
+                  updateProduct(
+                    row.id,
+                    { default_cog: parseFloat(val + "") }
+                    // values.product_name,
+                    // values.category,
+                    // parseFloat((values.default_cog ?? "").replace(/,/g, "")),
+                    // parseFloat((values.default_ppu ?? "").replace(/,/g, "")),
+                    // values.description,
+                    // values.reorder_level
+                  ).then((response) => {
+                    if (response?.status === 200) {
+                      alert("Product COG Updated");
+                      return true;
+                    }
+                  });
+                  return false;
+                }}
+              />,
               new Intl.NumberFormat("en-PH", {
                 style: "currency",
                 currency: "PHP",

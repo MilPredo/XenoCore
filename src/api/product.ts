@@ -46,6 +46,45 @@ export const addProduct = async (
   }
 };
 
+export const updateProduct = async (
+  id: number,
+  product: {
+    product_name?: string;
+    category?: string;
+    default_cog?: number;
+    default_ppu?: number;
+    description?: string;
+    reorder_level?: number;
+    papers?: boolean;
+    initial_qty?: number;
+    current_qty?: number;
+    stock_status?: string;
+  }
+) => {
+  try {
+    let headersList = {
+      "Content-Type": "application/json",
+    };
+    let bodyContent = JSON.stringify({
+      id,
+      ...product
+    });
+    console.log(bodyContent)
+    let response = await fetch("http://127.0.0.1:1338/product", {
+      method: "PATCH",
+      body: bodyContent,
+      headers: headersList,
+      credentials: "include",
+    });
+
+    // let data: any = await response.json();
+    console.log(response.status);
+    return response;
+  } catch (error) {
+    console.error("Fetch error:", error);
+  }
+};
+
 // export interface ProductData {
 //   product_name: string;
 //   category: string;
@@ -59,11 +98,7 @@ export const addProduct = async (
 //   description: string;
 // }
 
-export const getProduct = async (
-  page?: number,
-  product_name?: string,
-  id?: string
-) => {
+export const getProduct = async (page?: number, product_name?: string, id?: string) => {
   const queryParams = new URLSearchParams();
 
   const baseUrl = "http://127.0.0.1:1338/product";

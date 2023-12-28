@@ -15,6 +15,19 @@ interface ProductRequestBody {
   description?: string;
 }
 
+interface ProductUpdateBody {
+  id: number;
+  product_name: string;
+  category: string;
+  default_cog?: number;
+  default_ppu?: number;
+  papers?: boolean;
+  initial_qty?: number;
+  reorder_level?: number;
+  current_qty?: number;
+  stock_status?: string;
+  description?: string;
+}
 export class ProductController {
   private productService: ProductService;
 
@@ -36,8 +49,8 @@ export class ProductController {
         stock_status,
         description,
       } = request.body as ProductRequestBody;
-      console.log(request.body)
-      if (!(product_name||category)) throw "product name or category is required."
+      console.log(request.body);
+      if (!(product_name || category)) throw "product name or category is required.";
       const result = await this.productService.addProduct(
         product_name,
         category,
@@ -76,7 +89,7 @@ export class ProductController {
         description,
       } = request.query as any; // Query parameters for pagination
       console.log(request.query);
-      console.log("id", id)
+      console.log("id", id);
       const result = await this.productService.getAllProducts(
         page,
         16,
@@ -86,7 +99,7 @@ export class ProductController {
         // contact_number,
         // email
       );
-      reply.status(200).header('Content-Type', 'application/json; charset=utf-8').send({
+      reply.status(200).header("Content-Type", "application/json; charset=utf-8").send({
         rows: result.products,
         count: result.totalCount,
       });
@@ -117,11 +130,47 @@ export class ProductController {
   //   }
   // }
 
-  async updateSuppliers(request: FastifyRequest, reply: FastifyReply) {
-    // Logic to update a user
-  }
+  async updateProduct(request: FastifyRequest, reply: FastifyReply) {
+    try {
+      const {
+        id,
+        product_name,
+        category,
+        default_cog,
+        default_ppu,
+        papers,
+        initial_qty,
+        reorder_level,
+        current_qty,
+        stock_status,
+        description,
+      } = request.body as ProductUpdateBody;
 
-  async deleteSuppliers(request: FastifyRequest, reply: FastifyReply) {
-    // Logic to delete a user
+      // Ensure that an 'id' is provided for updating
+      if (!id) throw "Product ID is required for updating.";
+
+      // Call the updateProduct method from the ProductService
+      const result = await this.productService.updateProduct(
+        id,
+        product_name,
+        category,
+        default_cog,
+        default_ppu,
+        papers,
+        initial_qty,
+        reorder_level,
+        current_qty,
+        stock_status,
+        description
+      );
+
+      // Respond with the updated product
+      reply.status(200).send(result);
+    } catch (error) {
+      console.log("error");
+      console.log((error as any).detail);
+      console.log(error);
+      reply.status(500).send({ message: (error as { detail: string }).detail });
+    }
   }
 }
