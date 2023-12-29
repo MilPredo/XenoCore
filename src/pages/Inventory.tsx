@@ -18,7 +18,17 @@ import {
   Flex,
   Checkbox,
 } from "@chakra-ui/react";
-import { FiHome, FiTrendingUp, FiCompass, FiStar, FiSettings, FiMenu, FiList, FiX, FiSearch } from "react-icons/fi";
+import {
+  FiHome,
+  FiTrendingUp,
+  FiCompass,
+  FiStar,
+  FiSettings,
+  FiMenu,
+  FiList,
+  FiX,
+  FiSearch,
+} from "react-icons/fi";
 import { IconType } from "react-icons";
 import { useState, useEffect } from "react";
 // import { useNavHeight } from "../stores/navHeight";
@@ -28,7 +38,10 @@ import { useInventoryStore } from "../stores/inventoryStore";
 import Pagination from "../components/Pagination";
 import { updateProduct } from "../api/product";
 
-function calculateStockStatus(qtyInStock: number, reorderLevel: number): string {
+function calculateStockStatus(
+  qtyInStock: number,
+  reorderLevel: number
+): string {
   if (qtyInStock <= 0) {
     return "No Stock"; // If qtyInStock is less than or equal to 0, return "No Stock".
   } else if (qtyInStock > reorderLevel) {
@@ -219,7 +232,14 @@ function Inventory() {
       {/* <Box bg='secondary.500'>
       asd
     </Box> */}
-      <Flex p={2} bg="secondary.50" _dark={{ bg: "secondary.700" }} borderRadius="xl" m="4" gap={2}>
+      <Flex
+        p={2}
+        bg="secondary.50"
+        _dark={{ bg: "secondary.700" }}
+        borderRadius="xl"
+        m="4"
+        gap={2}
+      >
         <Flex gap={2} flex={1}>
           <Input
             variant="filled"
@@ -281,17 +301,10 @@ function Inventory() {
               <EditableCell
                 defaultValue={row.default_cog}
                 onSave={(val) => {
-                  console.log("ahahha",val)
-                  updateProduct(
-                    row.id,
-                    { default_cog: parseFloat(val + "") }
-                    // values.product_name,
-                    // values.category,
-                    // parseFloat((values.default_cog ?? "").replace(/,/g, "")),
-                    // parseFloat((values.default_ppu ?? "").replace(/,/g, "")),
-                    // values.description,
-                    // values.reorder_level
-                  ).then((response) => {
+                  console.log("ahahha", val);
+                  updateProduct(row.id, {
+                    default_cog: parseFloat(val + ""),
+                  }).then((response) => {
                     if (response?.status === 200) {
                       alert("Product COG Updated");
                       return true;
@@ -300,15 +313,45 @@ function Inventory() {
                   return false;
                 }}
               />,
-              new Intl.NumberFormat("en-PH", {
-                style: "currency",
-                currency: "PHP",
-              }).format(row.default_ppu),
-              row.reorder_level,
+              <EditableCell
+                defaultValue={row.default_ppu}
+                onSave={(val) => {
+                  console.log("ahahha", val);
+                  updateProduct(row.id, {
+                    default_ppu: parseFloat(val + ""),
+                  }).then((response) => {
+                    if (response?.status === 200) {
+                      alert("Product PPU Updated");
+                      return true;
+                    }
+                  });
+                  return false;
+                }}
+              />,
+              <EditableCell
+                defaultValue={row.reorder_level}
+                type="number"
+                onSave={(val) => {
+                  console.log("ahahha", val);
+                  updateProduct(row.id, {
+                    reorder_level: parseInt(val + ""),
+                  }).then((response) => {
+                    if (response?.status === 200) {
+                      alert("Product Re=Order Level Updated");
+                      return true;
+                    }
+                  });
+                  return false;
+                }}
+              />,
               <Badge
                 variant="solid"
                 colorScheme={
-                  row.inventory_balance >= row.reorder_level ? "green" : row.inventory_balance <= 0 ? "red" : "orange"
+                  row.inventory_balance >= row.reorder_level
+                    ? "green"
+                    : row.inventory_balance <= 0
+                    ? "red"
+                    : "orange"
                 }
               >
                 {row.inventory_balance >= row.reorder_level
@@ -331,11 +374,17 @@ function Inventory() {
               new Intl.NumberFormat("en-PH", {
                 style: "currency",
                 currency: "PHP",
-              }).format(row.inventory_balance * (row.default_ppu - (row.default_ppu - row.default_cog) * 0.2)),
+              }).format(
+                row.inventory_balance *
+                  (row.default_ppu - (row.default_ppu - row.default_cog) * 0.2)
+              ),
               new Intl.NumberFormat("en-PH", {
                 style: "currency",
                 currency: "PHP",
-              }).format(row.inventory_balance * (row.default_ppu - (row.default_ppu - row.default_cog) * 0.1)),
+              }).format(
+                row.inventory_balance *
+                  (row.default_ppu - (row.default_ppu - row.default_cog) * 0.1)
+              ),
             ];
           })}
           // rows={[].map((value) => [
