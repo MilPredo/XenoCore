@@ -55,7 +55,7 @@ app.register(purchasesRoutes);
 app.register(salesRoutes);
 app.register(fastifyCors, {
   // Set your desired CORS options here
-  origin: ["http://127.0.0.1:5173", "http://localhost:5173"], // Replace with your front-end origin
+  origin: ["http://127.0.0.1:5173", "http://localhost:5173", "http://192.168.5.202:5173", "http://0.0.0.0:5173"], // Replace with your front-end origin
   methods: "GET,POST,PUT,PATCH,DELETE",
   credentials: true,
 });
@@ -101,7 +101,7 @@ app.get("/checkauth", async function handler(request, reply) {
 // Run the server!
 const start = async () => {
   try {
-    await app.listen({ port: port });
+    await app.listen({ port: port, host:'0.0.0.0' });
   } catch (err) {
     app.log.error(err);
     process.exit(1);

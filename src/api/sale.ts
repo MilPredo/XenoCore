@@ -1,3 +1,5 @@
+import { serverRoute } from "./serverRoute";
+
 export interface AddSaleData {
   customer_id: number;
   product_id: number;
@@ -48,7 +50,7 @@ export const addSales = async (items: AddSaleData[]) => {
     };
     let bodyContent = JSON.stringify(items);
     console.log('sale',bodyContent)
-    let response = await fetch("http://127.0.0.1:1338/sales", {
+    let response = await fetch(`${await serverRoute()}/sales`, {
       method: "POST",
       body: bodyContent,
       headers: headersList,
@@ -72,7 +74,7 @@ export const getSales = async (
 ) => {
   const queryParams = new URLSearchParams();
 
-  const baseUrl = "http://127.0.0.1:1338/sales";
+  const baseUrl = `${await serverRoute()}/sales`;
   queryParams.append("page", `${page}`);
   queryParams.append("product_name", `${product_name}`);
   console.log("product api ", id);

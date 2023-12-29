@@ -1,11 +1,13 @@
+import { serverRoute } from "./serverRoute";
+
 export const getUsers = async (
   page: number,
   username?: string,
   first_name?: string,
   middle_name?: string,
-  last_name?: string,
+  last_name?: string
 ) => {
-  const baseUrl = "http://127.0.0.1:1338/user";
+  const baseUrl = `${await serverRoute()}/user`;
   const queryParams = new URLSearchParams();
   queryParams.append("page", `${page}`);
   if (username) {
@@ -30,7 +32,7 @@ export const getUsers = async (
 
     let data: {
       rows: Array<{
-        id: number,
+        id: number;
         username: string;
         first_name: string;
         middle_name: string;
@@ -72,7 +74,7 @@ export const registerUser = async (
     });
     authority;
 
-    let response = await fetch("http://127.0.0.1:1338/user/register", {
+    let response = await fetch(`${await serverRoute()}/user/register`, {
       method: "POST",
       body: bodyContent,
       headers: headersList,
@@ -89,7 +91,7 @@ export const registerUser = async (
 };
 
 export const getUsersProfile = async (id: number) => {
-  const baseUrl = `http://127.0.0.1:1338/user/${id}`;
+  const baseUrl = `${await serverRoute()}/user/${id}`;
   try {
     let response = await fetch(baseUrl, {
       method: "GET",

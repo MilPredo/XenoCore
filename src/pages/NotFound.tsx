@@ -37,12 +37,12 @@ function NotFound() {
             Looks like this page is being shy right now...
           </Text>
           <Text fontStyle={"italic"}>{errorMessage}</Text>
-          <Flex my="2em" flexDir={"column"} align={"center"}>
+          {/* <Flex my="2em" flexDir={"column"} align={"center"}>
             <Text>Return to </Text>
             <Link to="/">
               <Button>Dashboard</Button>
             </Link>
-          </Flex>
+          </Flex> */}
         </Flex>
       </Center>
     </Flex>

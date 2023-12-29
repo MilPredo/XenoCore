@@ -1,3 +1,5 @@
+import { serverRoute } from "./serverRoute";
+
 export interface AddPurchaseData {
   product_id: number;
   quantity: number;
@@ -33,7 +35,7 @@ export const addPurchases = async (items: AddPurchaseData[]) => {
     };
     let bodyContent = JSON.stringify(items);
 
-    let response = await fetch("http://127.0.0.1:1338/purchases", {
+    let response = await fetch(`${await serverRoute()}/purchases`, {
       method: "POST",
       body: bodyContent,
       headers: headersList,
@@ -58,7 +60,7 @@ export const getPurchases = async (
 ) => {
   const queryParams = new URLSearchParams();
 
-  const baseUrl = "http://127.0.0.1:1338/purchases";
+  const baseUrl = `${await serverRoute()}/purchases`;
   queryParams.append("page", `${page}`);
   queryParams.append("product_name", `${product_name}`);
   console.log("product api ", id);

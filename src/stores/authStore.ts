@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { useNavigate } from "react-router";
 import Cookies from 'js-cookie';
+import { serverRoute } from "../api/serverRoute";
 interface AuthState {
   isAuthenticated: boolean;
   user: any;
@@ -34,7 +35,7 @@ export const useAuthStore = create<AuthState>((set) => {
           password: password,
         });
 
-        let response = await fetch("http://127.0.0.1:1338/user/login", {
+        let response = await fetch(`${await serverRoute()}/user/login`, {
           method: "POST",
           body: bodyContent,
           headers: headersList,
@@ -93,7 +94,7 @@ export const useAuthStore = create<AuthState>((set) => {
           Accept: "*/*",
         };
 
-        let response = await fetch("http://127.0.0.1:1338/user/logout", {
+        let response = await fetch(`${await serverRoute()}/user/logout`, {
           method: "POST",
           headers: headersList,
           credentials: 'include'

@@ -1,5 +1,6 @@
 import { CustomerRow, ProductRow } from "../interface";
 import { SupplierData } from "../stores/supplierStore";
+import { serverRoute } from "./serverRoute";
 
 export const addCustomer = async (
   first_name: string,
@@ -9,6 +10,9 @@ export const addCustomer = async (
   notes?: string
 ) => {
   try {
+    // Construct the API route
+    const apiRoute = `${await serverRoute()}/customer`;
+
     let headersList = {
       "Content-Type": "application/json",
     };
@@ -20,7 +24,7 @@ export const addCustomer = async (
       notes,
     });
 
-    let response = await fetch("http://127.0.0.1:1338/customer", {
+    let response = await fetch(apiRoute, {
       method: "POST",
       body: bodyContent,
       headers: headersList,
@@ -29,7 +33,7 @@ export const addCustomer = async (
 
     let data: any = await response;
     console.log(data.message);
-   //alert(data);
+    //alert(data);
     return response;
   } catch (error) {
     console.error("Fetch error:", error);
@@ -49,9 +53,17 @@ export const addCustomer = async (
 //   description: string;
 // }
 
-export const getCustomer = async (page?: number, first_name?: string, middle_name?: string, last_name?: string) => {
+export const getCustomer = async (
+  page?: number,
+  first_name?: string,
+  middle_name?: string,
+  last_name?: string
+) => {
+  // Construct the API route
+  const apiRoute = `${await serverRoute()}/customer`;
+  console.log("api route:", apiRoute);
   const queryParams = new URLSearchParams();
-  const baseUrl = "http://127.0.0.1:1338/customer";
+  const baseUrl = apiRoute;
   queryParams.append("page", `${page}`);
   queryParams.append("first_name", `${first_name}`);
   queryParams.append("middle_name", `${middle_name}`);

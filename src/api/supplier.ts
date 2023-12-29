@@ -1,4 +1,5 @@
 import { SupplierData } from "../stores/supplierStore";
+import { serverRoute } from "./serverRoute";
 
 export const addSupplier = async (
   supplier_name: string,
@@ -23,7 +24,7 @@ export const addSupplier = async (
       notes,
     });
 
-    let response = await fetch("http://127.0.0.1:1338/supplier", {
+    let response = await fetch(`${await serverRoute()}/supplier`, {
       method: "POST",
       body: bodyContent,
       headers: headersList,
@@ -41,7 +42,7 @@ export const addSupplier = async (
 
 export const getSupplier = async (page?: number, supplier_name?: string) => {
   const queryParams = new URLSearchParams();
-  const baseUrl = "http://127.0.0.1:1338/supplier"
+  const baseUrl = `${await serverRoute()}/supplier`
   queryParams.append("page", `${page}`);
   queryParams.append("supplier_name", `${supplier_name}`);
   const apiUrl = `${baseUrl}?${queryParams.toString()}`;

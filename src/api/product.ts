@@ -1,5 +1,6 @@
 import { ProductRow } from "../interface";
 import { SupplierData } from "../stores/supplierStore";
+import { serverRoute } from "./serverRoute";
 
 export const addProduct = async (
   product_name: string,
@@ -30,7 +31,7 @@ export const addProduct = async (
       description,
     });
 
-    let response = await fetch("http://127.0.0.1:1338/product", {
+    let response = await fetch(`${await serverRoute()}/product`, {
       method: "POST",
       body: bodyContent,
       headers: headersList,
@@ -70,7 +71,7 @@ export const updateProduct = async (
       ...product
     });
     console.log(bodyContent)
-    let response = await fetch("http://127.0.0.1:1338/product", {
+    let response = await fetch(`${await serverRoute()}/product`, {
       method: "PATCH",
       body: bodyContent,
       headers: headersList,
@@ -101,7 +102,7 @@ export const updateProduct = async (
 export const getProduct = async (page?: number, product_name?: string, id?: string) => {
   const queryParams = new URLSearchParams();
 
-  const baseUrl = "http://127.0.0.1:1338/product";
+  const baseUrl = `${await serverRoute()}/product`;
   queryParams.append("page", `${page}`);
   queryParams.append("product_name", `${product_name}`);
   console.log("product api ", id);

@@ -1,8 +1,9 @@
 import { InventoryRow } from "../interface";
+import { serverRoute } from "./serverRoute";
 
 const getInventory = async (page: number = 1, product_name?: string, id?:number) => {
   // Define the base URL of the API
-  const baseUrl = "http://127.0.0.1:1338/inventory"; // Replace with your API URL
+  const baseUrl = `${await serverRoute()}/inventory`; // Replace with your API URL
 
   // Create a URLSearchParams object to manage query parameters
   const queryParams = new URLSearchParams();
