@@ -22,11 +22,18 @@ class Asd {
 }
 const asddd = new Asd();
 asddd.dsa()
+// app.register(fastifyPostgres, {
+//   user: "otsxmkfc",
+//   host: "rain.db.elephantsql.com",
+//   database: "otsxmkfc",
+//   password: "Yq80wlq6E7pmcacRxRPK3gaLJQADPPrO",
+//   port: 5432, //5432 1337
+// });
 app.register(fastifyPostgres, {
-  user: "otsxmkfc",
-  host: "rain.db.elephantsql.com",
-  database: "otsxmkfc",
-  password: "Yq80wlq6E7pmcacRxRPK3gaLJQADPPrO",
+  user: "postgres",
+  host: "localhost",
+  database: "test",
+  password: "postgres",
   port: 5432, //5432 1337
 });
 // Register the fastify-jwt plugin with your secret key
@@ -55,7 +62,7 @@ app.register(purchasesRoutes);
 app.register(salesRoutes);
 app.register(fastifyCors, {
   // Set your desired CORS options here
-  origin: ["http://127.0.0.1:5173", "http://localhost:5173", "http://192.168.5.202:5173", "http://0.0.0.0:5173"], // Replace with your front-end origin
+  origin: ["http://127.0.0.1:5173", "http://localhost:5173", "http://192.168.1.135:5173", "http://0.0.0.0:5173", "http://192.168.1.100:5173"], // Replace with your front-end origin
   methods: "GET,POST,PUT,PATCH,DELETE",
   credentials: true,
 });
@@ -98,12 +105,39 @@ app.get("/checkauth", async function handler(request, reply) {
   return { ...request.session };
 });
 
+// Handle interrupt signals
+process.on('SIGINT', async () => {
+  try {
+    // Close the Fastify server
+    await app.close();
+    console.log('Server closed on interrupt signal');
+    process.exit(0);
+  } catch (err) {
+    console.error('Error closing server:', err);
+    process.exit(1);
+  }
+});
+
+// Handle termination signals
+process.on('SIGTERM', async () => {
+  try {
+    // Close the Fastify server
+    await app.close();
+    console.log('Server closed on termination signal');
+    process.exit(0);
+  } catch (err) {
+    console.error('Error closing server:', err);
+    process.exit(1);
+  }
+});
+
 // Run the server!
 const start = async () => {
   try {
-    await app.listen({ port: port, host:'0.0.0.0' });
+    await app.listen({ port: port, host: '0.0.0.0' });
   } catch (err) {
     app.log.error(err);
+    await app.close();
     process.exit(1);
   }
 };

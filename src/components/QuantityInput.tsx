@@ -2,7 +2,10 @@ import { Box, Button, ButtonGroup, Flex, Input } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { FiCheck, FiMinus, FiPlus, FiX } from "react-icons/fi";
 
-function QuantityInput({ max = 100, onChange = (val: number) => {} }) {
+function QuantityInput({ max = 100,
+  onChange = (val: number) => {val} 
+}
+  ) {
   const [quantity, setQuantity] = useState("1");
   const [previous, setPreviousQuantity] = useState("1");
   const [isInvalid, setIsInvalid] = useState(false);

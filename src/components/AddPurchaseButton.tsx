@@ -143,7 +143,7 @@ function AddPurchaseButton(props: { onSubmitSuccess?: () => void }) {
       transaction_date: getCurrentDate(),
       delivery_status: "Ordered",
     },
-    validate: (values) => {
+    validate: () => {
       const errors: Partial<PurchaseFormValues> = {};
 
       // if (!values.delivery_date) {

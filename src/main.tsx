@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import Root from "./Root.tsx";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, createHashRouter } from "react-router-dom";
 import Login from "./pages/Login.tsx";
 import { Box, ChakraProvider, CSSReset, extendTheme } from "@chakra-ui/react";
 
