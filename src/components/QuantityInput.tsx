@@ -2,7 +2,7 @@ import { Box, Button, ButtonGroup, Flex, Input } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { FiCheck, FiMinus, FiPlus, FiX } from "react-icons/fi";
 
-function QuantityInput({ max = 100,
+function QuantityInput({ max = 10000,
   onChange = (val: number) => {val} 
 }
   ) {

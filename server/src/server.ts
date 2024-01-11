@@ -14,28 +14,24 @@ import productRoutes from "./routes/product";
 import customerRoutes from "./routes/customer";
 import purchasesRoutes from "./routes/purchases";
 import salesRoutes from "./routes/sales";
+import dashboardRoutes from "./routes/dashboard";
 
 const app = Fastify({ logger: true });
-const port = 1338;
-class Asd {
-  dsa() {console.log("lol")}
-}
-const asddd = new Asd();
-asddd.dsa()
-// app.register(fastifyPostgres, {
-//   user: "otsxmkfc",
-//   host: "rain.db.elephantsql.com",
-//   database: "otsxmkfc",
-//   password: "Yq80wlq6E7pmcacRxRPK3gaLJQADPPrO",
-//   port: 5432, //5432 1337
-// });
+const port = 1338; 
 app.register(fastifyPostgres, {
-  user: "postgres",
-  host: "localhost",
-  database: "test",
-  password: "postgres",
+  user: "otsxmkfc",
+  host: "rain.db.elephantsql.com",
+  database: "otsxmkfc",
+  password: "Yq80wlq6E7pmcacRxRPK3gaLJQADPPrO",
   port: 5432, //5432 1337
 });
+// app.register(fastifyPostgres, {
+//   user: "postgres",
+//   host: "localhost",
+//   database: "test",
+//   password: "postgres",
+//   port: 5432, //5432 1337
+// });
 // Register the fastify-jwt plugin with your secret key
 // app.register(jwt, {
 //   secret: "asdjkl", // Replace with your secret key
@@ -49,6 +45,7 @@ app.register(fastifySession, {
   cookie: {
     secure: false, // Set to true in a production environment with HTTPS
     // sameSite: "none"
+
   },
 });
 
@@ -60,6 +57,7 @@ app.register(productRoutes);
 app.register(customerRoutes);
 app.register(purchasesRoutes);
 app.register(salesRoutes);
+app.register(dashboardRoutes);
 app.register(fastifyCors, {
   // Set your desired CORS options here
   origin: ["http://127.0.0.1:5173", "http://localhost:5173", "http://192.168.1.135:5173", "http://0.0.0.0:5173", "http://192.168.1.100:5173"], // Replace with your front-end origin
@@ -75,30 +73,6 @@ app.get('/profile', (request, reply) => {
     reply.send('User not logged in');
   }
 });
-// Declare a route
-// app.get("/", async function handler(request, reply) {
-//   return { hello: "world" };
-// });
-// app.get(
-//   "/inventory",
-//   {
-//     preHandler: checkAccess(app, "read", "user_management_access"),
-//   },
-//   async (request, reply) => {
-//     reply.send({ msg: "HALLO!!!!" });
-//   }
-// );
-// app.post("/test", async function handler(request, reply) {
-//   const { secret_word } = request.body as any;
-//   if (secret_word === "banana") {
-//     console.log(request.session.sessionId);
-//     (request.session as any).authenticated = true;
-//     reply.status(200);
-//     return { ...request.session };
-//   }
-//   reply.status(200);
-//   return { ...request.session };
-// });
 
 app.get("/checkauth", async function handler(request, reply) {
   console.log(request.session.sessionId);
@@ -141,24 +115,5 @@ const start = async () => {
     process.exit(1);
   }
 };
-
-// server.get<{
-//   Querystring: IQuerystring,
-//   Headers: IHeaders,
-//   Reply: IReply
-// }>('/auth', async (request, reply) => {
-//   const { username, password } = request.query
-//   const customerHeader = request.headers['h-Custom']
-//   // do something with request data
-
-//   // chaining .statusCode/.code calls with .send allows type narrowing. For example:
-//   // this works
-//   reply.code(200).send({ success: true });
-//   // but this gives a type error
-//   reply.code(200).send('uh-oh');
-//   // it even works for wildcards
-//   reply.code(404).send({ error: 'Not found' });
-//   return `logged in!`
-// })
 
 start();
