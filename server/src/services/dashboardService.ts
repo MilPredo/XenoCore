@@ -26,7 +26,7 @@ export class DashboardService {
       }
     }
     const result = await this.fastify.pg.query(query, input);
-    const totalCog = result.rows[0]??0;
+    const totalCog = result.rows[0] ?? 0;
     return totalCog;
   }
 
@@ -48,7 +48,39 @@ export class DashboardService {
       }
     }
     const result = await this.fastify.pg.query(query, input);
-    const totalCog = result.rows[0]??0;
+    const totalCog = result.rows[0] ?? 0;
     return totalCog;
+  }
+
+  async getTopFiveProductSales() {
+    let query = `
+    SELECT
+        product.id,
+        product.product_name,
+        product.category,
+        COALESCE(SUM(sales.sale_quantity), 0) AS total_sale_quantity
+    FROM
+        product
+    LEFT JOIN (
+        SELECT
+            product_id,
+            SUM(quantity) AS sale_quantity
+        FROM
+            sales
+    WHERE
+        transaction_date >= DATE_TRUNC('MONTH', CURRENT_DATE) --DATE_TRUNC('MONTH', DATE '2023-12-01')
+        GROUP BY
+            product_id
+    ) AS sales ON product.id = sales.product_id
+    GROUP BY
+        product.id, product.product_name, product.category
+    ORDER BY
+        total_sale_quantity DESC
+    LIMIT
+        5;
+`;
+    const result = await this.fastify.pg.query(query);
+    const topFive = result.rows;
+    return topFive;
   }
 }

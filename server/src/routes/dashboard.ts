@@ -38,4 +38,13 @@ export default async function dashboardRoutes(fastify: FastifyInstance) {
       await dashboardController.getTotalPpu(request, reply);
     }
   );
+  fastify.get(
+    "/dashboard/topsales",
+    // {
+    //   preHandler: checkAccess(fastify, ["canRead"], "user_management_access"),
+    // },
+    async (request, reply) => {
+      await dashboardController.getTopFiveProductSales(request, reply);
+    }
+  );
 }

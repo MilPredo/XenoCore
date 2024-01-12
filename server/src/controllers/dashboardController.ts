@@ -66,6 +66,29 @@ export class DashboardController {
     }
   }
 
+  async getTopFiveProductSales(request: FastifyRequest, reply: FastifyReply){
+    try {
+      // const { start_date, end_date} =
+      //   request.query as {
+      //     start_date?: Date;
+      //     end_date?: Date};
+      // console.log(request.query); 
+      const result = await this.dashboardService.getTopFiveProductSales();
+      reply
+        .status(200)
+        .header("Content-Type", "application/json; charset=utf-8")
+        .send(result);
+    } catch (error) {
+      // console.log("error");
+      console.log((error as any).detail);
+      console.log(error);
+      reply
+        //.status((error as any).code === "23505" ? 409 : 500)
+        .status(500)
+        .send({ message: (error as { detail: string }).detail });
+    }
+  }
+
   // async getUserById(request: FastifyRequest, reply: FastifyReply) {
   //   try {
   //     const { id } = request.params as any;
