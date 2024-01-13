@@ -19,6 +19,16 @@ import {
 import React, { useEffect, useRef, useState } from "react";
 import Chart from "react-apexcharts";
 import { useNavigate } from "react-router-dom";
+
+
+interface TopSales {
+  
+    id: number,
+    product_name: string,
+    category: string,
+    total_sale_quantity: number
+  
+}
 function Dashboard() {
   const { colorMode } = useColorMode();
   const navigate = useNavigate();
@@ -26,9 +36,58 @@ function Dashboard() {
 
   const [pieSize, setPieSize] = useState({ width: 0, height: 0 });
   const [graphSize, setGraphSize] = useState({ width: 0, height: 0 });
+  const [topSales, setTopSales] = useState<Array<TopSales>>([])
+  const [totalInventoryValue, setTotalInventoryValue] = useState<number>(0)
+  const [totalSaleValue, setTotalSaleValue] = useState<number>(0)
   const pieA = useRef<HTMLDivElement>(null);
   const graph = useRef<HTMLDivElement>(null);
 
+  useEffect(()=>{
+    (async ()=>{
+       let response = await fetch("http://127.0.0.1:1338/dashboard/cog", { 
+         method: "GET",
+         headers: {
+          "Accept": "*/*"
+         }
+       });
+       
+       let data = await response.json()
+       console.log(data)
+      setTotalInventoryValue(data.total_cog)
+    })()
+  
+  },[])
+  useEffect(()=>{
+    (async ()=>{
+       let response = await fetch("http://127.0.0.1:1338/dashboard/ppu", { 
+         method: "GET",
+         headers: {
+          "Accept": "*/*"
+         }
+       });
+       
+       let data = await response.json()
+       console.log(data)
+      setTotalSaleValue(data.total_ppu)
+    })()
+  
+  },[])
+
+  useEffect(()=>{
+    (async ()=>{
+       let response = await fetch("http://127.0.0.1:1338/dashboard/topsales", { 
+         method: "GET",
+         headers: {
+          "Accept": "*/*"
+         }
+       });
+       
+       let data = await response.json()
+       console.log(data)
+      setTopSales(data)
+    })()
+  
+  },[])
   useEffect(() => {
     console.log("hallo");
     if (refreshed) {
@@ -92,12 +151,12 @@ function Dashboard() {
           p={2}
         >
           <Flex flexDir="column" h="100%" align="center" justify="center">
-            <Text>TOTAL INVENTORY VALUE</Text>
+            <Text>TOTAL INVENTORY VALUE ({new Date().toLocaleString('default', { month: 'long' }).toUpperCase()})</Text>
             <Heading>
               {new Intl.NumberFormat("en-PH", {
                 style: "currency",
                 currency: "PHP",
-              }).format(7000000)}
+              }).format(totalSaleValue)}
             </Heading>
           </Flex>
         </GridItem>
@@ -110,12 +169,12 @@ function Dashboard() {
           p={2}
         >
           <Flex flexDir="column" h="100%" align="center" justify="center">
-            <Text>TOTAL INVENTORY COST</Text>
+            <Text>TOTAL INVENTORY COST ({new Date().toLocaleString('default', { month: 'long' }).toUpperCase()})</Text>
             <Heading>
               {new Intl.NumberFormat("en-PH", {
                 style: "currency",
                 currency: "PHP",
-              }).format(3000000)}
+              }).format(totalInventoryValue)}
             </Heading>
           </Flex>
         </GridItem>
@@ -197,13 +256,8 @@ function Dashboard() {
                       ? "rgba(255,255,255,0.5)"
                       : "rgba(0,0,0,0.5)",
                 },
-                categories: [
-                  "Paracetamol",
-                  "Cetirizine",
-                  "Neozef",
-                  "Bonamine",
-                  "Ibuprofen",
-                ],
+                categories: 
+                topSales.map((val)=>val.product_name),
                 labels: {
                   style: {
                     colors: colorMode === "dark" ? "white" : "black",
@@ -226,7 +280,7 @@ function Dashboard() {
                 enabled: false,
               },
               title: {
-                text: "TOP 5 SOLD PRODUCTS",
+                text: `TOP 5 SOLD PRODUCTS THIS MONTH (${new Date().toLocaleString('default', { month: 'long' }).toUpperCase()})`,
                 align: "center",
                 style: {
                   color: colorMode === "dark" ? "white" : "black", // Set the font color of the title
@@ -235,7 +289,7 @@ function Dashboard() {
             }}
             series={[
               {
-                data: [400, 300, 250, 120, 70],
+                data: topSales.map((val)=>val.total_sale_quantity),
               },
             ]}
             type="bar"
@@ -275,7 +329,7 @@ function Dashboard() {
             height="100%"
           />
         </GridItem>
-        <GridItem
+        {/* <GridItem
           rowSpan={2}
           colSpan={1}
           bg="secondary.700"
@@ -302,7 +356,7 @@ function Dashboard() {
           _light={{ bg: "secondary.50" }}
           borderRadius="xl"
           p={2}
-        ></GridItem>
+        ></GridItem> */}
       </Grid>
       {/* <Grid templateRows="repeat(4, 1fr)" templateColumns="repeat(3, 1fr)" h='0'>
         <GridItem rowSpan={1} colSpan={3}>
