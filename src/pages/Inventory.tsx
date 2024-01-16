@@ -213,10 +213,10 @@ function Inventory() {
   const [page, setPage] = useState(1);
   const [doSearch, setDoSearch] = useState(false);
   const [search, setSearch] = useState<{
-    product_name?: string;
+    product_name: string;
 
-    id?: number;
-  }>({ product_name: "", id: undefined });
+    id: string;
+  }>({ product_name: "", id: "" });
   useEffect(() => {
     console.log("id:", search.id);
     setSearch({
@@ -250,10 +250,46 @@ function Inventory() {
               _hover: { _placeholder: { color: "white", opacity: 0.5 } },
               _focus: { _placeholder: { color: "white", opacity: 0.5 } },
             }}
-            placeholder="Search"
+            placeholder="Search Item ID"
+            value={search.id}
+            onChange={(e) => {
+              setSearch({ ...search, id: e.target.value });
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                setDoSearch(!doSearch);
+              }
+            }}
+          />
+          <Input
+            variant="filled"
+            _light={{
+              bg: "white",
+            }}
+            _dark={{
+              _hover: { _placeholder: { color: "white", opacity: 0.5 } },
+              _focus: { _placeholder: { color: "white", opacity: 0.5 } },
+            }}
+            placeholder="Search Product Name"
+            value={search.product_name}
+            onChange={(e) => {
+              setSearch({ ...search, product_name: e.target.value });
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                setDoSearch(!doSearch);
+              }
+            }}
           />
         </Flex>
-        <Button leftIcon={<FiSearch />} variant="solid" colorScheme="cyan">
+        <Button
+          leftIcon={<FiSearch />}
+          variant="solid"
+          colorScheme="cyan"
+          onClick={() => {
+            setDoSearch(!doSearch);
+          }}
+        >
           Search
         </Button>
       </Flex>

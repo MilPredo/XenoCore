@@ -20,14 +20,11 @@ import React, { useEffect, useRef, useState } from "react";
 import Chart from "react-apexcharts";
 import { useNavigate } from "react-router-dom";
 
-
 interface TopSales {
-  
-    id: number,
-    product_name: string,
-    category: string,
-    total_sale_quantity: number
-  
+  id: number;
+  product_name: string;
+  category: string;
+  total_sale_quantity: number;
 }
 function Dashboard() {
   const { colorMode } = useColorMode();
@@ -36,58 +33,100 @@ function Dashboard() {
 
   const [pieSize, setPieSize] = useState({ width: 0, height: 0 });
   const [graphSize, setGraphSize] = useState({ width: 0, height: 0 });
-  const [topSales, setTopSales] = useState<Array<TopSales>>([])
-  const [totalInventoryValue, setTotalInventoryValue] = useState<number>(0)
-  const [totalSaleValue, setTotalSaleValue] = useState<number>(0)
+  const [topSales, setTopSales] = useState<Array<TopSales>>([]);
+  const [totalInventoryValue, setTotalInventoryValue] = useState<number>(0);
+  const [totalSaleValue, setTotalSaleValue] = useState<number>(0);
+  const [productCount, setProductCount] = useState<number>(0);
+  const [remittanceRatio, setRemittanceRatio] = useState<{
+    remitted: number;
+    unremitted: number;
+  }>({ remitted: 0, unremitted: 0 });
   const pieA = useRef<HTMLDivElement>(null);
   const graph = useRef<HTMLDivElement>(null);
 
-  useEffect(()=>{
-    (async ()=>{
-       let response = await fetch("http://127.0.0.1:1338/dashboard/cog", { 
-         method: "GET",
-         headers: {
-          "Accept": "*/*"
-         }
-       });
-       
-       let data = await response.json()
-       console.log(data)
-      setTotalInventoryValue(data.total_cog)
-    })()
-  
-  },[])
-  useEffect(()=>{
-    (async ()=>{
-       let response = await fetch("http://127.0.0.1:1338/dashboard/ppu", { 
-         method: "GET",
-         headers: {
-          "Accept": "*/*"
-         }
-       });
-       
-       let data = await response.json()
-       console.log(data)
-      setTotalSaleValue(data.total_ppu)
-    })()
-  
-  },[])
+  useEffect(() => {
+    (async () => {
+      let response = await fetch("http://127.0.0.1:1338/dashboard/cog", {
+        method: "GET",
+        headers: {
+          Accept: "*/*",
+        },
+      });
 
-  useEffect(()=>{
-    (async ()=>{
-       let response = await fetch("http://127.0.0.1:1338/dashboard/topsales", { 
-         method: "GET",
-         headers: {
-          "Accept": "*/*"
-         }
-       });
-       
-       let data = await response.json()
-       console.log(data)
-      setTopSales(data)
-    })()
-  
-  },[])
+      let data = await response.json();
+      console.log(data);
+      setTotalInventoryValue(data.total_cog);
+    })();
+  }, []);
+  useEffect(() => {
+    (async () => {
+      let response = await fetch("http://127.0.0.1:1338/dashboard/ppu", {
+        method: "GET",
+        headers: {
+          Accept: "*/*",
+        },
+      });
+
+      let data = await response.json();
+      console.log(data);
+      setTotalSaleValue(data.total_ppu);
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      let response = await fetch(
+        "http://127.0.0.1:1338/dashboard/product_count",
+        {
+          method: "GET",
+          headers: {
+            Accept: "*/*",
+          },
+        }
+      );
+
+      let data = await response.json();
+      console.log(data);
+      setProductCount(data.count);
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      let response = await fetch("http://127.0.0.1:1338/dashboard/topsales", {
+        method: "GET",
+        headers: {
+          Accept: "*/*",
+        },
+      });
+
+      let data = await response.json();
+      console.log(data);
+      setTopSales(data);
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      let response = await fetch(
+        "http://127.0.0.1:1338/dashboard/remittance_ratio",
+        {
+          method: "GET",
+          headers: {
+            Accept: "*/*",
+          },
+        }
+      );
+
+      let data = await response.json();
+      console.log(data);
+      setRemittanceRatio({
+        remitted: parseInt(data.remitted),
+        unremitted: parseInt(data.unremitted),
+      });
+    })();
+  }, []);
+
   useEffect(() => {
     console.log("hallo");
     if (refreshed) {
@@ -139,7 +178,7 @@ function Dashboard() {
         >
           <Flex flexDir="column" h="100%" align="center" justify="center">
             <Text>PRODUCTS</Text>
-            <Heading>21</Heading>
+            <Heading>{productCount}</Heading>
           </Flex>
         </GridItem>
         <GridItem
@@ -151,7 +190,13 @@ function Dashboard() {
           p={2}
         >
           <Flex flexDir="column" h="100%" align="center" justify="center">
-            <Text>TOTAL INVENTORY VALUE ({new Date().toLocaleString('default', { month: 'long' }).toUpperCase()})</Text>
+            <Text>
+              TOTAL INVENTORY VALUE (
+              {new Date()
+                .toLocaleString("default", { month: "long" })
+                .toUpperCase()}
+              )
+            </Text>
             <Heading>
               {new Intl.NumberFormat("en-PH", {
                 style: "currency",
@@ -169,7 +214,13 @@ function Dashboard() {
           p={2}
         >
           <Flex flexDir="column" h="100%" align="center" justify="center">
-            <Text>TOTAL INVENTORY COST ({new Date().toLocaleString('default', { month: 'long' }).toUpperCase()})</Text>
+            <Text>
+              TOTAL INVENTORY COST (
+              {new Date()
+                .toLocaleString("default", { month: "long" })
+                .toUpperCase()}
+              )
+            </Text>
             <Heading>
               {new Intl.NumberFormat("en-PH", {
                 style: "currency",
@@ -213,7 +264,7 @@ function Dashboard() {
                 },
               },
             }}
-            series={[300, 150]}
+            series={[remittanceRatio.remitted, remittanceRatio.unremitted+0]}
             type="donut"
             height="100%"
           />
@@ -256,8 +307,7 @@ function Dashboard() {
                       ? "rgba(255,255,255,0.5)"
                       : "rgba(0,0,0,0.5)",
                 },
-                categories: 
-                topSales.map((val)=>val.product_name),
+                categories: topSales.map((val) => val.product_name),
                 labels: {
                   style: {
                     colors: colorMode === "dark" ? "white" : "black",
@@ -280,7 +330,9 @@ function Dashboard() {
                 enabled: false,
               },
               title: {
-                text: `TOP 5 SOLD PRODUCTS THIS MONTH (${new Date().toLocaleString('default', { month: 'long' }).toUpperCase()})`,
+                text: `TOP 5 SOLD PRODUCTS THIS MONTH (${new Date()
+                  .toLocaleString("default", { month: "long" })
+                  .toUpperCase()})`,
                 align: "center",
                 style: {
                   color: colorMode === "dark" ? "white" : "black", // Set the font color of the title
@@ -289,7 +341,7 @@ function Dashboard() {
             }}
             series={[
               {
-                data: topSales.map((val)=>val.total_sale_quantity),
+                data: topSales.map((val) => val.total_sale_quantity),
               },
             ]}
             type="bar"

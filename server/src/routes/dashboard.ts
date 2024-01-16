@@ -47,4 +47,24 @@ export default async function dashboardRoutes(fastify: FastifyInstance) {
       await dashboardController.getTopFiveProductSales(request, reply);
     }
   );
+  
+  fastify.get(
+    "/dashboard/product_count",
+    // {
+    //   preHandler: checkAccess(fastify, ["canRead"], "user_management_access"),
+    // },
+    async (request, reply) => {
+      await dashboardController.getProductCount(request, reply);
+    }
+  );
+
+  fastify.get(
+    "/dashboard/remittance_ratio",
+    // {
+    //   preHandler: checkAccess(fastify, ["canRead"], "user_management_access"),
+    // },
+    async (request, reply) => {
+      await dashboardController.getRemittanceRatio(request, reply);
+    }
+  );
 }

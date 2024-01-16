@@ -1,7 +1,7 @@
 import { InventoryRow } from "../interface";
 import { serverRoute } from "./serverRoute";
 
-const getInventory = async (page: number = 1, product_name?: string, id?:number) => {
+const getInventory = async (page: number = 1, product_name?: string, id?:string) => {
   // Define the base URL of the API
   const baseUrl = `${await serverRoute()}/inventory`; // Replace with your API URL
 

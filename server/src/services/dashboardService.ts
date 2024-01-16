@@ -52,6 +52,43 @@ export class DashboardService {
     return totalCog;
   }
 
+  async getProductCount() {
+    let query = `SELECT COUNT(*) FROM product`;
+    const result = await this.fastify.pg.query(query);
+    const productCount = result.rows[0] ?? 0;
+    return productCount;
+  }
+
+  async getRemittanceRatio(start_date?: Date, end_date?: Date) {
+    let query = `
+    SELECT
+        COUNT(CASE WHEN remittance_status = 1 THEN 1 END) AS remitted,
+        COUNT(CASE WHEN remittance_status = 2 THEN 1 END) AS unremitted
+    FROM sales
+    `;
+
+    let input = [];
+    if (start_date) {
+      input.push(start_date);
+      query += ` WHERE transaction_date >= ${input.length}`;
+
+      if (end_date) {
+        input.push(end_date);
+        query += ` AND transaction_date <= ${input.length}`;
+      }
+    } else {
+      if (end_date) {
+        input.push(end_date);
+        query += ` WHERE transaction_date <= ${input.length}`;
+      }
+    }
+    const result = await this.fastify.pg.query(query, input);
+    const remittanceRatio = result.rows[0] ?? 0;
+    return remittanceRatio;
+  }
+
+  //
+
   async getTopFiveProductSales() {
     let query = `
     SELECT
