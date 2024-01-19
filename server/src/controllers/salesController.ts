@@ -39,10 +39,11 @@ export class SalesController {
 
   async getAllSales(request: FastifyRequest, reply: FastifyReply) {
     try {
-      const { page, pageSize, product_name, order_by, order_direction } = request.query as {
+      const { page, pageSize, product_name, product_id, order_by, order_direction } = request.query as {
         page?: number;
         pageSize?: number;
         product_name?: string;
+        product_id?: number | null | string;
         order_by?: "product_name" | "product_id" | "transaction_date" | "delivery_date";
         order_direction?: "asc" | "desc" | "ASC" | "DESC";
       }; // Query parameters for pagination
@@ -51,6 +52,7 @@ export class SalesController {
         page,
         pageSize,
         product_name ?? "",
+        product_id ?? "",
         order_by,
         order_direction
         // address,

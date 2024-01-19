@@ -7,14 +7,14 @@ import { getSales } from "../api/sale";
 export interface SaleState {
   rows: any[][];
   count: number;
-  getSales: (page?: number, product_name?: string) => void;
+  getSales: (page?: number, product_name?: string, id?: string) => void;
 }
 
 export const useSaleStore = create<SaleState>()((set) => ({
   rows: [],
   count: 0,
-  getSales: async (page = 1, product_name = "") => {
-    let data = await getSales(page, product_name);
+  getSales: async (page = 1, product_name = "", id = "") => {
+    let data = await getSales(page, product_name, id);
     //console.log(data.rows);
     let rows: any[][] = [];
     if (!data) return;
@@ -22,6 +22,7 @@ export const useSaleStore = create<SaleState>()((set) => ({
       const row = data.rows[index];
       rows.push([
         `${row.customer_first_name} ${row.customer_middle_name} ${row.customer_last_name}`,
+        row.product_id,
         row.product_name,
         row.quantity,
         new Intl.NumberFormat("en-PH", {

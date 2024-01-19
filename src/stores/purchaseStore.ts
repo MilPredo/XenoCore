@@ -6,14 +6,14 @@ import { getPurchases } from "../api/purchase";
 export interface PurchaseState {
   rows: any[][];
   count: number;
-  getPurchases: (page?: number, product_name?: string) => void;
+  getPurchases: (page?: number, product_name?: string, id?: string) => void;
 }
 
 export const usePurchaseStore = create<PurchaseState>()((set) => ({
   rows: [],
   count: 0,
-  getPurchases: async (page = 1, product_name = "") => {
-    let data = await getPurchases(page, product_name);
+  getPurchases: async (page = 1, product_name = "", id = "") => {
+    let data = await getPurchases(page, product_name, id);
     //console.log(data.rows);
     let rows: any[][] = [];
     if (!data) return;
@@ -21,6 +21,7 @@ export const usePurchaseStore = create<PurchaseState>()((set) => ({
       const row = data.rows[index];
       rows.push([
         row.supplier_name,
+        row.product_id,
         row.product_name,
         row.quantity,
         new Intl.NumberFormat("en-PH", {

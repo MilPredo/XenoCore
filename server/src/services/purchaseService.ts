@@ -20,6 +20,7 @@ export class PurchaseService {
     page: number = 1,
     pageSize: number = 16,
     product_name: string,
+    product_id: number | null | string,
     order_by: "id" | "product_name" | "product_id" | "transaction_date" | "delivery_date" = "product_name",
     order_direction: "asc" | "desc" | "ASC" | "DESC" = "DESC"
   ) {
@@ -30,7 +31,7 @@ export class PurchaseService {
     const validDirections = ["asc", "desc", "ASC", "DESC"];
     order_direction = validDirections.includes(order_direction) ? order_direction : "DESC";
     const offset = (page - 1) * pageSize;
-
+    if ( product_id === "" ) product_id = null
     const query = `
     SELECT purchases.*, product.product_name, supplier.supplier_name, users.username
     FROM purchases
@@ -38,10 +39,11 @@ export class PurchaseService {
     LEFT JOIN supplier ON purchases.supplier_id = supplier.id
     LEFT JOIN users ON purchases.user_id= users.id
     WHERE (LOWER(product.product_name) LIKE '%' || LOWER($1)  || '%' OR $1 IS NULL)
-    ORDER BY id ${order_direction} LIMIT $2 OFFSET $3;
+    AND (product.id = $2 OR $2 IS NULL)
+    ORDER BY id ${order_direction} LIMIT $3 OFFSET $4;
     `;
     console.log(query);
-    const result = await this.fastify.pg.query(query, [product_name, pageSize, offset]);
+    const result = await this.fastify.pg.query(query, [product_name, product_id, pageSize, offset]);
     const products = result.rows;
 
     // Fetch total count of products
@@ -55,9 +57,10 @@ export class PurchaseService {
           LEFT JOIN supplier ON purchases.supplier_id = supplier.id
           LEFT JOIN users ON purchases.user_id= users.id
           WHERE (LOWER(product.product_name) LIKE '%' || LOWER($1) || '%' OR $1 IS NULL)
+          AND (product.id = $2 OR $2 IS NULL)
       ) AS subquery;
       `,
-      [product_name]
+      [product_name, product_id]
     );
     const totalCount = parseInt(totalCountResult.rows[0].count, 10);
 

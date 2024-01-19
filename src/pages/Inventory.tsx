@@ -250,7 +250,7 @@ function Inventory() {
               _hover: { _placeholder: { color: "white", opacity: 0.5 } },
               _focus: { _placeholder: { color: "white", opacity: 0.5 } },
             }}
-            placeholder="Search Item ID"
+            placeholder="Search Product ID"
             value={search.id}
             onChange={(e) => {
               setSearch({ ...search, id: e.target.value });

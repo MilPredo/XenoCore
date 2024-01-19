@@ -12,12 +12,14 @@ function Sales() {
   const [doSearch, setDoSearch] = useState(false);
   const [search, setSearch] = useState<{
     product_name: string;
-  }>({ product_name: "" });
+    id: string;
+  }>({ product_name: "", id: "" });
   useEffect(() => {
     setSearch({
       product_name: search.product_name.trim(),
+      id: search.id.trim(),
     });
-    getSales(page, search.product_name.trim());
+    getSales(page, search.product_name.trim(), search.id.trim());
     console.log(rows);
     console.log(count);
   }, [page, doSearch]);
@@ -32,7 +34,27 @@ function Sales() {
         gap={2}
       >
         <Flex gap={2} flex={1}>
-        <Input
+          <Input
+            variant="filled"
+            _light={{
+              bg: "white",
+            }}
+            _dark={{
+              _hover: { _placeholder: { color: "white", opacity: 0.5 } },
+              _focus: { _placeholder: { color: "white", opacity: 0.5 } },
+            }}
+            placeholder="Search Product ID"
+            value={search.id}
+            onChange={(e) => {
+              setSearch({ ...search, id: e.target.value });
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                setDoSearch(!doSearch);
+              }
+            }}
+          />
+          <Input
             variant="filled"
             _light={{
               bg: "white",
@@ -70,6 +92,7 @@ function Sales() {
         <DynamicTable
           columns={[
             "Customer",
+            "Product ID",
             "Product",
             "Quantity",
             "Sale Price",

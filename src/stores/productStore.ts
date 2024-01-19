@@ -40,7 +40,7 @@ export const useProductStore = create<ProductState>()((set) => ({
         //row.default_ppu-((row.default_cog - row.default_ppu)*0.1)
         // row.papers,
         // row.initial_qty,
-        // row.reorder_level,
+        row.reorder_level,
         // row.current_qty,
         // row.stock_status,
         row.description,

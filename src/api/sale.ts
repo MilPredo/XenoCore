@@ -78,7 +78,7 @@ export const getSales = async (
   queryParams.append("page", `${page}`);
   queryParams.append("product_name", `${product_name}`);
   console.log("product api ", id);
-  queryParams.append("id", `${id}`);
+  queryParams.append("product_id", `${id}`);
   const apiUrl = `${baseUrl}?${queryParams.toString()}`;
   try {
     let response = await fetch(apiUrl, {

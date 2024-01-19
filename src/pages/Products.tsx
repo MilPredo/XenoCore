@@ -5,7 +5,7 @@ import { FiPlus, FiSearch } from "react-icons/fi";
 import AddProductButton from "../components/AddProductButton";
 import { useProductStore } from "../stores/productStore";
 import Pagination from "../components/Pagination";
-
+import EditProductButton from "../components/EditProductButton";
 
 //ppu-((cog - ppu)*0.1)
 function Products() {
@@ -18,7 +18,7 @@ function Products() {
     id: string;
   }>({ product_name: "", id: "" });
   useEffect(() => {
-    console.log("id:", search.id.trim())
+    console.log("id:", search.id.trim());
     setSearch({
       product_name: search.product_name.trim(),
       id: search.id.trim(),
@@ -46,10 +46,9 @@ function Products() {
               _hover: { _placeholder: { color: "white", opacity: 0.5 } },
               _focus: { _placeholder: { color: "white", opacity: 0.5 } },
             }}
-            placeholder="Search Item ID"
+            placeholder="Search Product ID"
             value={search.id}
             onChange={(e) => {
-              
               setSearch({ ...search, id: e.target.value });
             }}
             onKeyDown={(e) => {
@@ -94,13 +93,15 @@ function Products() {
       <Flex flex={1} flexDir="column" m="6" overflow="hidden">
         <DynamicTable
           columns={[
+            "",
             "Category",
-            "Item ID",
+            "Product ID",
             "Product",
             "Default COG",
             "Default PPU",
             "MD Price",
             "Agent Price",
+            "Re-Order Level",
             // "Papers",
             // "Initial Qty",
             // "Re-Order Level",
@@ -108,7 +109,21 @@ function Products() {
             // "Stock Status",
             "Description",
           ]}
-          rows={rows}
+          rows={rows.map((row) => {
+            return [
+              <EditProductButton
+                row={row}
+                onSubmitSuccess={() => {
+                  getProducts(
+                    page,
+                    search.product_name.trim(),
+                    search.id.trim()
+                  );
+                }}
+              />,
+              ...row,
+            ];
+          })}
           //columns={["Supplier", "Address", "Contact Number", "Email", "Notes"]}
           //rows={rows as (string | CellType)[][]}
         />
