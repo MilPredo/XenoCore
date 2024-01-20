@@ -8,8 +8,41 @@ export class DashboardService {
     this.fastify = fastify;
   }
 
-  async getTotalCog(start_date?: Date, end_date?: Date) {
-    let query = `SELECT SUM(cog) AS total_cog FROM purchases`;
+  async getTotalInventoryValueAndCost(){
+    let query = `
+      SELECT
+          COALESCE(SUM(product.default_cog * (COALESCE(purchases.quantity, 0) - COALESCE(sales.sale_quantity, 0))), 0) AS total_inventory_cost,
+          COALESCE(SUM(product.default_ppu * (COALESCE(purchases.quantity, 0) - COALESCE(sales.sale_quantity, 0))), 0) AS total_inventory_value
+      FROM
+          product
+      LEFT JOIN (
+          SELECT
+              product_id,
+              SUM(quantity) AS quantity
+          FROM
+              purchases
+          GROUP BY
+              product_id
+      ) AS purchases ON product.id = purchases.product_id
+      LEFT JOIN (
+          SELECT
+              product_id,
+              SUM(quantity) AS sale_quantity
+          FROM
+              sales
+          GROUP BY
+              product_id
+      ) AS sales ON product.id = sales.product_id
+    `
+    const result = await this.fastify.pg.query(query);
+    const totalValueAndCost = result.rows[0];
+    return totalValueAndCost;
+
+
+  }
+
+  async getTotalCog(start_date?: Date, end_date?: Date) { //magkano nagastos sa lahat ng stocks
+    let query = `SELECT SUM(cog*quantity) AS total_cog FROM purchases`;
     let input = [];
     if (start_date) {
       input.push(start_date);
@@ -30,8 +63,8 @@ export class DashboardService {
     return totalCog;
   }
 
-  async getTotalPpu(start_date?: Date, end_date?: Date) {
-    let query = `SELECT SUM(ppu) AS total_ppu FROM sales`;
+  async getTotalPpu(start_date?: Date, end_date?: Date) {//magkano lahat ng nabenta
+    let query = `SELECT SUM(ppu*quantity) AS total_ppu FROM sales`;
     let input = [];
     if (start_date) {
       input.push(start_date);

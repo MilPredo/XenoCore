@@ -21,6 +21,15 @@ interface UserSession {
 export default async function dashboardRoutes(fastify: FastifyInstance) {
   const dashboardController = new DashboardController(fastify);
   fastify.get(
+    "/dashboard/total_inventory_value_and_cost",
+    // {
+    //   preHandler: checkAccess(fastify, ["canRead"], "user_management_access"),
+    // },
+    async (request, reply) => {
+      await dashboardController.getTotalInventoryValueAndCost(request, reply);
+    }
+  );
+  fastify.get(
     "/dashboard/cog",
     // {
     //   preHandler: checkAccess(fastify, ["canRead"], "user_management_access"),
@@ -29,6 +38,7 @@ export default async function dashboardRoutes(fastify: FastifyInstance) {
       await dashboardController.getTotalCog(request, reply);
     }
   );
+
   fastify.get(
     "/dashboard/ppu",
     // {
@@ -47,7 +57,7 @@ export default async function dashboardRoutes(fastify: FastifyInstance) {
       await dashboardController.getTopFiveProductSales(request, reply);
     }
   );
-  
+
   fastify.get(
     "/dashboard/product_count",
     // {

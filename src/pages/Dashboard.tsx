@@ -37,16 +37,20 @@ function Dashboard() {
   const [totalInventoryValue, setTotalInventoryValue] = useState<number>(0);
   const [totalSaleValue, setTotalSaleValue] = useState<number>(0);
   const [productCount, setProductCount] = useState<number>(0);
+  const [totalValueAndCost, setTotalValueAndCost] = useState({
+    total_inventory_cost: 0.00,
+    total_inventory_value: 0.00
+  });
   const [remittanceRatio, setRemittanceRatio] = useState<{
     remitted: number;
     unremitted: number;
   }>({ remitted: 0, unremitted: 0 });
   const pieA = useRef<HTMLDivElement>(null);
   const graph = useRef<HTMLDivElement>(null);
-
+//
   useEffect(() => {
     (async () => {
-      let response = await fetch("http://127.0.0.1:1338/dashboard/cog", {
+      let response = await fetch("http://127.0.0.1:1338/dashboard/total_inventory_value_and_cost", {
         method: "GET",
         headers: {
           Accept: "*/*",
@@ -54,24 +58,40 @@ function Dashboard() {
       });
 
       let data = await response.json();
-      console.log(data);
-      setTotalInventoryValue(data.total_cog);
+      // console.log('aaaaaaaaaaaaaaaaaaaasdaefedhrft6jty',data);
+      setTotalValueAndCost(data);
     })();
   }, []);
-  useEffect(() => {
-    (async () => {
-      let response = await fetch("http://127.0.0.1:1338/dashboard/ppu", {
-        method: "GET",
-        headers: {
-          Accept: "*/*",
-        },
-      });
 
-      let data = await response.json();
-      console.log(data);
-      setTotalSaleValue(data.total_ppu);
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     let response = await fetch("http://127.0.0.1:1338/dashboard/cog", {
+  //       method: "GET",
+  //       headers: {
+  //         Accept: "*/*",
+  //       },
+  //     });
+
+  //     let data = await response.json();
+  //     console.log(data);
+  //     setTotalInventoryValue(data.total_cog);
+  //   })();
+  // }, []);
+
+  // useEffect(() => {
+  //   (async () => {
+  //     let response = await fetch("http://127.0.0.1:1338/dashboard/ppu", {
+  //       method: "GET",
+  //       headers: {
+  //         Accept: "*/*",
+  //       },
+  //     });
+
+  //     let data = await response.json();
+  //     console.log(data);
+  //     setTotalSaleValue(data.total_ppu);
+  //   })();
+  // }, []);
 
   useEffect(() => {
     (async () => {
@@ -191,17 +211,18 @@ function Dashboard() {
         >
           <Flex flexDir="column" h="100%" align="center" justify="center">
             <Text>
-              TOTAL INVENTORY VALUE (
+              TOTAL INVENTORY VALUE 
+              {/* (
               {new Date()
                 .toLocaleString("default", { month: "long" })
                 .toUpperCase()}
-              )
+              ) */}
             </Text>
             <Heading>
               {new Intl.NumberFormat("en-PH", {
                 style: "currency",
                 currency: "PHP",
-              }).format(totalSaleValue)}
+              }).format(totalValueAndCost.total_inventory_value)}
             </Heading>
           </Flex>
         </GridItem>
@@ -215,17 +236,18 @@ function Dashboard() {
         >
           <Flex flexDir="column" h="100%" align="center" justify="center">
             <Text>
-              TOTAL INVENTORY COST (
+              TOTAL INVENTORY COST 
+              {/* (
               {new Date()
                 .toLocaleString("default", { month: "long" })
                 .toUpperCase()}
-              )
+              ) */}
             </Text>
             <Heading>
               {new Intl.NumberFormat("en-PH", {
                 style: "currency",
                 currency: "PHP",
-              }).format(totalInventoryValue)}
+              }).format(totalValueAndCost.total_inventory_cost)}
             </Heading>
           </Flex>
         </GridItem>
@@ -348,7 +370,7 @@ function Dashboard() {
             height="100%"
           />
         </GridItem>
-        <GridItem
+        {/* <GridItem
           rowSpan={2}
           colSpan={1}
           bg="secondary.700"
@@ -380,7 +402,7 @@ function Dashboard() {
             type="donut"
             height="100%"
           />
-        </GridItem>
+        </GridItem> */}
         {/* <GridItem
           rowSpan={2}
           colSpan={1}

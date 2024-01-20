@@ -20,6 +20,24 @@ export class DashboardController {
     this.dashboardService = new DashboardService(fastify);
   }
 
+  async getTotalInventoryValueAndCost(request: FastifyRequest, reply: FastifyReply) {
+    try {
+      const result = await this.dashboardService.getTotalInventoryValueAndCost();
+      reply
+        .status(200)
+        .header("Content-Type", "application/json; charset=utf-8")
+        .send(result);
+    } catch (error) {
+      // console.log("error");
+      console.log((error as any).detail);
+      console.log(error);
+      reply
+        //.status((error as any).code === "23505" ? 409 : 500)
+        .status(500)
+        .send({ message: (error as { detail: string }).detail });
+    }
+  }
+
   async getTotalCog(request: FastifyRequest, reply: FastifyReply) {
     try {
       const { start_date, end_date} =
