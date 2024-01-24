@@ -28,7 +28,8 @@ export class InventoryService {
           product.reorder_level,
           COALESCE(SUM(purchases.quantity), 0) AS total_purchase_quantity,
           COALESCE(SUM(sales.sale_quantity), 0) AS total_sale_quantity,
-          COALESCE(SUM(purchases.quantity), 0) - COALESCE(SUM(sales.sale_quantity), 0) AS inventory_balance
+          COALESCE(SUM(purchases.quantity), 0) - COALESCE(SUM(sales.sale_quantity), 0) AS inventory_balance,
+          product.description
       FROM
           product
       LEFT JOIN (

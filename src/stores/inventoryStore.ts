@@ -14,6 +14,7 @@ export const useInventoryStore = create<InventoryState>()((set) => ({
   rows: [],
   count: 0,
   getInventory: async (page = 1, product_name?: string, id?: number) => {
+    //@ts-ignore
     let data = await getInventory(page, product_name, id);
     let rows: InventoryRow[] = [];
     if (!data) return;

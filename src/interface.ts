@@ -24,6 +24,7 @@ export interface InventoryRow {
   total_purchase_quantity: number;
   total_sale_quantity: number;
   inventory_balance: number;
+  description: string;
 }
 
 

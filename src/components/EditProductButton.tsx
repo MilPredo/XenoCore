@@ -31,7 +31,7 @@ import {
   AutoCompleteList,
 } from "@choc-ui/chakra-autocomplete";
 import { useFormik } from "formik";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FiEdit, FiUserPlus } from "react-icons/fi";
 import CurrencyInput from "react-currency-input-field";
 import { addProduct, updateProduct } from "../api/product";
@@ -140,11 +140,26 @@ function EditProductButton(props: {
     "MERCK PHILIPPINES",
     "SANOFI PHILIPPINES",
   ];
+
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   return (
     <>
       <Button
-        onClick={onOpen}
+        onClick={()=>{
+          console.log(props.row)
+          formik.resetForm();
+          formik.setValues({
+            category: props.row[0],
+            product_name: props.row[2],
+            default_cog: (props.row[3].replace(/[₱,]/g, "")).toString(),
+            default_ppu: (props.row[4].replace(/[₱,]/g, "")).toString(),
+            reorder_level: props.row[7],
+            description: props.row[8],
+          });
+
+          //</>console.log("nan? ",parseFloat(props.row[3].replace("₱", "")))
+          onOpen();
+        }}
         leftIcon={<FiEdit />}
         variant="solid"
         colorScheme="green"

@@ -299,7 +299,7 @@ function Dashboard() {
           borderRadius="xl"
           p={2}
         >
-          <Chart
+          {topSales && <Chart
             options={{
               chart: {
                 type: "bar",
@@ -329,7 +329,7 @@ function Dashboard() {
                       ? "rgba(255,255,255,0.5)"
                       : "rgba(0,0,0,0.5)",
                 },
-                categories: topSales.map((val) => val.product_name),
+                categories: Array.isArray(topSales) ? topSales.map((val) => val.product_name): [],
                 labels: {
                   style: {
                     colors: colorMode === "dark" ? "white" : "black",
@@ -363,12 +363,13 @@ function Dashboard() {
             }}
             series={[
               {
-                data: topSales.map((val) => val.total_sale_quantity),
+                data: Array.isArray(topSales) ? topSales.map((val) => val.total_sale_quantity): [],
               },
             ]}
             type="bar"
             height="100%"
-          />
+          />}
+          
         </GridItem>
         {/* <GridItem
           rowSpan={2}

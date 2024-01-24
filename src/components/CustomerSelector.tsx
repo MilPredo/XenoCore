@@ -226,7 +226,7 @@ function CustomerSelector(props: {
           <Flex>
 
           <Text flex={1} fontSize='sm'>New customer?</Text>
-          <AddCustomerButton/>
+          <AddCustomerButton onSubmitSuccess={() => setDoSearch(!doSearch)}/>
           </Flex>
           <Flex>
             <Heading size="sm">Selected: </Heading>
