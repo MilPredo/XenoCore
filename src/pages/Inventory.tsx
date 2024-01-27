@@ -193,14 +193,10 @@ function Inventory() {
               <Badge
                 variant="solid"
                 colorScheme={
-                  row.inventory_balance >= row.reorder_level ? "green" : row.inventory_balance <= 0 ? "red" : "orange"
+                  row.inventory_balance > 0 ? (row.inventory_balance >= row.reorder_level ? "green" : "orange") : "red"
                 }
               >
-                {row.inventory_balance >= row.reorder_level
-                  ? "In Stock"
-                  : row.inventory_balance <= 0
-                  ? "No Stock"
-                  : "Low Stock"}
+                {row.inventory_balance > 0 ? (row.inventory_balance >= row.reorder_level ? "IN STOCK" : "LOW STOCK") : "NO STOCK"}
               </Badge>,
               row.total_purchase_quantity,
               row.total_sale_quantity,
