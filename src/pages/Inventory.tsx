@@ -54,7 +54,7 @@ function Inventory() {
       product_name: search.product_name?.trim(),
       id: search.id,
     });
-    getInventory(page, search.product_name?.trim(), parseInt(search.id));
+    getInventory(page, search.product_name?.trim(), search.id);
     console.log(rows);
   }, [page, doSearch]);
 
@@ -174,7 +174,7 @@ function Inventory() {
                   row.description,
                 ]}
                 onSubmitSuccess={() => {
-                  getInventory(page, search.product_name.trim(), Number.parseInt(search.id));
+                  getInventory(page, search.product_name.trim(), search.id);
                 }}
               />,
               <Tag>{row.category}</Tag>,

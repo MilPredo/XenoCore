@@ -101,7 +101,7 @@ function AddSupplierButton(props: { onSubmitSuccess?: () => void }) {
       </Button>
       <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose} isCentered size="6xl">
         <form onSubmit={formik.handleSubmit}>
-          <ModalOverlay />
+        <ModalOverlay backdropFilter="auto" backdropBlur="2px" />
           <ModalContent _dark={{bg:'dominant.800'}}>
             <ModalHeader>Add new supplier</ModalHeader>
             <ModalCloseButton />

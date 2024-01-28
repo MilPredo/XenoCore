@@ -90,28 +90,57 @@ function AddSalesButton(props: { onSubmitSuccess?: () => void }) {
   >();
   const [soldAs, setSoldAs] = useState<number | undefined>();
   const [errors, setErrors] = useState<{
-    paymentMethod: boolean;
-    remittanceStatus: boolean;
-    soldAs: boolean;
+    paymentMethod: string;
+    remittanceStatus: string;
+    soldAs: string;
   }>({
-    paymentMethod: false,
-    remittanceStatus: false,
-    soldAs: false,
+    paymentMethod: "",
+    remittanceStatus: "",
+    soldAs: "",
   });
 
   const handleSubmit = () => {
-    setErrors({ ...errors, paymentMethod: !paymentMethod });
-    setErrors({ ...errors, remittanceStatus: !remittanceStatus });
-    setErrors({
-      ...errors,
-      soldAs: typeof soldAs === "undefined" ? true : false,
-    });
+    console.log("hallo", paymentMethod, remittanceStatus, soldAs);
+    if (isNaN(paymentMethod??0)) {
+      setErrors({
+        ...errors,
+        paymentMethod: "Select a Payment Method",
+      });
+    } else {
+      setErrors({
+        ...errors,
+        paymentMethod: "",
+      });
+    }
+    if (isNaN(remittanceStatus??0)) {
+      setErrors({
+        ...errors,
+        remittanceStatus: "Select a Remittance Status",
+      });
+    } else {
+      setErrors({
+        ...errors,
+        remittanceStatus: "",
+      });
+    }
+    if (isNaN(remittanceStatus??0)) {
+      setErrors({
+        ...errors,
+        remittanceStatus: "Select a Discount Type",
+      });
+    } else {
+      setErrors({
+        ...errors,
+        remittanceStatus: "",
+      });
+    }
     setIsSubmitting(true);
     // setErrors({ ...errors, isSubmitting: true });
   };
   const { user } = useAuthStore();
   useEffect(() => {
-    if (errors.paymentMethod || errors.remittanceStatus || errors.soldAs) {
+    console.log(errors);
+    if (errors.paymentMethod=='' || errors.remittanceStatus=='' || errors.soldAs=='') {
       setIsSubmitting(false);
       return;
     }
@@ -150,16 +179,16 @@ function AddSalesButton(props: { onSubmitSuccess?: () => void }) {
         setRemittanceStatus(undefined);
         setSoldAs(undefined);
         setErrors({
-          paymentMethod: false,
-          remittanceStatus: false,
-          soldAs: false,
+          paymentMethod: "",
+          remittanceStatus: "",
+          soldAs: "",
         });
         setIsSubmitting(false);
         onClose();
         alert("Sale Added!");
       }
     });
-  }, [errors]);
+  }, [isSubmitting]);
   return (
     <>
       <Button
@@ -178,7 +207,7 @@ function AddSalesButton(props: { onSubmitSuccess?: () => void }) {
         size="6xl"
       >
         {/* <form onSubmit={formik.handleSubmit}> */}
-        <ModalOverlay />
+        <ModalOverlay backdropFilter="auto" backdropBlur="2px" />
         <ModalContent _dark={{ bg: "dominant.800" }}>
           <ModalHeader>Add new sale</ModalHeader>
           <ModalCloseButton />
@@ -248,13 +277,27 @@ function AddSalesButton(props: { onSubmitSuccess?: () => void }) {
                 />
               </GridItem>
             </Grid>
+
             <InputGroup gap={4}>
-              <FormControl mt={4}>
+              <FormControl mt={4} isInvalid={errors.paymentMethod != ""}>
                 <FormLabel>Payment Method</FormLabel>
                 <Select
                   placeholder="..."
                   onChange={(e) => {
                     setPaymentMethod(parseInt(e.target.value));
+                    // console.log(typeof e.target.value)
+                    if (e.target.value == "") {
+                      setErrors({
+                        ...errors,
+                        paymentMethod: "Select a Payment Method",
+                      });
+                    } else {
+                      setErrors({
+                        ...errors,
+                        paymentMethod: "",
+                      });
+                    }
+                    //
                   }}
                 >
                   <option value={1}>Cash (Full Payment)</option>
@@ -265,31 +308,56 @@ function AddSalesButton(props: { onSubmitSuccess?: () => void }) {
                   <option value={6}>Cheque (Partial Payment/PDC)</option>
                   <option value={7}>Cheque (Partial Payment/Dated)</option>
                 </Select>
+                <FormErrorMessage>{errors.paymentMethod}</FormErrorMessage>
               </FormControl>
-              <FormControl mt={4}>
+              <FormControl mt={4} isInvalid={errors.remittanceStatus != ""}>
                 <FormLabel>Select Remittance Status</FormLabel>
                 <Select
                   placeholder="..."
                   onChange={(e) => {
                     setRemittanceStatus(parseInt(e.target.value));
+                    if (e.target.value == "") {
+                      setErrors({
+                        ...errors,
+                        remittanceStatus: "Select a Remittance Status",
+                      });
+                    } else {
+                      setErrors({
+                        ...errors,
+                        remittanceStatus: "",
+                      });
+                    }
                   }}
                 >
                   <option value={1}>Remitted</option>
                   <option value={2}>Un-Remitted</option>
                 </Select>
+                <FormErrorMessage>{errors.remittanceStatus}</FormErrorMessage>
               </FormControl>
-              <FormControl mt={4}>
+              <FormControl mt={4} isInvalid={errors.soldAs != ""}>
                 <FormLabel>Sold as</FormLabel>
                 <Select
                   placeholder="..."
                   onChange={(e) => {
                     setSoldAs(parseInt(e.target.value));
+                    if (e.target.value == "") {
+                      setErrors({
+                        ...errors,
+                        soldAs: "Select a Discount Type",
+                      });
+                    } else {
+                      setErrors({
+                        ...errors,
+                        soldAs: "",
+                      });
+                    }
                   }}
                 >
                   <option value={0}>None</option>
                   <option value={1}>Agent</option>
                   <option value={2}>Doctor</option>
                 </Select>
+                <FormErrorMessage>{errors.soldAs}</FormErrorMessage>
               </FormControl>
             </InputGroup>
           </ModalBody>
