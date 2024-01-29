@@ -84,11 +84,11 @@ function AddSalesButton(props: { onSubmitSuccess?: () => void }) {
     | undefined
   >();
 
-  const [paymentMethod, setPaymentMethod] = useState<number | undefined>();
+  const [paymentMethod, setPaymentMethod] = useState<number>(-1);
   const [remittanceStatus, setRemittanceStatus] = useState<
-    number | undefined
-  >();
-  const [soldAs, setSoldAs] = useState<number | undefined>();
+    number
+  >(-1);
+  const [soldAs, setSoldAs] = useState<number>(-1);
   const [errors, setErrors] = useState<{
     paymentMethod: string;
     remittanceStatus: string;
@@ -101,50 +101,24 @@ function AddSalesButton(props: { onSubmitSuccess?: () => void }) {
 
   const handleSubmit = () => {
     console.log("hallo", paymentMethod, remittanceStatus, soldAs);
-    if (isNaN(paymentMethod??0)) {
-      setErrors({
-        ...errors,
-        paymentMethod: "Select a Payment Method",
-      });
-    } else {
-      setErrors({
-        ...errors,
-        paymentMethod: "",
-      });
-    }
-    if (isNaN(remittanceStatus??0)) {
-      setErrors({
-        ...errors,
-        remittanceStatus: "Select a Remittance Status",
-      });
-    } else {
-      setErrors({
-        ...errors,
-        remittanceStatus: "",
-      });
-    }
-    if (isNaN(remittanceStatus??0)) {
-      setErrors({
-        ...errors,
-        remittanceStatus: "Select a Discount Type",
-      });
-    } else {
-      setErrors({
-        ...errors,
-        remittanceStatus: "",
-      });
-    }
+    setErrors({
+      paymentMethod: paymentMethod == -1 ? "Select a Payment Method" : "",
+      remittanceStatus: remittanceStatus == -1 ? "Select a Remittance Status" : "",
+      soldAs: soldAs == -1 ? "Select a Discount Type" : ""
+    });
     setIsSubmitting(true);
     // setErrors({ ...errors, isSubmitting: true });
   };
   const { user } = useAuthStore();
   useEffect(() => {
-    console.log(errors);
-    if (errors.paymentMethod=='' || errors.remittanceStatus=='' || errors.soldAs=='') {
+    console.log('errors',errors);
+    console.log('asd',paymentMethod, remittanceStatus, soldAs);
+    if (paymentMethod == -1 || remittanceStatus == -1 || soldAs == -1) {
+      console.log('its error')
       setIsSubmitting(false);
       return;
     }
-
+  
     // if (values.items.length === 0) {
     //   console.log("cart is empty");
     //   return;
@@ -175,9 +149,9 @@ function AddSalesButton(props: { onSubmitSuccess?: () => void }) {
         if (props.onSubmitSuccess) props.onSubmitSuccess();
         // resetForm();
         setCart([]);
-        setPaymentMethod(undefined);
-        setRemittanceStatus(undefined);
-        setSoldAs(undefined);
+        setPaymentMethod(0);
+        setRemittanceStatus(0);
+        setSoldAs(0);
         setErrors({
           paymentMethod: "",
           remittanceStatus: "",
@@ -284,14 +258,16 @@ function AddSalesButton(props: { onSubmitSuccess?: () => void }) {
                 <Select
                   placeholder="..."
                   onChange={(e) => {
-                    setPaymentMethod(parseInt(e.target.value));
-                    // console.log(typeof e.target.value)
                     if (e.target.value == "") {
+                      console.log(0)
+                      setPaymentMethod(-1);
                       setErrors({
                         ...errors,
                         paymentMethod: "Select a Payment Method",
                       });
                     } else {
+                      console.log(parseInt(e.target.value))
+                      setPaymentMethod(parseInt(e.target.value));
                       setErrors({
                         ...errors,
                         paymentMethod: "",
@@ -299,6 +275,7 @@ function AddSalesButton(props: { onSubmitSuccess?: () => void }) {
                     }
                     //
                   }}
+                  value={paymentMethod}
                 >
                   <option value={1}>Cash (Full Payment)</option>
                   <option value={2}>Cash (Partial Payment)</option>
@@ -315,13 +292,14 @@ function AddSalesButton(props: { onSubmitSuccess?: () => void }) {
                 <Select
                   placeholder="..."
                   onChange={(e) => {
-                    setRemittanceStatus(parseInt(e.target.value));
                     if (e.target.value == "") {
+                      setRemittanceStatus(-1);
                       setErrors({
                         ...errors,
                         remittanceStatus: "Select a Remittance Status",
                       });
                     } else {
+                      setRemittanceStatus(parseInt(e.target.value));
                       setErrors({
                         ...errors,
                         remittanceStatus: "",
@@ -339,13 +317,14 @@ function AddSalesButton(props: { onSubmitSuccess?: () => void }) {
                 <Select
                   placeholder="..."
                   onChange={(e) => {
-                    setSoldAs(parseInt(e.target.value));
                     if (e.target.value == "") {
+                      setSoldAs(-1);
                       setErrors({
                         ...errors,
                         soldAs: "Select a Discount Type",
                       });
                     } else {
+                      setSoldAs(parseInt(e.target.value));
                       setErrors({
                         ...errors,
                         soldAs: "",
