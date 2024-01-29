@@ -17,6 +17,7 @@ import Products from "./pages/Products.tsx";
 import Suppliers from "./pages/Suppliers.tsx";
 import Customers from "./pages/Customers.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
+import Request from "./pages/Request.tsx";
 
 /*
 Pahabol ...
@@ -68,6 +69,10 @@ const router = createBrowserRouter([
       {
         path: "sales",
         element: <Sales />,
+      },
+      {
+        path: "request",
+        element: <Request />,
       },
       {
         path: "customers",
