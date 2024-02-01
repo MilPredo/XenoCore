@@ -3,7 +3,7 @@ import { serverRoute } from "./serverRoute";
 
 const getInventory = async (page: number = 1, product_name?: string, id?:string) => {
   // Define the base URL of the API
-  const baseUrl = `${await serverRoute()}/inventory`; // Replace with your API URL
+  const baseUrl = `${window.location.protocol + '//' + window.location.hostname}:1338/inventory`; // Replace with your API URL
 
   // Create a URLSearchParams object to manage query parameters
   const queryParams = new URLSearchParams();

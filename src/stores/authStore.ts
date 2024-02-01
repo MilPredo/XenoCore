@@ -35,7 +35,7 @@ export const useAuthStore = create<AuthState>((set) => {
           password: password,
         });
 
-        let response = await fetch(`${await serverRoute()}/user/login`, {
+        let response = await fetch(`${window.location.protocol + '//' + window.location.hostname}:1338/user/login`, {
           method: "POST",
           body: bodyContent,
           headers: headersList,
@@ -94,7 +94,7 @@ export const useAuthStore = create<AuthState>((set) => {
           Accept: "*/*",
         };
 
-        let response = await fetch(`${await serverRoute()}/user/logout`, {
+        let response = await fetch(`${window.location.protocol + '//' + window.location.hostname}:1338/user/logout`, {
           method: "POST",
           headers: headersList,
           credentials: 'include'

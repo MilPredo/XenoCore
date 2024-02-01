@@ -31,7 +31,7 @@ export const addProduct = async (
       description,
     });
 
-    let response = await fetch(`${await serverRoute()}/product`, {
+    let response = await fetch(`${window.location.protocol + '//' + window.location.hostname}:1338/product`, {
       method: "POST",
       body: bodyContent,
       headers: headersList,
@@ -71,7 +71,7 @@ export const updateProduct = async (
       ...product
     });
     console.log(bodyContent)
-    let response = await fetch(`${await serverRoute()}/product`, {
+    let response = await fetch(`${window.location.protocol + '//' + window.location.hostname}:1338/product`, {
       method: "PATCH",
       body: bodyContent,
       headers: headersList,
@@ -102,7 +102,7 @@ export const updateProduct = async (
 export const getProduct = async (page?: number, product_name?: string, id?: string) => {
   const queryParams = new URLSearchParams();
 
-  const baseUrl = `${await serverRoute()}/product`;
+  const baseUrl = `${window.location.protocol + '//' + window.location.hostname}:1338/product`;
   queryParams.append("page", `${page}`);
   queryParams.append("product_name", `${product_name}`);
   console.log("product api ", id);

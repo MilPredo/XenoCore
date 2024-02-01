@@ -35,7 +35,7 @@ export const addPurchases = async (items: AddPurchaseData[]) => {
     };
     let bodyContent = JSON.stringify(items);
 
-    let response = await fetch(`${await serverRoute()}/purchases`, {
+    let response = await fetch(`${window.location.protocol + '//' + window.location.hostname}:1338/purchases`, {
       method: "POST",
       body: bodyContent,
       headers: headersList,
@@ -60,7 +60,7 @@ export const getPurchases = async (
 ) => {
   const queryParams = new URLSearchParams();
 
-  const baseUrl = `${await serverRoute()}/purchases`;
+  const baseUrl = `${window.location.protocol + '//' + window.location.hostname}:1338/purchases`;
   queryParams.append("page", `${page}`);
   queryParams.append("product_name", `${product_name}`);
   console.log("product api ", id);

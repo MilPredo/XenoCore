@@ -24,7 +24,7 @@ export const addSupplier = async (
       notes,
     });
 
-    let response = await fetch(`${await serverRoute()}/supplier`, {
+    let response = await fetch(`${window.location.protocol + '//' + window.location.hostname}:1338/supplier`, {
       method: "POST",
       body: bodyContent,
       headers: headersList,
@@ -42,7 +42,7 @@ export const addSupplier = async (
 
 export const getSupplier = async (page?: number, supplier_name?: string) => {
   const queryParams = new URLSearchParams();
-  const baseUrl = `${await serverRoute()}/supplier`
+  const baseUrl = `${window.location.protocol + '//' + window.location.hostname}:1338/supplier`
   queryParams.append("page", `${page}`);
   queryParams.append("supplier_name", `${supplier_name}`);
   const apiUrl = `${baseUrl}?${queryParams.toString()}`;

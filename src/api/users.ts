@@ -7,7 +7,7 @@ export const getUsers = async (
   middle_name?: string,
   last_name?: string
 ) => {
-  const baseUrl = `${await serverRoute()}/user`;
+  const baseUrl = `${window.location.protocol + '//' + window.location.hostname}:1338/user`;
   const queryParams = new URLSearchParams();
   queryParams.append("page", `${page}`);
   if (username) {
@@ -74,7 +74,7 @@ export const registerUser = async (
     });
     authority;
 
-    let response = await fetch(`${await serverRoute()}/user/register`, {
+    let response = await fetch(`${window.location.protocol + '//' + window.location.hostname}:1338/user/register`, {
       method: "POST",
       body: bodyContent,
       headers: headersList,
@@ -91,7 +91,7 @@ export const registerUser = async (
 };
 
 export const getUsersProfile = async (id: number) => {
-  const baseUrl = `${await serverRoute()}/user/${id}`;
+  const baseUrl = `${window.location.protocol + '//' + window.location.hostname}:1338/user/${id}`;
   try {
     let response = await fetch(baseUrl, {
       method: "GET",

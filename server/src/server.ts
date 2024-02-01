@@ -60,7 +60,7 @@ app.register(salesRoutes);
 app.register(dashboardRoutes);
 app.register(fastifyCors, {
   // Set your desired CORS options here
-  origin: ["http://127.0.0.1:5173", "http://localhost:5173", "http://192.168.1.135:5173", "http://0.0.0.0:5173", "http://192.168.1.135:5173", "http://192.168.5.202:5173"], // Replace with your front-end origin
+  origin: ["http://127.0.0.1:5173", "http://25.35.199.27:5173", "http://localhost:5173", "http://192.168.1.135:5173", "http://0.0.0.0:5173", "http://192.168.1.135:5173", "http://192.168.5.202:5173"], // Replace with your front-end origin
   methods: "GET,POST,PUT,PATCH,DELETE",
   credentials: true,
 });

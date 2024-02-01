@@ -50,7 +50,7 @@ function Dashboard() {
 //
   useEffect(() => {
     (async () => {
-      let response = await fetch("http://127.0.0.1:1338/dashboard/total_inventory_value_and_cost", {
+      let response = await fetch(`${window.location.protocol + '//' + window.location.hostname}:1338/dashboard/total_inventory_value_and_cost`, {
         method: "GET",
         headers: {
           Accept: "*/*",
@@ -96,7 +96,7 @@ function Dashboard() {
   useEffect(() => {
     (async () => {
       let response = await fetch(
-        "http://127.0.0.1:1338/dashboard/product_count",
+        `${window.location.protocol + '//' + window.location.hostname}:1338/dashboard/product_count`,
         {
           method: "GET",
           headers: {
@@ -113,7 +113,7 @@ function Dashboard() {
 
   useEffect(() => {
     (async () => {
-      let response = await fetch("http://127.0.0.1:1338/dashboard/topsales", {
+      let response = await fetch(`${window.location.protocol + '//' + window.location.hostname}:1338/dashboard/topsales`, {
         method: "GET",
         headers: {
           Accept: "*/*",
@@ -129,7 +129,7 @@ function Dashboard() {
   useEffect(() => {
     (async () => {
       let response = await fetch(
-        "http://127.0.0.1:1338/dashboard/remittance_ratio",
+        `${window.location.protocol + '//' + window.location.hostname}:1338/dashboard/remittance_ratio`,
         {
           method: "GET",
           headers: {

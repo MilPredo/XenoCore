@@ -48,6 +48,23 @@ Unit cost - CoG = 500
 500 x 0.20 = 100
 2,000 - 100 = 1,900 = Agent Price
 
+ORDER FORM
+Client Name: Garrod
+Delivery Address: cainta
+Delivery Date: jan  29,2023
+Delivery time: 10am
+Contact Number: 
+Medicines & Qty: 50 box  of  30  1500 tab 
+price  45 per tab
+Amount: 67,500
+Terms: pdc
+courier: me
+
+
+tag to Category c &d
+tag to house acct
+
+thank you
 */
 const router = createBrowserRouter([
   {

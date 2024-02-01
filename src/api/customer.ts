@@ -11,7 +11,7 @@ export const addCustomer = async (
 ) => {
   try {
     // Construct the API route
-    const apiRoute = `${await serverRoute()}/customer`;
+    const apiRoute = `${window.location.protocol + '//' + window.location.hostname}:1338/customer`;
 
     let headersList = {
       "Content-Type": "application/json",
@@ -60,7 +60,7 @@ export const getCustomer = async (
   last_name?: string
 ) => {
   // Construct the API route
-  const apiRoute = `${await serverRoute()}/customer`;
+  const apiRoute = `${window.location.protocol + '//' + window.location.hostname}:1338/customer`;
   console.log("api route:", apiRoute);
   const queryParams = new URLSearchParams();
   const baseUrl = apiRoute;

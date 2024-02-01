@@ -50,7 +50,7 @@ export const addSales = async (items: AddSaleData[]) => {
     };
     let bodyContent = JSON.stringify(items);
     console.log('sale',bodyContent)
-    let response = await fetch(`${await serverRoute()}/sales`, {
+    let response = await fetch(`${window.location.protocol + '//' + window.location.hostname}:1338/sales`, {
       method: "POST",
       body: bodyContent,
       headers: headersList,
@@ -74,7 +74,7 @@ export const getSales = async (
 ) => {
   const queryParams = new URLSearchParams();
 
-  const baseUrl = `${await serverRoute()}/sales`;
+  const baseUrl = `${window.location.protocol + '//' + window.location.hostname}:1338/sales`;
   queryParams.append("page", `${page}`);
   queryParams.append("product_name", `${product_name}`);
   console.log("product api ", id);
