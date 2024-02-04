@@ -5,6 +5,7 @@ import { FiPlus, FiSearch } from "react-icons/fi";
 import AddSalesButton from "../components/AddSalesButton";
 import { useSaleStore } from "../stores/saleStore";
 import Pagination from "../components/Pagination";
+import CreateRequestButton from "../components/CreateRequestButton";
 
 function Request() {
   //const { rows, count, getSales } = useSaleStore();
@@ -85,13 +86,7 @@ function Request() {
         >
           Search
         </Button>
-        <Button
-        leftIcon={<FiPlus />}
-        variant="solid"
-        colorScheme="green"
-      >
-        Create Request
-      </Button>
+        <CreateRequestButton />
         {/* <AddSalesButton onSubmitSuccess={() => setDoSearch(!doSearch)} /> */}
       </Flex>
 
