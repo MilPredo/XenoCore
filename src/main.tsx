@@ -18,6 +18,7 @@ import Suppliers from "./pages/Suppliers.tsx";
 import Customers from "./pages/Customers.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
 import Request from "./pages/Request.tsx";
+import Invoice from "./pages/Invoice.tsx";
 
 /*
 Pahabol ...
@@ -90,6 +91,10 @@ const router = createBrowserRouter([
       {
         path: "request",
         element: <Request />,
+      },
+      {
+        path: "invoice",
+        element: <Invoice />,
       },
       {
         path: "customers",
