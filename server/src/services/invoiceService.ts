@@ -43,55 +43,42 @@ export class InvoiceService {
     const offset = (page - 1) * pageSize;
 
     const query = `
-    SELECT 
-      sales.*, 
-      customer.first_name AS customer_first_name, 
-      customer.middle_name AS customer_middle_name, 
-      customer.last_name AS customer_last_name, 
-      product.product_name, 
-      users.username
-    FROM sales
-    LEFT JOIN product ON sales.product_id = product.id
-    LEFT JOIN customer ON sales.customer_id = customer.id
-    LEFT JOIN users ON sales.user_id = users.id
-    WHERE (LOWER(product.product_name) LIKE '%' || LOWER($1)  || '%' OR $1 IS NULL)
-    AND (product.id = $2 OR $2 IS NULL)
-    ORDER BY id ${order_direction} LIMIT $3 OFFSET $4;
-    `;
+
+    SELECT requests.*, 
+    users.first_name AS user_first_name, 
+    users.middle_name AS user_middle_name, 
+    users.last_name AS user_last_name
+    FROM requests
+    LEFT join users on requests.user_id = users.id
+    AND (requests.id = $1 OR $1 IS NULL)
+    ORDER BY id ${order_direction} LIMIT $2 OFFSET $3; `;
     console.log(query);
     const result = await this.fastify.pg.query(query, [
-      product_name,
-      product_id,
+      request_id,
       pageSize,
       offset,
     ]);
-    const products = result.rows;
+    const requests = result.rows;
 
     // Fetch total count of sales
     const totalCountResult = await this.fastify.pg.query(
       `
       SELECT COUNT(*)
       FROM (
-          SELECT 
-            sales.*, 
-            customer.first_name AS customer_first_name, 
-            customer.middle_name AS customer_middle_name, 
-            customer.last_name AS customer_last_name, 
-            product.product_name, 
-            users.username
-          FROM sales
-          LEFT JOIN product ON sales.product_id = product.id
-          LEFT JOIN customer ON sales.customer_id = customer.id
-          LEFT JOIN users ON sales.user_id = users.id
-          WHERE (LOWER(product.product_name) LIKE '%' || LOWER($1) || '%' OR $1 IS NULL)
-          AND (product.id = $2 OR $2 IS NULL)
+        SELECT requests.*, 
+        users.first_name AS user_first_name, 
+        users.middle_name AS user_middle_name, 
+        users.last_name AS user_last_name
+        FROM requests
+        LEFT join users on requests.user_id = users.id
+        AND (requests.id = $1 OR $1 IS NULL)
       ) AS subquery;
       `,
-      [product_name, product_id]
+      [request_id]
     );
     const totalCount = parseInt(totalCountResult.rows[0].count, 10);
 
-    return { products, totalCount };
+    return { requests, totalCount };
   }
 
   /*
