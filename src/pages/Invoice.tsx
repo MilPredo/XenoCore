@@ -45,7 +45,7 @@ function Invoice() {
               _hover: { _placeholder: { color: "white", opacity: 0.5 } },
               _focus: { _placeholder: { color: "white", opacity: 0.5 } },
             }}
-            placeholder="Search Product ID"
+            placeholder="Search Request ID"
             value={search.id}
             onChange={(e) => {
               setSearch({ ...search, id: e.target.value });
@@ -65,7 +65,7 @@ function Invoice() {
               _hover: { _placeholder: { color: "white", opacity: 0.5 } },
               _focus: { _placeholder: { color: "white", opacity: 0.5 } },
             }}
-            placeholder="Search Product Name"
+            placeholder="Search User Name"
             value={search.product_name}
             onChange={(e) => {
               setSearch({ ...search, product_name: e.target.value });
@@ -95,19 +95,13 @@ function Invoice() {
         <DynamicTable
           columns={[
             "",
-            "Customer",
-            "Product ID",
-            "Product",
-            "Quantity",
-            "Sale Price",
-            "Total Price",
-            "Payment Method",
-            "Remittance Status",
-            "Request Date",
-            "User Type",
             "Requested By",
+            "Request ID",
+            "Request Date",
+            "Address",
+            "Status",
           ]}
-          rows={[[]]}
+          rows={[[<Button>View</Button>,"Mil", 1, "February 21, 2024", "Urbiztondo, San Juan, La Union"]]}
         />
         <Box mb="8">
           <Pagination
