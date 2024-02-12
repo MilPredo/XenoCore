@@ -183,10 +183,10 @@ function DirectInvoiceButton(props: { onSubmitSuccess?: () => void }) {
         {/* <form onSubmit={formik.handleSubmit}> */}
         <ModalOverlay backdropFilter="auto" backdropBlur="2px" />
         <ModalContent _dark={{ bg: "dominant.800" }}>
-          <ModalHeader>Add new sale</ModalHeader>
+          <ModalHeader>Invoice</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Heading size="sm">Select customer</Heading>
+            {/* <Heading size="sm">Select customer</Heading> */}
             {/* <CustomerSelector onChange={setCustomer} /> */}
             {/* <Flex gap={4}>
                 <FormControl mt={4}>
