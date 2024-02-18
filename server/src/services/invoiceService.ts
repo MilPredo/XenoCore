@@ -21,25 +21,15 @@ export class InvoiceService {
     page: number = 1,
     pageSize: number = 16,
     request_id: number | null,
-    order_by:
-      | "id"
-      | "request_id"
-      | "transaction_date"
-      | "delivery_date" = "transaction_date",
+    order_by: "id" | "request_id" | "transaction_date" | "delivery_date" = "transaction_date",
     order_direction: "asc" | "desc" | "ASC" | "DESC" = "DESC"
   ) {
-    const validColumns = [
-      "id",
-      "transaction_date",
-      "delivery_date",
-    ];
+    const validColumns = ["id", "transaction_date", "delivery_date"];
 
     order_by = validColumns.includes(order_by) ? order_by : "id";
 
     const validDirections = ["asc", "desc", "ASC", "DESC"];
-    order_direction = validDirections.includes(order_direction)
-      ? order_direction
-      : "DESC";
+    order_direction = validDirections.includes(order_direction) ? order_direction : "DESC";
     const offset = (page - 1) * pageSize;
 
     const query = `
@@ -53,11 +43,7 @@ export class InvoiceService {
     AND (requests.id = $1 OR $1 IS NULL)
     ORDER BY id ${order_direction} LIMIT $2 OFFSET $3; `;
     console.log(query);
-    const result = await this.fastify.pg.query(query, [
-      request_id,
-      pageSize,
-      offset,
-    ]);
+    const result = await this.fastify.pg.query(query, [request_id, pageSize, offset]);
     const requests = result.rows;
 
     // Fetch total count of sales
@@ -82,115 +68,137 @@ export class InvoiceService {
   }
 
   /*
-      product_id: string;
-      quantity: string;
-      cog?: number;
-      transaction_date?: Date
-      delivery_date?: Date
-      delivery_status?: string
-      notes?: string;
-      user_id: number;
+    id
+    request_id
+    product_id
+    quantity
+    cog
+    ppu
   */
-  async addSales(
+  async getRequestItems(id: number) {
+    const query = `
+    SELECT *
+    FROM requests_items
+    WHERE request_id = $1`;
+    console.log(query);
+    const result = await this.fastify.pg.query(query, [id]);
+    const items = result.rows;
+    return { items };
+  }
+
+  /*
+ORDER FORM
+Client Name: Garrod
+Delivery Address: cainta
+Delivery Date: jan  29,2023
+Delivery time: 10am
+Contact Number: 
+Medicines & Qty: 50 box  of  30  1500 tab 
+price  45 per tab
+Amount: 67,500
+Terms: pdc
+courier: me
+
+
+tag to Category c &d
+tag to house acct
+
+thank you
+
+  id
+  request_id
+  product_id
+  quantity
+  cog
+  ppu
+  */
+  async addRequest(
+    user_id: number,
+    address: string,
+    delivery_date: string,
+    isInvoiced: boolean,
+    discount_type: string,
+    transaction_date: string,
+    admin_id: number,
     items: {
-      customer_id: string;
       product_id: string;
       quantity: string;
       ppu: number;
       cog: number;
-      transaction_date?: Date;
-      payment_method: number;
-      remittance_status: number;
-      user_id: number;
-      user_type: string;
     }[]
   ) {
-    // items.map((purchase_order) => {
-    //   let output = [
-    //     purchase_order.product_id,
-    //     purchase_order.quantity,
-    //     purchase_order.cog,
-    //     purchase_order.transaction_date,
-    //     purchase_order.delivery_date,
-    //     purchase_order.delivery_status,
-    //     purchase_order.notes,
-    //     purchase_order.user_id,
-    //   ].join();
-    //   return output;
-    // });
+    let query1 = `INSERT INTO requests (
+      user_id,
+      address,
+      delivery_date,
+      "isInvoiced",
+      discount_type,
+      transaction_date,
+      admin_id
+  ) VALUES (
+      $1, $2::text, $3, $4, $5, $6, $7
+  ) RETURNING id;`;
+    let query2 = `INSERT INTO requests_items (
+      request_id,
+      product_id,
+      quantity,
+      ppu,
+      cog
+  ) VALUES `;
 
-    let query = `
-      INSERT INTO sales (
-        customer_id, product_id, user_id, quantity, ppu, cog, transaction_date, payment_method, remittance_status, user_type)
-        VALUES ${items
-          .map((_, idx) => {
-            let string_row = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-              .map((_, idx2) => {
-                return `$${idx * 10 + (idx2 + 1)}`;
-              })
-              .join();
+    // Generate placeholders for items
+    let placeholders = [];
+    for (let i = 0; i < items.length; i++) {
+      const baseIndex = i * 4 + 1; // Increment by 4 for each item
+      placeholders.push(`($1, $${baseIndex + 1}, $${baseIndex + 2}, $${baseIndex + 3}, $${baseIndex + 4})`);
+    }
+    query2 += placeholders.join(",");
 
-            string_row = `(${string_row})`;
-            return string_row;
-          })
-          .join()}
-    `;
+    // Commit the transaction
+    let commitQuery = "COMMIT;";
+
     let inputs = items.map((row) => {
       /*
-      customer_id, 
-      product_id, 
-      user_id, 
-      quantity, 
-      ppu, 
-      transaction_date, 
-      payment_method, 
-      remittance_status, 
-      user_type
-      */
-      let output: any = [
-        row.customer_id,
-        row.product_id,
-        row.user_id,
-        row.quantity,
-        row.ppu,
-        row.cog,
-        row.transaction_date,
-        row.payment_method,
-        row.remittance_status,
-        row.user_type,
-      ];
+  customer_id, 
+  product_id, 
+  user_id, 
+  quantity, 
+  ppu, 
+  transaction_date, 
+  payment_method, 
+  remittance_status, 
+  user_type
+  */
+      let output: any = [row.product_id, row.quantity, row.ppu, row.cog];
       return output;
     });
-    console.log(query, [].concat(...inputs));
 
-    await this.fastify.pg.query(query, [].concat(...inputs));
-    //   let newProduct = {
-    //     product_name,
-    //     category,
-    //     default_cog,
-    //     default_ppu,
-    //     papers,
-    //     initial_qty,
-    //     reorder_level,
-    //     current_qty,
-    //     stock_status,
-    //     description,
-    //   };
-    //   let denulled: { [key: string]: any } = {};
-    //   for (const [fieldName, fieldValue] of Object.entries(newProduct)) {
-    //     if (fieldValue) denulled[fieldName] = fieldValue;
-    //   }
-    //   let query = `
-    //   INSERT INTO product (${Object.keys(denulled).join(", ")})
-    //   VALUES (
-    //     ${Object.entries(denulled)
-    //       .map((_, idx) => `$${idx + 1}`)
-    //       .join(", ")}
-    //   )
-    //   RETURNING *
-    // `;
-    //   console.log(query);
-    //   await this.fastify.pg.query(query, Object.values(denulled));
-    //   //return { suppliers, totalCount };
+    // Start a transaction
+    await this.fastify.pg.query("BEGIN");
+
+    try {
+      console.log(query1)
+      const result = await this.fastify.pg.query(query1, [
+        user_id,
+        address,
+        delivery_date,
+        isInvoiced,
+        discount_type,
+        transaction_date,
+        admin_id,
+      ]);
+      const requestId = result.rows[0].id;
+      console.log('done')
+      
+      console.log(query2)
+      await this.fastify.pg.query(query2, [requestId, ...[].concat(...inputs)]);
+
+      // Commit the transaction
+      await this.fastify.pg.query(commitQuery);
+    } catch (error) {
+      // Rollback the transaction if an error occurs
+      await this.fastify.pg.query("ROLLBACK");
+      throw error;
+    }
   }
 }

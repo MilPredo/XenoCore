@@ -30,19 +30,29 @@ export default async function invoiceRoutes(fastify: FastifyInstance) {
     //   preHandler: checkAccess(fastify, ["canRead"], "user_management_access"),
     // },
     async (request, reply) => {
-      await invoiceController.getRequests(request, reply)
+      await invoiceController.getRequests(request, reply);
     }
   );
 
-  // fastify.post(
-  //   "/sales",
-  //   // {
-  //   //   preHandler: checkAccess(fastify, ["canRead"], "user_management_access"),
-  //   // },
-  //   async (request, reply) => {
-  //     await salesController.addSales(request, reply)
-  //   }
-  // );
+  fastify.get(
+    "/invoice/:id",
+    // {
+    //   preHandler: checkAccess(fastify, ["canRead"], "user_management_access"),
+    // },
+    async (request, reply) => {
+      await invoiceController.getRequestItems(request, reply);
+    }
+  );
+
+  fastify.post(
+    "/invoice",
+    // {
+    //   preHandler: checkAccess(fastify, ["canRead"], "user_management_access"),
+    // },
+    async (request, reply) => {
+      await invoiceController.addRequests(request, reply);
+    }
+  );
 
   // fastify.get(
   //   "/user/:id",
