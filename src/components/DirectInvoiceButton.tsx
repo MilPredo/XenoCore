@@ -118,7 +118,7 @@ function DirectInvoiceButton(props: { onSubmitSuccess?: () => void }) {
       setIsSubmitting(false);
       return;
     }
-  
+    
     // if (values.items.length === 0) {
     //   console.log("cart is empty");
     //   return;

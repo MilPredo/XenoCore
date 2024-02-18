@@ -32,7 +32,7 @@ export class InvoiceController {
         address: string;
         delivery_date: string;
         isInvoiced: boolean;
-        discount_type: string;
+        discount_type: number;
         transaction_date: string;
         admin_id: number;
         items: {

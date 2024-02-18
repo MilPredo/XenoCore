@@ -77,9 +77,11 @@ export class InvoiceService {
   */
   async getRequestItems(id: number) {
     const query = `
-    SELECT *
+    SELECT requests_items.*, product.product_name
     FROM requests_items
-    WHERE request_id = $1`;
+    LEFT JOIN product ON product.id = requests_items.product_id
+    WHERE request_id = $1
+    `;
     console.log(query);
     const result = await this.fastify.pg.query(query, [id]);
     const items = result.rows;
@@ -117,7 +119,7 @@ thank you
     address: string,
     delivery_date: string,
     isInvoiced: boolean,
-    discount_type: string,
+    discount_type: number, //0 - none, 1 - agent, 2 - doctor
     transaction_date: string,
     admin_id: number,
     items: {
@@ -127,6 +129,7 @@ thank you
       cog: number;
     }[]
   ) {
+
     let query1 = `INSERT INTO requests (
       user_id,
       address,
@@ -136,7 +139,7 @@ thank you
       transaction_date,
       admin_id
   ) VALUES (
-      $1, $2::text, $3, $4, $5, $6, $7
+      $1, $2::text, $3, $4, $5, NOW(), $6
   ) RETURNING id;`;
     let query2 = `INSERT INTO requests_items (
       request_id,
@@ -184,7 +187,7 @@ thank you
         delivery_date,
         isInvoiced,
         discount_type,
-        transaction_date,
+        //transaction_date,
         admin_id,
       ]);
       const requestId = result.rows[0].id;
