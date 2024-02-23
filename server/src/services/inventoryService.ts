@@ -14,7 +14,9 @@ export class InventoryService {
     order_direction: "asc" | "desc" | "ASC" | "DESC" = "DESC"
   ) {
     const validDirections = ["asc", "desc", "ASC", "DESC"];
-    order_direction = validDirections.includes(order_direction) ? order_direction : "DESC";
+    order_direction = validDirections.includes(order_direction)
+      ? order_direction
+      : "DESC";
     const offset = (page - 1) * pageSize;
     if (id === "") id = undefined;
     const query = `
@@ -27,8 +29,8 @@ export class InventoryService {
           product.papers,
           product.reorder_level,
           COALESCE(SUM(purchases.quantity), 0) AS total_purchase_quantity,
-          COALESCE(SUM(sales.sale_quantity), 0) AS total_sale_quantity,
-          COALESCE(SUM(purchases.quantity), 0) - COALESCE(SUM(sales.sale_quantity), 0) AS inventory_balance,
+          (COALESCE(SUM(sales.sale_quantity), 0)+COALESCE(SUM(invoices.invoice_quantity), 0)) AS total_sale_quantity,
+          COALESCE(SUM(purchases.quantity), 0) - (COALESCE(SUM(sales.sale_quantity), 0)+COALESCE(SUM(invoices.invoice_quantity), 0)) AS inventory_balance,
           product.description
       FROM
           product
@@ -50,6 +52,15 @@ export class InventoryService {
           GROUP BY
               product_id
       ) AS sales ON product.id = sales.product_id
+      LEFT JOIN (
+          SELECT
+              product_id,
+              SUM(quantity) AS invoice_quantity
+          FROM
+              requests_items
+          GROUP BY
+              product_id
+      ) AS invoices ON product.id = invoices.product_id
       WHERE
           (LOWER(product.product_name) LIKE '%' || LOWER($1) || '%' OR $1 IS NULL)
           AND (product.id = $2 OR $2 IS NULL)
@@ -62,7 +73,12 @@ export class InventoryService {
 
 `;
     console.log(query);
-    const result = await this.fastify.pg.query(query, [product_name, id, pageSize, offset]);
+    const result = await this.fastify.pg.query(query, [
+      product_name,
+      id,
+      pageSize,
+      offset,
+    ]);
     const inventory = result.rows;
 
     console.log("id", id);
