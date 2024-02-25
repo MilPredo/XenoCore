@@ -165,7 +165,7 @@ function CreateRequestButton(props: { onSubmitSuccess?: () => void }) {
       //   console.log("cart is empty");
       //   return;
       // }
-      setIsSubmitting(true)
+      setIsSubmitting(true);
       const finalCart: AddPurchaseData[] = cart.map((item) => {
         console.log(item, values);
         return {
@@ -417,22 +417,34 @@ function CreateRequestButton(props: { onSubmitSuccess?: () => void }) {
                     {formik.errors.delivery_date}
                   </FormErrorMessage>
                 </FormControl>
-                <FormControl mt={4}>
-                  <FormLabel>Order Status</FormLabel>
+                <FormControl
+                  mt={4}
+                  // isInvalid={errors.soldAs != ""}
+                >
+                  <FormLabel>Discount</FormLabel>
                   <Select
-                    id="delivery_status"
-                    name="delivery_status"
-                    value={formik.values.delivery_status}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    defaultValue="Ordered"
-                    width="150px"
+                    placeholder="..."
+                    // onChange={(e) => {
+                    //   if (e.target.value == "") {
+                    //     setSoldAs(-1);
+                    //     setErrors({
+                    //       ...errors,
+                    //       soldAs: "Select a Discount Type",
+                    //     });
+                    //   } else {
+                    //     setSoldAs(parseInt(e.target.value));
+                    //     setErrors({
+                    //       ...errors,
+                    //       soldAs: "",
+                    //     });
+                    //   }
+                    // }}
                   >
-                    <option value="Ordered">Ordered</option>
-                    <option value="Delivered">Delivered</option>
-                    <option value="Incomplete">Incomplete</option>
-                    <option value="Problematic">Problematic</option>
+                    <option value={0}>None</option>
+                    <option value={1}>Agent</option>
+                    <option value={2}>Doctor</option>
                   </Select>
+                  <FormErrorMessage>{/* {errors.soldAs} */}</FormErrorMessage>
                 </FormControl>
               </InputGroup>
             </ModalBody>
