@@ -118,10 +118,11 @@ thank you
     user_id: number,
     address: string,
     delivery_date: string,
-    isInvoiced: boolean,
+    is_invoiced: boolean,
     discount_type: number, //0 - none, 1 - agent, 2 - doctor
     transaction_date: string,
     admin_id: number,
+    notes: string,
     items: {
       product_id: string;
       quantity: string;
@@ -134,12 +135,13 @@ thank you
       user_id,
       address,
       delivery_date,
-      "isInvoiced",
+      is_invoiced,
       discount_type,
       transaction_date,
-      admin_id
+      admin_id,
+      notes
   ) VALUES (
-      $1, $2::text, $3, $4, $5, NOW(), $6
+      $1, $2::text, $3, $4, $5, NOW(), $6, $7
   ) RETURNING id;`;
     let query2 = `INSERT INTO requests_items (
       request_id,
@@ -185,10 +187,11 @@ thank you
         user_id,
         address,
         delivery_date,
-        isInvoiced,
+        is_invoiced,
         discount_type,
         //transaction_date,
         admin_id,
+        notes
       ]);
       const requestId = result.rows[0].id;
       console.log('done')

@@ -34,22 +34,10 @@ import {
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import React, { useEffect, useRef, useState } from "react";
-import {
-  FiArrowRight,
-  FiPlus,
-  FiSearch,
-  FiShoppingCart,
-  FiUserPlus,
-  FiX,
-} from "react-icons/fi";
+import { FiArrowRight, FiPlus, FiSearch, FiShoppingCart, FiUserPlus, FiX } from "react-icons/fi";
 import AddCustomerButton from "./AddCustomerButton";
 import DynamicTable from "./DynamicTable";
-import {
-  AutoComplete,
-  AutoCompleteInput,
-  AutoCompleteItem,
-  AutoCompleteList,
-} from "@choc-ui/chakra-autocomplete";
+import { AutoComplete, AutoCompleteInput, AutoCompleteItem, AutoCompleteList } from "@choc-ui/chakra-autocomplete";
 import AddProductButton from "./AddProductButton";
 import AddSupplierButton from "./AddSupplierButton";
 import AsyncSelect from "react-select/async";
@@ -85,13 +73,12 @@ interface PurchaseFormValues {
   //   quantity: string;
   //   cog?: number;
   // }[];
+  address: string;
   transaction_date?: Date | string;
   delivery_date?: Date | string;
   delivery_status?: string;
   notes?: string;
   user_id: number;
-  supplier_id?: number;
-  supplier_name?: number;
 }
 
 interface PurchaseFormItems {
@@ -109,10 +96,7 @@ function CreateRequestButton(props: { onSubmitSuccess?: () => void }) {
     label: string;
   }
   const [supplierOptions, setSupplierOptions] = useState<Option[]>([]);
-  const loadOptions = async (
-    inputValue: string,
-    callback: (options: Option[]) => void
-  ) => {
+  const loadOptions = async (inputValue: string, callback: (options: Option[]) => void) => {
     // Perform an async request to fetch options based on inputValue
     const data = await getSupplier(1, inputValue);
 
@@ -139,6 +123,7 @@ function CreateRequestButton(props: { onSubmitSuccess?: () => void }) {
   const formik = useFormik<PurchaseFormValues>({
     initialValues: {
       // items: [],
+      address: "",
       user_id: 1,
       transaction_date: getCurrentDate(),
       delivery_status: "Ordered",
@@ -176,13 +161,9 @@ function CreateRequestButton(props: { onSubmitSuccess?: () => void }) {
           //TODO: FIX THIS TYPE!!!!!
           //@ts-ignore
           supplier_id: values.supplier_id?.value ?? undefined,
-          delivery_date: values.delivery_date
-            ? new Date(values.delivery_date as string)
-            : undefined,
+          delivery_date: values.delivery_date ? new Date(values.delivery_date as string) : undefined,
           delivery_status: values.delivery_status,
-          transaction_date: values.transaction_date
-            ? new Date(values.transaction_date as string)
-            : new Date(),
+          transaction_date: values.transaction_date ? new Date(values.transaction_date as string) : new Date(),
         };
       });
       console.log("final cart", finalCart);
@@ -227,14 +208,21 @@ function CreateRequestButton(props: { onSubmitSuccess?: () => void }) {
   //   }, 1000);
   // };
   const { colorMode } = useColorMode();
+  /*
+Client Name: Garrod
+Delivery Address: cainta
+Delivery Date: jan  29,2023
+Delivery time: 10am
+Contact Number: 
+Medicines & Qty: 50 box  of  30  1500 tab 
+price  45 per tab
+Amount: 67,500
+Terms: pdc
+courier: me
+   */
   return (
     <>
-      <Button
-        onClick={onOpen}
-        leftIcon={<FiPlus />}
-        variant="solid"
-        colorScheme="green"
-      >
+      <Button onClick={onOpen} leftIcon={<FiPlus />} variant="solid" colorScheme="green">
         Create Order Request
       </Button>
       <Modal
@@ -269,7 +257,7 @@ function CreateRequestButton(props: { onSubmitSuccess?: () => void }) {
                 </GridItem>
               </Grid>
               <InputGroup gap={4}>
-                <FormControl
+                {/* <FormControl
                   mt={4}
                   // isInvalid={
                   //   !!formik.errors.last_name && formik.touched.last_name
@@ -284,25 +272,19 @@ function CreateRequestButton(props: { onSubmitSuccess?: () => void }) {
                       }),
                       menuList: (baseStyles) => ({
                         ...baseStyles,
-                        backgroundColor:
-                          colorMode === "dark"
-                            ? "#3C3C5D"
-                            : baseStyles.backgroundColor,
+                        backgroundColor: colorMode === "dark" ? "#3C3C5D" : baseStyles.backgroundColor,
                       }),
                       singleValue: (baseStyles) => ({
                         ...baseStyles,
-                        color:
-                          colorMode === "dark" ? "white" : baseStyles.color,
+                        color: colorMode === "dark" ? "white" : baseStyles.color,
                       }),
                       clearIndicator: (baseStyles) => ({
                         ...baseStyles,
-                        color:
-                          colorMode === "dark" ? "white" : baseStyles.color,
+                        color: colorMode === "dark" ? "white" : baseStyles.color,
                       }),
                       dropdownIndicator: (baseStyles) => ({
                         ...baseStyles,
-                        color:
-                          colorMode === "dark" ? "white" : baseStyles.color,
+                        color: colorMode === "dark" ? "white" : baseStyles.color,
                       }),
                       option: (baseStyles, state) => ({
                         ...baseStyles,
@@ -314,14 +296,12 @@ function CreateRequestButton(props: { onSubmitSuccess?: () => void }) {
                               ? "#64649B"
                               : baseStyles.backgroundColor
                             : baseStyles.backgroundColor,
-                        color:
-                          colorMode === "dark" ? "white" : baseStyles.color,
+                        color: colorMode === "dark" ? "white" : baseStyles.color,
                       }),
 
                       input: (baseStyles) => ({
                         ...baseStyles,
-                        color:
-                          colorMode === "dark" ? "white" : baseStyles.color,
+                        color: colorMode === "dark" ? "white" : baseStyles.color,
                       }),
                       // valueContainer: (baseStyles, state) => ({
                       //   ...baseStyles,
@@ -332,9 +312,7 @@ function CreateRequestButton(props: { onSubmitSuccess?: () => void }) {
                     id="supplier_id"
                     name="supplier_id"
                     value={formik.values.supplier_id}
-                    onChange={(supplier_id) =>
-                      formik.setFieldValue("supplier_id", supplier_id)
-                    }
+                    onChange={(supplier_id) => formik.setFieldValue("supplier_id", supplier_id)}
                     // inputValue={formik.values.supplier_name?.toString()}
                     // onInputChange={(val) => {
                     //   setSupplierInput(val);
@@ -352,70 +330,47 @@ function CreateRequestButton(props: { onSubmitSuccess?: () => void }) {
                     }}
                     defaultOptions
                   />
-                  {/* <AutoComplete openOnFocus>
-                    <AutoCompleteInput
-                      variant="filled"
-                      value={supplierInput}
-                      onChange={(e:any) => {
-                        setSupplierInput(e.target.value);
-                      }}
-                    />
-                    <AutoCompleteList>
-                      {suppliers.map((supplierData, id) => (
-                        <AutoCompleteItem key={`option-${id}`} value={supplierData.supplier_name} textTransform="capitalize">
-                          {supplierData.supplier_name}
-                        </AutoCompleteItem>
-                      ))}
-                    </AutoCompleteList>
-                  </AutoComplete> */}
-                  {/* <FormErrorMessage>{formik.errors.last_name}</FormErrorMessage> */}
+                </FormControl> */}
+                <FormControl mt={4} isInvalid={false}>
+                  <FormLabel>Address</FormLabel>
+                  <Input
+                    id="address"
+                    name="address"
+                    //@ts-ignore
+                    value={formik.values.address}
+                    onChange={(e) => formik.setFieldValue("address", e.target.value)}
+                    placeholder="Enter full address"
+                    type="text"
+                  ></Input>
+
+                  <FormErrorMessage>{formik.errors.transaction_date}</FormErrorMessage>
                 </FormControl>
-                <FormControl
-                  mt={4}
-                  isInvalid={
-                    !!formik.errors.transaction_date &&
-                    formik.touched.transaction_date
-                  }
-                >
+                <FormControl mt={4} isInvalid={!!formik.errors.transaction_date && formik.touched.transaction_date}>
                   <FormLabel>Order Date</FormLabel>
                   <Input
                     id="transaction_date"
                     name="transaction_date"
                     //@ts-ignore
                     value={formik.values.transaction_date}
-                    onChange={(e) =>
-                      formik.setFieldValue("transaction_date", e.target.value)
-                    }
+                    onChange={(e) => formik.setFieldValue("transaction_date", e.target.value)}
                     defaultValue={getCurrentDate()}
                     type="date"
                   ></Input>
 
-                  <FormErrorMessage>
-                    {formik.errors.transaction_date}
-                  </FormErrorMessage>
+                  <FormErrorMessage>{formik.errors.transaction_date}</FormErrorMessage>
                 </FormControl>
-                <FormControl
-                  mt={4}
-                  isInvalid={
-                    !!formik.errors.delivery_date &&
-                    formik.touched.delivery_date
-                  }
-                >
-                  <FormLabel>Delivery Date</FormLabel>
+                <FormControl mt={4} isInvalid={!!formik.errors.delivery_date && formik.touched.delivery_date}>
+                  <FormLabel>Delivery Date & Time</FormLabel>
                   <Input
                     id="delivery_date"
                     name="delivery_date"
                     //@ts-ignore
                     value={formik.values.delivery_date}
-                    onChange={(e) =>
-                      formik.setFieldValue("delivery_date", e.target.value)
-                    }
-                    type="date"
+                    onChange={(e) => formik.setFieldValue("delivery_date", e.target.value)}
+                    type="datetime-local"
                   ></Input>
 
-                  <FormErrorMessage>
-                    {formik.errors.delivery_date}
-                  </FormErrorMessage>
+                  <FormErrorMessage>{formik.errors.delivery_date}</FormErrorMessage>
                 </FormControl>
                 <FormControl
                   mt={4}

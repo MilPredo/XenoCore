@@ -35,6 +35,7 @@ export class InvoiceController {
         discount_type: number;
         transaction_date: string;
         admin_id: number;
+        notes: string;
         items: {
           product_id: string;
           quantity: string;
@@ -50,6 +51,7 @@ export class InvoiceController {
         requests.discount_type,
         requests.transaction_date,
         requests.admin_id,
+        requests.notes,
         requests.items
       );
       reply.status(200).send(result);
